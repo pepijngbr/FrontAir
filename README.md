@@ -5,12 +5,12 @@
   
 Opleiding: Software Developer (Niveau 4)  
 Leerjaar: 3  
-Module: Keuzedeel Frontend Development (FED)  
+Module: Keuzedeel Frontend Development (FED) - Portfolio Examen  
 Examenduur: 6 weken  
 Resultaat: 8 studiepunten  
 Beoordeling: -
 
-Startgesprek: vrijdag 17 mei 2024 om 08:30  
+**Startgesprek: vrijdag 17 mei 2024 om 08:30**  
 
 Oplevermoment: -  
 Duur: -  
@@ -37,45 +37,15 @@ Coming soon.
 Coming soon.  
 
 ## Resources  
-A list of all the resources I used for this entire project.  
+A table of all the resources I plan on using or used for this entire project.  
 
-<table>
-    <thead>
-        <th>Category</td>
-        <th>Resources</td>
-    </thead>
-    <tbody>
-        <tr>
-            <td>Frameworks</td>
-            <td>Vue.js, TailwindCSS and Laravel.</td>
-        </tr>
-        <tr>
-            <td>Programming languages</td>
-            <td>JavaScript, Php.</td>
-        </tr>
-        <tr>
-            <td>Other languages</td>
-            <td>HTML5, CSS3.</td>
-        </tr>
-        <tr>
-            <td>Libraries</td>
-            <td>DaisyUI.</td>
-        </tr>
-        <tr>
-            <td>Database</td>
-            <td>MySQL.</td>
-        </tr>
-        <tr>
-            <td>IDE's and text editors</td>
-            <td>VSCode, Notepad++.</td>
-        </tr>
-        <tr>
-            <td>CLI</td>
-            <td>Git.</td>
-        </tr>
-        <tr>
-            <td>Software</td>
-            <td>Figma.</td>
-        </tr>
-    </tbody>
-</table>
+| Category | Resources |
+|----------|----------|
+| Frameworks | ![Vue.js](https://img.shields.io/badge/-Vue.js-42B883?style=flat-square&logo=vue.js&logoColor=white) ![TailwindCSS](https://img.shields.io/badge/-TailwindCSS-0EA5E9?style=flat-square&logo=tailwindcss&logoColor=white) ![Laravel](https://img.shields.io/badge/-Laravel-FF2D20?style=flat-square&logo=laravel&logoColor=white) |
+| Programming languages | ![JavaScript](https://img.shields.io/badge/-JavaScript-F7DF1E?style=flat-square&logo=javascript&logoColor=black) ![Php](https://img.shields.io/badge/-Php-777BB4?style=flat-square&logo=php&logoColor=white) |
+| Other languages | ![Html](https://img.shields.io/badge/-HTML5-E34F26?style=flat-square&logo=html5&logoColor=white) ![Css](https://img.shields.io/badge/-CSS3-1572B6?style=flat-square&logo=css3&logoColor=white) |
+| Libraries | ![DaisyUI](https://img.shields.io/badge/-DaisyUI-1AD1A5?style=flat-square&logo=daisyui&logoColor=white) |
+| Database | ![MySQL](https://img.shields.io/badge/-MySQL-015B85?style=flat-square&logo=mysql&logoColor=white) |
+| IDE's and text editors | ![VS Code](https://img.shields.io/badge/-VS%20Code-007ACC?style=flat-square&logo=visualstudiocode&logoColor=white) ![Notepad++](https://img.shields.io/badge/-Notepad++-FEFEFE?style=flat-square&logo=notepadplusplus&logoColor=black) |
+| CLI | ![Git](https://img.shields.io/badge/-Git-F05032?style=flat-square&logo=git&logoColor=white) |
+| Software | ![Figma](https://img.shields.io/badge/-Figma-2C2C2C?style=flat-square&logo=figma&logoColor=white) |
