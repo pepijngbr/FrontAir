@@ -1,5 +1,5 @@
 # FrontAir  
-<img src="FrontAir_White.png" align="right" width="30%">  
+<img src="FrontAir_White.png" align="right" width="40%">  
 
 🟧 **Eindresultaat: N/A** 🟧  
   
