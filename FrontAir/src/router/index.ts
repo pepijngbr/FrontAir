@@ -1,22 +1,97 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import HomeView from '../views/HomeView.vue'
+
+// Layouts
+import DefaultLayout from '../layouts/DefaultLayout.vue'
+import DashboardLayout from '../layouts/DashboardLayout.vue'
+import AuthLayout from '../layouts/AuthLayout.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
+  mode: 'history',
   routes: [
+    // {
+    //   path: '',
+    //   name: 'home',
+    //   component: () => import('../views/HomeView.vue')
+    // },
     {
-      path: '/',
-      name: 'home',
-      component: HomeView
+      path: '',
+      component: () => import('../layouts/DefaultLayout.vue'),
+      children: [
+        { path: '', name: 'home', component: () => import('../views/HomeView.vue'), }
+      ],
     },
     {
       path: '/about',
       name: 'about',
-      // route level code-splitting
-      // this generates a separate chunk (About.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
       component: () => import('../views/AboutView.vue')
-    }
+    },
+    {
+      path: '/contact',
+      name: 'contact',
+      component: () => import('../views/ContactView.vue')
+    },
+    {
+      // Flight schedule (4 blocks, responsive)
+      path: '/flights',
+      name: 'flights',
+      component: () => import('../views/FlightsView.vue')
+    },
+    // #
+    // TODO: add authentication guard for bookings
+    // #
+    {
+      path: '/bookings',
+      name: 'bookings',
+      component: import('../views/BookingsView.vue')
+    },
+    {
+      path: '/profile',
+      name: 'profile',
+      component: import('../views/ProfileView.vue')
+    },
+    {
+      path: '',
+      name: 'authentication',
+      meta: { layout: AuthLayout },
+      children: [
+        {
+          path: 'login',
+          name: 'login',
+          component: () => import('../views/auth/LoginView.vue')
+        },
+        {
+          path: 'register',
+          name: 'register',
+          component: () => import('../views/auth/RegisterView.vue')
+        },
+        {
+          path: 'reset-password',
+          name: 'reset-password',
+          component: () => import('../views/auth/ResetPasswordView.vue')
+        },
+      ],
+    },
+    // #
+    // TODO: Add authentication guard for dashboard
+    // #
+    {
+      path: '/dashboard',
+      name: 'dashboard',
+      meta: { requiresAuth: true, layout: DashboardLayout },
+      children: [
+        {
+          path: 'overview', // having an empty path will make this the default child route
+          name: 'dashboard.overview',
+          component: () => import('../views/dashboard/OverviewView.vue')
+        },
+        {
+          path: 'analytics',
+          name: 'dashboard.analytics',
+          component: () => import('../views/dashboard/AnalyticsView.vue')
+        },
+      ]
+    },
   ]
 })
 
