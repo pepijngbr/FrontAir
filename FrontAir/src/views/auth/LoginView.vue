@@ -1,10 +1,8 @@
 <!-- View for logging in -->
 
 <template>
-    <div>
-        <h1>Login</h1>
-        <p>Log in to your account.</p>
-    </div>
+    <h1>Login</h1>
+    <p>Log in to your account.</p>
 </template>
 
 <script lang="ts">

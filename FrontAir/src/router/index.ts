@@ -16,9 +16,13 @@ const router = createRouter({
     // },
     {
       path: '',
-      component: () => import('../layouts/DefaultLayout.vue'),
+      component: () => import('../views/HomeView.vue'),
       children: [
-        { path: '', name: 'home', component: () => import('../views/HomeView.vue'), }
+        {
+          path: '',
+          name: 'home',
+          component: () => import('../views/HomeView.vue'),
+        }
       ],
     },
     {
@@ -35,8 +39,30 @@ const router = createRouter({
       // Flight schedule (4 blocks, responsive)
       path: '/flights',
       name: 'flights',
-      component: () => import('../views/FlightsView.vue')
+      component: () => import('../views/FlightsView.vue'),
+      children: [
+        {
+          path: ':id',
+          name: 'flights.show',
+          component: () => import('../views/FlightsShow.vue')
+        },
+        // {
+        //   path: 'create',
+        //   name: 'flights.create',
+        //   component: () => import('../components/Flights/FlightsCreate.vue')
+        // },
+        // {
+        //   path: 'edit/:id',
+        //   name: 'flights.edit',
+        //   component: () => import('../components/Flights/FlightsEdit.vue')
+        // },
+      ]
     },
+    // {
+    //   path: '/flights/:id',
+    //   name: 'flights.show',
+    //   component: () => import('../views/FlightsShow.vue')
+    // },
     // #
     // TODO: add authentication guard for bookings
     // #
@@ -44,6 +70,11 @@ const router = createRouter({
       path: '/bookings',
       name: 'bookings',
       component: import('../views/BookingsView.vue')
+    },
+    {
+      path: '/store',
+      name: 'store',
+      component: import('../views/StoreView.vue')
     },
     {
       path: '/profile',
@@ -81,7 +112,7 @@ const router = createRouter({
       meta: { requiresAuth: true, layout: DashboardLayout },
       children: [
         {
-          path: 'overview', // having an empty path will make this the default child route
+          path: '', // having an empty path will make this the default child route
           name: 'dashboard.overview',
           component: () => import('../views/dashboard/OverviewView.vue')
         },
