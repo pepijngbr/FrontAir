@@ -36,22 +36,41 @@
     }
 
     h1 {
-        @apply text-3xl;
+        /* @apply text-3xl; */
+        @apply text-[61.04px];
     }
 
     h2 {
-        @apply text-2xl;
+        /* @apply text-2xl; */
+        @apply text-[48.83px];
     }
 
     h3 {
-        @apply text-xl;
+        /* @apply text-xl; */
+        @apply text-[39.06px];
     }
 
     h4 {
-        @apply text-lg;
+        /* @apply text-lg; */
+        @apply text-[31.25px];
     }
 
     h5 {
-        @apply text-base;
+        /* @apply text-base; */
+        @apply text-[25px];
+    }
+
+    h6 {
+        /* @apply text-sm; */
+        @apply text-[20px];
+    }
+
+    /* p {
+        @apply text-[16px];
+    } */
+
+    /* FIXME: header, drawer navigation breaks this? */
+    .card {
+        @apply z-[0]
     }
 }
