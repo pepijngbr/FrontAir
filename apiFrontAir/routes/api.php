@@ -15,8 +15,8 @@ Route::apiResource('airports', AirportController::class);
 Route::apiResource('flights', FlightController::class);
 Route::apiResource('airlines', AirlineController::class);
 Route::apiResource('tickets', TicketController::class);
-Route::apiResource('bookings', BookingController::class);
 Route::apiResource('baggages', BaggageController::class);
-    // ->parameters(['baggages' => 'baggage']);
-// Route::apiResource('commentaren', CommentaarController::class)
-//               ->parameters(['commentaren' => 'commentaar']);
+
+Route::post('register', [UserController::class, 'register']);
+Route::post('login', [UserController::class, 'login']);
+Route::post('reset-password', [UserController::class, 'resetPassword']);
