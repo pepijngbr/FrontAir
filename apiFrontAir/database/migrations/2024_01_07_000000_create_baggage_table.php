@@ -13,6 +13,11 @@ return new class extends Migration
     {
         Schema::create('baggage', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('user_id')->foreign('user_id')->references('user_id')->on('users');
+            $table->unsignedBigInteger('flight_id')->foreign('flight_id')->references('id')->on('flights');
+            $table->unsignedBigInteger('ticket_id')->foreign('ticket_id')->references('ticket_id')->on('tickets');
+            $table->float('weight');
+            $table->string('status');
             $table->timestamps();
         });
     }
