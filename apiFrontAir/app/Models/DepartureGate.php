@@ -9,7 +9,13 @@ class DepartureGate extends Model
 {
     use HasFactory;
     public $timestamps = false;
-    protected $fillable = ['airport_id', 'gate', 'status'];
+    protected $fillable = [
+        'airport_id',
+        'gate_number',
+        'status',
+        'departure_time',
+        'boarding_status'
+    ];
 
     /**
      * Get the airport that owns the departure gate.

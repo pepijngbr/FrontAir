@@ -44,4 +44,20 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    /**
+     * Get the tickets for the user.
+     */
+    public function tickets()
+    {
+        return $this->hasMany(Ticket::class, 'user_id', 'user_id');
+    }
+
+    /**
+     * Get the baggage for the user.
+     */
+    public function baggage()
+    {
+        return $this->hasMany(Baggage::class, 'passenger_id', 'user_id');
+    }
 }

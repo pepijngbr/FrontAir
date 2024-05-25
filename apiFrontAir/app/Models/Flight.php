@@ -9,12 +9,22 @@ class Flight extends Model
 {
     use HasFactory;
     public $timestamps = true;
-    protected $fillable = ['flight_number', 'airline_id', 'departure_airport_id', 'arrival_airport_id', 'departure_time', 'arrival_time', 'price', 'class', 'available_seats'];
+    protected $fillable = [
+        'departure_airport_id',
+        'arrival_airport_id',
+        'departure_time',
+        'arrival_time',
+        'flight_number',
+        'airline_id',
+        'price',
+        // 'class',
+        'available_seats'
+    ];
 
     /**
      * Get the airline that owns the Flight
      */
-    public function airline()
+    public function airline(): BelongsTo
     {
         return $this->belongsTo(Airline::class);
     }
@@ -22,7 +32,7 @@ class Flight extends Model
     /**
      * Get the departure airport that owns the Flight
      */
-    public function departureAirport()
+    public function departureAirport(): BelongsTo
     {
         return $this->belongsTo(Airport::class, 'departure_airport_id');
     }
@@ -30,7 +40,7 @@ class Flight extends Model
     /**
      * Get the arrival airport that owns the Flight
      */
-    public function arrivalAirport()
+    public function arrivalAirport(): BelongsTo
     {
         return $this->belongsTo(Airport::class, 'arrival_airport_id');
     }
@@ -38,7 +48,7 @@ class Flight extends Model
     /**
      * Get the bookings for the flight.
      */
-    public function bookings()
+    public function bookings(): HasMany
     {
         return $this->hasMany(Booking::class);
     }
@@ -46,7 +56,7 @@ class Flight extends Model
     /**
      * Get the tickets for the flight.
      */
-    public function tickets()
+    public function tickets(): HasMany
     {
         return $this->hasMany(Ticket::class);
     }
@@ -54,7 +64,7 @@ class Flight extends Model
     /**
      * Get the baggage for the flight.
      */
-    public function baggage()
+    public function baggage(): HasMany
     {
         return $this->hasMany(Baggage::class);
     }
@@ -62,7 +72,7 @@ class Flight extends Model
     /**
      * Get the departure gates for the flight.
      */
-    public function departureGates()
+    public function departureGates(): HasMany
     {
         return $this->hasMany(DepartureGate::class);
     }

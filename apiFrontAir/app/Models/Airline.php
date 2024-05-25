@@ -9,7 +9,14 @@ class Airline extends Model
 {
     use HasFactory;
     public $timestamps = true;
-    protected $fillable = ['name', 'iata', 'icao', 'callsign', 'country', 'active'];
+    protected $fillable = [
+        'name',
+        'iata',
+        'icao',
+        'callsign',
+        'country',
+        'operating_since'
+    ];
 
     /**
      * Get the flights for the airline.

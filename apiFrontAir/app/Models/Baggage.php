@@ -9,7 +9,13 @@ class Baggage extends Model
 {
     use HasFactory;
     public $timestamps = true;
-    protected $fillable = ['user_id', 'flight_id', 'ticket_id', 'weight', 'status'];
+    protected $fillable = [
+        'user_id',
+        'flight_id',
+        'ticket_id',
+        'weight',
+        'status'
+    ];
 
     /**
      * Get the User that owns the Baggage

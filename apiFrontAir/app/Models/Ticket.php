@@ -9,7 +9,12 @@ class Ticket extends Model
 {
     use HasFactory;
     public $timestamps = true;
-    protected $fillable = ['booking_id', 'seat', 'type', 'price', 'status'];
+    protected $fillable = [
+        'seat_number', 
+        'type', 
+        'price', 
+        'status'
+    ];
 
     /**
      * Get the Booking that owns the Ticket
