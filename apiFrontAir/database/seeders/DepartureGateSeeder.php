@@ -2,8 +2,8 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use App\Models\DepartureGate;
 
 class DepartureGateSeeder extends Seeder
 {
@@ -12,6 +12,6 @@ class DepartureGateSeeder extends Seeder
      */
     public function run(): void
     {
-        //
+        DepartureGate::factory()->count(10)->create();
     }
 }
