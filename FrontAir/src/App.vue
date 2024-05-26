@@ -10,14 +10,13 @@
                 <div class="flex-none lg:hidden">
                     <label for="my-drawer-3" aria-label="open sidebar" class="btn btn-square btn-ghost">
                         <!-- TODO: add icons -->
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"class="inline-block w-6 h-6 stroke-current">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"d="M4 6h16M4 12h16M4 18h16"></path>
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="inline-block w-6 h-6 stroke-current">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
                         </svg>
                     </label>
                 </div>
-                <!-- flex w-screen absolute sm:block -translate-x-[32px] justify-center sm:ml-4 sm:mr-0 lg:ml-0 lg:mr-12 transition-none hover:scale-100 active:scale-100 lg:transition-transform lg:active:scale-105 lg:hover:scale-110 -->
-                <RouterLink to="/"class="ml-4 sm:ml-4 sm:mr-0 lg:ml-0 lg:mr-12 transition-none hover:scale-100 active:scale-100 lg:transition-transform lg:active:scale-105 lg:hover:scale-110">
-                    <img :src="'../src/assets/images/FrontAir' + (this.theme == 'light' ? '.png' : '_White.png')"alt="FrontAir Logo" class="h-14">
+                <RouterLink to="/" class="ml-4 sm:ml-4 sm:mr-0 lg:ml-0 lg:mr-12 transition-none hover:scale-100 active:scale-100 lg:transition-transform lg:active:scale-105 lg:hover:scale-110">
+                    <img :src="'../src/assets/images/FrontAir' + (this.theme == 'light' ? '.png' : '_White.png')" alt="FrontAir Logo" class="h-14">
                 </RouterLink>
                 <nav class="[&>*]:mx-4 hidden lg:block">
                     <RouterLink class="transition-colors hover:text-accent" to="/">Home</RouterLink>
@@ -27,21 +26,23 @@
                     <RouterLink class="transition-colors hover:text-accent" to="/dashboard">Dashboard</RouterLink>
                 </nav>
                 <div class="hidden flex-1 justify-end items-center gap-4 sm:flex">
-                    <!-- TODO: make user saved in $store & add authentication to elements -->
-                    <p>180 Loyalty Points</p>
+                    <p v-if="isLoggedIn">{{ user.loyalty_points }} Loyalty Points</p>
                     <RouterLink :to="{ name: 'store' }" class="btn btn-secondary">Store</RouterLink>
                     <div class="dropdown dropdown-end dropdown-hover">
                         <div tabindex="0" role="button" class="btn">Account</div>
                         <ul tabindex="0" class="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52">
-                            <li><RouterLink :to="{ name: 'login' }">Login</RouterLink></li>
-                            <li><RouterLink :to="{ name: 'register' }">Register</RouterLink></li>
-                            <li><RouterLink :to="{ name: 'profile' }">Profile</RouterLink></li>
+                            <li v-if="isLoggedIn"><p>Wallet: €{{ user.wallet }}</p></li>
+                            <li v-if="isLoggedIn"><RouterLink :to="{ name: 'bookings' }">My Bookings</RouterLink></li>
+                            <li v-if="isLoggedIn"><RouterLink :to="{ name: 'profile' }">Profile</RouterLink></li>
+                            <li v-if="isLoggedIn"><button @click="logout()" class="bg-red-400 hover:bg-red-500">Logout</button></li>
+                            <li v-if="!isLoggedIn"><RouterLink :to="{ name: 'login' }">Login</RouterLink></li>
+                            <li v-if="!isLoggedIn"><RouterLink :to="{ name: 'register' }">Register</RouterLink></li>
                         </ul>
                     </div>
                 </div>
             </header>
-            <!-- content -->
-            <RouterView />
+            <!-- site content -->
+            <RouterView :theme="this.theme" :apiUrl="this.apiUrl" />
         </div>
         <div class="drawer-side">
             <label for="my-drawer-3" aria-label="close sidebar" class="drawer-overlay"></label>
@@ -55,7 +56,8 @@
                 <div class="divider"></div>
                 <ul>
                     <li><RouterLink :to="{ name: 'dashboard.overview' }" class="transition-colors hover:text-accent">Dashboard</RouterLink></li>
-                    <li><RouterLink :to="{ name: 'profile' }" class="transition-colors hover:text-accent">Profile</RouterLink></li><li><RouterLink :to="{ name: 'login' }" class="transition-colors hover:text-accent">Login</RouterLink></li>
+                    <li><RouterLink :to="{ name: 'profile' }" class="transition-colors hover:text-accent">Profile</RouterLink></li>
+                    <li><RouterLink :to="{ name: 'login' }" class="transition-colors hover:text-accent">Login</RouterLink></li>
                     <li><RouterLink :to="{ name: 'register' }" class="transition-colors hover:text-accent">Register</RouterLink></li>
                     <li><RouterLink :to="{ name: 'reset-password' }" class="transition-colors hover:text-accent">ResetPassword</RouterLink></li>
                 </ul>
@@ -64,23 +66,25 @@
     </div>
 </template>
 
-<script setup lang="ts">
-    import { RouterLink, RouterView } from 'vue-router'
-</script>
-
 <script lang="ts">
+    import { RouterLink, RouterView } from 'vue-router'
+    import { useUserStore } from '@/stores/user';
+
     import axios from 'axios';
 
     const apiUrl = 'http://127.0.0.1:8000/api/';
 
+
     export default {
         name: 'App',
         components: {
-            // #
+            RouterLink,
+            RouterView
         },
         data() {
             return {
-                theme: 'light',
+                theme: '',
+                apiUrl: apiUrl,
             }
         },
         mounted() {
@@ -89,11 +93,26 @@
             // });
             this.theme = JSON.parse(localStorage.getItem('theme') || 'light');
         },
+        setup() {
+            // Access state directly
+            const userStore = useUserStore();
+
+            const user = userStore.user;
+            const isLoggedIn = userStore.isLoggedIn;
+
+            return {
+                user,
+                isLoggedIn
+            }
+        },
         async created() {
             // #
         },
         methods: {
-            // #
+            async logout() {
+                const userStore = useUserStore();
+                await userStore.logout();
+            },
         },
-    }
+    };
 </script>

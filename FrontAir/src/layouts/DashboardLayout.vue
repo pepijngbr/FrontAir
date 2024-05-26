@@ -1,4 +1,9 @@
 <template>
+    <nav class="h-screen">
+        <!-- Logo -->
+        <!-- = DIVIDER = -->
+        <!-- Nav Items (with Bootstrap Icons), RouterLinks -->
+    </nav>
     <v-layout>
         <v-app-bar color="grey-lighten-2"></v-app-bar>
         <v-navigation-drawer color="grey-darken-2" permanent></v-navigation-drawer>

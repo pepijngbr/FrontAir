@@ -2,21 +2,17 @@
 @tailwind components;
 @tailwind utilities;
 
-/* import font-family and apply in tailwindcss here */
 @layer base {
-    /* import font-family here */
+    /* font-family import */
     @import url('https://fonts.googleapis.com/css2?family=Lexend:wght@100..900&display=swap');
 
-    /* apply font-family here */
+    /* font-family applied on site via html */
     html {
         font-family: 'Lexend', sans-serif;
     }
 }
 
 @layer components {
-    /* * {
-        @apply text-gray-800;
-    } */
 
     html,
     body {
@@ -36,32 +32,26 @@
     }
 
     h1 {
-        /* @apply text-3xl; */
         @apply text-[61.04px];
     }
 
     h2 {
-        /* @apply text-2xl; */
         @apply text-[48.83px];
     }
 
     h3 {
-        /* @apply text-xl; */
         @apply text-[39.06px];
     }
 
     h4 {
-        /* @apply text-lg; */
         @apply text-[31.25px];
     }
 
     h5 {
-        /* @apply text-base; */
         @apply text-[25px];
     }
 
     h6 {
-        /* @apply text-sm; */
         @apply text-[20px];
     }
 
@@ -69,8 +59,16 @@
         @apply text-[16px];
     } */
 
-    /* FIXME: header, drawer navigation breaks this? */
+    /* DaisyUI Cards overlapped Header & Navigation Drawer */
     .card {
-        @apply z-[0]
+        @apply z-[1]
+    }
+
+    header {
+        @apply z-[2];
+    }
+
+    .drawer-side {
+        @apply z-[3];
     }
 }

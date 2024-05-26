@@ -26,6 +26,19 @@ const router = createRouter({
       ],
     },
     {
+      // Flight schedule (4 blocks, responsive)
+      path: '/flights',
+      name: 'flights',
+      component: () => import('../views/FlightsView.vue'),
+      // children: [
+      //   {
+      //     path: ':id', // having an empty path will make this the default route
+      //     name: 'flights.show',
+      //     component: () => import('../views/FlightsShow.vue')
+      //   },
+      // ]
+    },
+    {
       path: '/about',
       name: 'about',
       component: () => import('../views/AboutView.vue')
@@ -34,29 +47,6 @@ const router = createRouter({
       path: '/contact',
       name: 'contact',
       component: () => import('../views/ContactView.vue')
-    },
-    {
-      // Flight schedule (4 blocks, responsive)
-      path: '/flights',
-      name: 'flights',
-      component: () => import('../views/FlightsView.vue'),
-      children: [
-        {
-          path: ':id',
-          name: 'flights.show',
-          component: () => import('../views/FlightsShow.vue')
-        },
-        // {
-        //   path: 'create',
-        //   name: 'flights.create',
-        //   component: () => import('../components/Flights/FlightsCreate.vue')
-        // },
-        // {
-        //   path: 'edit/:id',
-        //   name: 'flights.edit',
-        //   component: () => import('../components/Flights/FlightsEdit.vue')
-        // },
-      ]
     },
     // {
     //   path: '/flights/:id',
@@ -74,7 +64,14 @@ const router = createRouter({
     {
       path: '/store',
       name: 'store',
-      component: import('../views/StoreView.vue')
+      component: import('../views/StoreView.vue'),
+      children: [
+        {
+          path: ':id',
+          name: 'store.show',
+          component: () => import('../views/StoreShow.vue')
+        },
+      ]
     },
     {
       path: '/profile',
@@ -83,8 +80,8 @@ const router = createRouter({
     },
     {
       path: '',
-      name: 'authentication',
-      meta: { layout: AuthLayout },
+      name: 'auth',
+      component: () => import('../layouts/AuthLayout.vue'),
       children: [
         {
           path: 'login',
@@ -110,6 +107,7 @@ const router = createRouter({
       path: '/dashboard',
       name: 'dashboard',
       meta: { requiresAuth: true, layout: DashboardLayout },
+      // component: () => import('../layouts/DashboardLayout.vue'),
       children: [
         {
           path: '', // having an empty path will make this the default child route
@@ -121,9 +119,45 @@ const router = createRouter({
           name: 'dashboard.analytics',
           component: () => import('../views/dashboard/AnalyticsView.vue')
         },
+        {
+          path: 'users',
+          name: 'dashboard.users',
+          children: [
+            {
+              path: '',
+              name: 'dashboard.users.index',
+              component: () => import('../views/dashboard/users/UsersView.vue'),
+            },
+            {
+              path: ':id',
+              name: 'dashboard.users.show',
+              component: () => import('../views/dashboard/users/UsersShow.vue')
+            },
+          ]
+        },
+        // {
+        //   path: 'flights',
+        //   name: 'dashboard.flights',
+        //   component: () => import('../views/dashboard/FlightsView.vue')
+        // },
+        // {
+        //   path: 'bookings',
+        //   name: 'dashboard.bookings',
+        //   component: () => import('../views/dashboard/BookingsView.vue')
+        // },
+        // {
+        //   path: 'store',
+        //   name: 'dashboard.store',
+        //   component: () => import('../views/dashboard/StoreView.vue')
+        // },
+        // {
+        //   path: 'profile',
+        //   name: 'dashboard.profile',
+        //   component: () => import('../views/dashboard/ProfileView.vue')
+        // },
       ]
     },
-  ]
+  ],
 })
 
 export default router

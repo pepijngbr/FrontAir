@@ -1,13 +1,11 @@
 <template>
     <h1>Profile</h1>
     <p>View and edit your profile.</p>
-    <!-- <section>
+    <section>
         <h2>Profile Information</h2>
-        <p>Username: {{ $store.state.user.username }}</p>
-        <p>Email: {{ $store.state.user.email }}</p>
-        <p>First Name: {{ $store.state.user.first_name }}</p>
-        <p>Last Name: {{ $store.state.user.last_name }}</p>
-    </section> -->
+        <p>Name: {{ this.user.first_name }}</p>
+        <p>Email: {{ this.user.email }}</p>
+    </section>
     <section>
         <h2>Change Password</h2>
         <form>
@@ -30,15 +28,33 @@
                 value="dark" @click="changeTheme('dark')" />
         </div>
     </section>
-
+    <br><br><br><br><br>
+    <button class="btn btn-primary">primary</button>
+    <button class="btn btn-secondary">secondary</button>
+    <button class="btn btn-accent">accent</button>
+    <button class="btn btn-neutral">neutral</button>
+    <button class="btn btn-base-100">base-100</button>
+    <button class="btn btn-info">info</button>
+    <button class="btn btn-success">success</button>
+    <button class="btn btn-warning">warning</button>
+    <button class="btn btn-error">error</button>
 </template>
 
 <script lang="ts">
+    import { useUserStore } from '@/stores/user';
+
     export default {
         name: 'ProfileView',
+        mounted() {
+            this.setTheme();
+        },
         data() {
             return {
                 theme: '',
+                user: {
+                    first_name: useUserStore().user.name,
+                    email: useUserStore().user.email,
+                },
             }
         },
         methods: {
@@ -48,10 +64,10 @@
                 localStorage.setItem('theme', JSON.stringify($theme));
                 document.documentElement.setAttribute('data-theme', this.theme);
             },
-        },
-        mounted() {
-            this.theme = JSON.parse(localStorage.getItem('theme') || 'default');
-            document.documentElement.setAttribute('data-theme', this.theme);
+            setTheme() {
+                this.theme = JSON.parse(localStorage.getItem('theme') || 'light');
+                document.documentElement.setAttribute('data-theme', this.theme);
+            }
         },
     }
 </script>

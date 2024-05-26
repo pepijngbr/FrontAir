@@ -1,5 +1,5 @@
 <template>
-    <h1>Working Layout</h1>
+    <h1>Default Layout</h1>
     <v-layout>
         <v-main>
             <!--The <slot> element is a slot outlet that indicates 
