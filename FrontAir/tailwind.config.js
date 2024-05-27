@@ -16,7 +16,7 @@ export default {
         themes: [
             {
                 // https://daisyui.com/theme-generator/
-                mytheme: {
+                frontair: {
                     "primary": "#0778F0",
                     "secondary": "#C084FC",
                     "accent": "#99F6E4",
@@ -27,7 +27,7 @@ export default {
                     "warning": "#FF8800",
                     "error": "#F43F5E",
                 },
-                mythemeDark: {
+                frontairDark: {
                     "primary": "#ff007f",
                     "secondary": "#0081ff",
                     "accent": "#875d00",

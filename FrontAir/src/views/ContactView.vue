@@ -34,7 +34,7 @@
         <input type="text" class="grow border-none" placeholder="Email" />
       </label>
     </label>
-    <div class="divider my-10 after:bg-red-400 before:bg-red-400"></div>
+    <div class="divider my-10"></div>
     <label class="input input-bordered flex items-center gap-2">
       Name
       <input type="text" class="grow border-none" placeholder="Daisy" />

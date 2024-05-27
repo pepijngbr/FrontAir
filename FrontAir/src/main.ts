@@ -1,4 +1,5 @@
 import './styles/app.css' // tailwindcss
+import 'bootstrap-icons/font/bootstrap-icons.css';
 
 import { createApp } from 'vue' // vue 3
 import { createPinia } from 'pinia' // state management

@@ -39,6 +39,11 @@ const router = createRouter({
       // ]
     },
     {
+      path: '/flights/:id',
+      name: 'flights.show',
+      component: () => import('../views/FlightsShow.vue')
+    },
+    {
       path: '/about',
       name: 'about',
       component: () => import('../views/AboutView.vue')
@@ -48,11 +53,7 @@ const router = createRouter({
       name: 'contact',
       component: () => import('../views/ContactView.vue')
     },
-    // {
-    //   path: '/flights/:id',
-    //   name: 'flights.show',
-    //   component: () => import('../views/FlightsShow.vue')
-    // },
+
     // #
     // TODO: add authentication guard for bookings
     // #
