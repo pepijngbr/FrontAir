@@ -50,7 +50,7 @@ class User extends Authenticatable
      */
     public function tickets()
     {
-        return $this->hasMany(Ticket::class, 'user_id', 'user_id');
+        return $this->hasMany(Ticket::class);
     }
 
     /**
@@ -58,6 +58,6 @@ class User extends Authenticatable
      */
     public function baggage()
     {
-        return $this->hasMany(Baggage::class, 'passenger_id', 'user_id');
+        return $this->hasMany(Baggage::class);
     }
 }

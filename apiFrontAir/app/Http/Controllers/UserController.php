@@ -45,6 +45,10 @@ class UserController extends Controller
      */
     public function show(User $user)
     {
+        $user = User::find($user);
+        if (!$user) {
+            return response()->json(['message' => 'User not found'], 404);
+        }
         return $user;
     }
 
@@ -128,5 +132,36 @@ class UserController extends Controller
         $user->password = bcrypt($credentials['password']);
         $user->save();
         return $user;
+    }
+
+
+    /**
+     * Shows the tickets of a User.
+     * 
+     * @param  \Illuminate\Http\Request  $request
+     * @return \App\Models\Ticket
+     */
+    public function showTickets(Request $request)
+    {
+        // $user = User::find($request->id);
+        // if (!$user) {
+        //     return response()->json(['message' => 'User not found'], 404);
+        // }
+        // return [$user->tickets()->get()];
+
+        // $user = User::find($request->id);
+        // if (!$user) {
+        //     return response()->json(['message' => 'User not found'], 404);
+        // }
+        // $tickets = $user->tickets()->with('flight')->get();
+        // return ['user' => $user, 'tickets' => $tickets->toArray()];
+
+        // // ->with('flight.airline')
+
+        // return the user and the tickets of the user with the flight information (including the airline)
+        return [
+            'user' => User::find($request->id)->makeHidden(['id']),
+            'tickets' => User::find($request->id)->tickets()->makeHidden(['ticket_id', 'user_id', 'flight_id'])->with('flight.departureAirport', 'flight.arrivalAirport')->get()
+        ];
     }
 }

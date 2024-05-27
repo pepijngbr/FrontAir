@@ -17,14 +17,6 @@ class Ticket extends Model
     ];
 
     /**
-     * Get the Booking that owns the Ticket
-     */
-    public function bookings()
-    {
-        return $this->belongsTo(Booking::class);
-    }
-
-    /**
      * Get the Baggage that belongs to the Ticket
      */
     public function baggage()
@@ -33,17 +25,17 @@ class Ticket extends Model
     }
 
     /**
-     * Get the Flights that belongs to the Ticket
+     * Get the Flight that belongs to the Ticket
      */
-    public function flights()
+    public function flight()
     {
         return $this->belongsTo(Flight::class);
     }
 
     /**
-     * Get the Users that belongs to the Ticket
+     * Get the User that belongs to the Ticket
      */
-    public function users()
+    public function user()
     {
         return $this->belongsTo(User::class);
     }

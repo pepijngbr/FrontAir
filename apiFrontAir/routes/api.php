@@ -11,6 +11,7 @@ use App\Http\Controllers\BookingController;
 use App\Http\Controllers\BaggageController;
 
 Route::apiResource('users', UserController::class);
+Route::get('users/{id}/tickets', [UserController::class, 'showTickets']);
 Route::apiResource('airports', AirportController::class);
 Route::apiResource('flights', FlightController::class);
 Route::apiResource('airlines', AirlineController::class);

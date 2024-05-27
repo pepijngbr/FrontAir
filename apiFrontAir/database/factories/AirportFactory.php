@@ -25,7 +25,6 @@ class AirportFactory extends Factory
             // 'terminal' => $this->faker->randomElement(['Terminal 1', 'Terminal 2', 'Terminal 3']),
             'timezone' => $this->faker->timezone,
             // 'facilities' => $this->faker->words(3, true),
-            'operating_since' => $this->faker->year,
         ];
     }
 }
