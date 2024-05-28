@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Flight;
 use Illuminate\Http\Request;
+use App\Models\Flight;
 
 class FlightController extends Controller
 {
@@ -12,14 +12,29 @@ class FlightController extends Controller
      */
     public function index(Request $request)
     {
-        $limit = $request->input('limit');
-        $offset = $request->input('offset') ?? 0;
-
-        if ($limit && $limit > 1 && $offset >= 0) {
-            return Flight::take($limit)->skip($offset)->get();
+        $query = Flight::query();
+        foreach ($request->all() as $key => $value) { // key = column name (name, country, iata_code), value = search value (e.g. 'London', 'Great Brittain', 'LHR')
+            if ($key !== 'id' && $key !== 'departure_airport_id' && $key !== 'arrival_airport_id' && $key !== 'airline_id' && $key !== 'limit' && $key !== 'offset' && $key !== 'sort_by' && $key !== 'sort_order') { // exclude id, limit, offset, sort_by & sorting order when filtering
+                $query->where($key, 'like', '%' . $value . '%');
+            }
         }
 
-        return Flight::all();
+        // add the limit and offset here
+        $limit = $request->input('limit');
+        $offset = $request->input('offset') ?? 0;
+        if ($limit && $limit > 1 && $offset >= 0) {
+            $query->take($limit)->skip($offset);
+        }
+
+        // add the sorting here
+        $sortField = $request->input('sort_by');
+        $sortOrder = $request->input('sort_order') ?? 'asc';
+        if ($sortField) {
+            $query->orderBy($sortField, $sortOrder);
+        }
+
+        // e.g. http://127.0.0.1:8000/api/airports?name=tes&offset=2&limit=2&sort_by=name&sort_order=asc
+        return $query->get(); // return the query result
     }
 
     /**
@@ -30,7 +45,16 @@ class FlightController extends Controller
      */
     public function store(Request $request)
     {
-        // TODO: validate request
+        $request->validate([
+            'departure_airport_id' => 'required|integer',
+            'arrival_airport_id' => 'required|integer',
+            'departure_time' => 'required|date',
+            'arrival_time' => 'required|date',
+            'flight_number' => 'required|string',
+            'airline_id' => 'required|integer',
+            'price' => 'required|numeric',
+            'available_seats' => 'required|integer'
+        ]);
         return Flight::create($request->all());
     }
 
@@ -42,7 +66,8 @@ class FlightController extends Controller
      */
     public function show(Flight $flight)
     {
-        $flight->load('departureAirport', 'arrivalAirport', 'airline');
+        // $flight->load('departureAirport', 'arrivalAirport', 'airline');
+        // return $flight;
         return $flight;
     }
 

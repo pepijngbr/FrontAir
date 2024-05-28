@@ -17,14 +17,13 @@ class Flight extends Model
         'flight_number',
         'airline_id',
         'price',
-        // 'class',
         'available_seats'
     ];
 
     /**
      * Get the airline that owns the Flight
      */
-    public function airline(): BelongsTo
+    public function airline()
     {
         return $this->belongsTo(Airline::class);
     }
@@ -32,31 +31,23 @@ class Flight extends Model
     /**
      * Get the departure airport that owns the Flight
      */
-    public function departureAirport(): BelongsTo
+    public function departureAirport()
     {
-        return $this->belongsTo(Airport::class, 'departure_airport_id');
+        return $this->hasOne(Airport::class, 'id', 'departure_airport_id');
     }
 
     /**
      * Get the arrival airport that owns the Flight
      */
-    public function arrivalAirport(): BelongsTo
+    public function arrivalAirport()
     {
-        return $this->belongsTo(Airport::class, 'arrival_airport_id');
-    }
-
-    /**
-     * Get the bookings for the flight.
-     */
-    public function bookings(): HasMany
-    {
-        return $this->hasMany(Booking::class);
+        return $this->hasOne(Airport::class, 'id', 'arrival_airport_id');
     }
 
     /**
      * Get the tickets for the flight.
      */
-    public function tickets(): HasMany
+    public function tickets()
     {
         return $this->hasMany(Ticket::class);
     }
@@ -64,7 +55,7 @@ class Flight extends Model
     /**
      * Get the baggage for the flight.
      */
-    public function baggage(): HasMany
+    public function baggage()
     {
         return $this->hasMany(Baggage::class);
     }
@@ -72,7 +63,7 @@ class Flight extends Model
     /**
      * Get the departure gates for the flight.
      */
-    public function departureGates(): HasMany
+    public function departureGates()
     {
         return $this->hasMany(DepartureGate::class);
     }

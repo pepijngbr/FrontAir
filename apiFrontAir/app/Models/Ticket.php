@@ -10,9 +10,9 @@ class Ticket extends Model
     use HasFactory;
     public $timestamps = true;
     protected $fillable = [
-        'seat_number', 
-        'type', 
-        'price', 
+        'seat_number',
+        'type',
+        'price',
         'status'
     ];
 
