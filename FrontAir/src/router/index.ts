@@ -58,9 +58,20 @@ const router = createRouter({
     // TODO: add authentication guard for bookings
     // #
     {
-      path: '/bookings',
+      path: '',
       name: 'bookings',
-      component: import('../views/BookingsView.vue')
+      children: [
+        {
+          path: 'bookings',
+          name: 'bookings.index',
+          component: () => import('../views/BookingsView.vue'),
+        },
+        {
+          path: 'bookings/:id',
+          name: 'bookings.show',
+          component: () => import('../views/BookingsShow.vue'),
+        },
+      ]
     },
     {
       path: '/store',

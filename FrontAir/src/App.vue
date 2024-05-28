@@ -9,10 +9,7 @@
                 <!-- https://iata.codes/airline/jetnetherlands-jnl-nl -->
                 <div class="flex-none lg:hidden">
                     <label for="my-drawer-3" aria-label="open sidebar" class="btn btn-square btn-ghost">
-                        <!-- TODO: add icons -->
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="inline-block w-6 h-6 stroke-current">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
-                        </svg>
+                        <i class="bi bi-list text-3xl h-[30px] flex items-center"></i>
                     </label>
                 </div>
                 <RouterLink to="/" class="ml-4 sm:ml-4 sm:mr-0 lg:ml-0 lg:mr-12 transition-none hover:scale-100 active:scale-100 lg:transition-transform lg:active:scale-105 lg:hover:scale-110">
@@ -36,7 +33,8 @@
                             <li v-if="isLoggedIn"><RouterLink :to="{ name: 'profile' }"><i class="bi bi-person-circle"></i> Profile</RouterLink></li>
                             <li v-if="isLoggedIn"><button @click="logout()" class="bg-red-400 hover:bg-red-500"><i class="bi bi-box-arrow-left"></i> Logout</button></li>
                             <li v-if="!isLoggedIn"><RouterLink :to="{ name: 'login' }"><i class="bi bi-box-arrow-in-right"></i> Login</RouterLink></li>
-                            <li v-if="!isLoggedIn"><RouterLink :to="{ name: 'register' }">Register</RouterLink></li>
+                            <li v-if="!isLoggedIn"><RouterLink :to="{ name: 'register' }"><i class="bi bi-person-plus"></i> Register</RouterLink></li>
+                            <li><RouterLink :to="{ name: 'reset-password' }"><i class="bi bi-arrow-counterclockwise"></i> Reset Password</RouterLink></li>
                         </ul>
                     </div>
                 </div>

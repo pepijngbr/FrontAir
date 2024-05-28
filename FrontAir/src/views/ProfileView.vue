@@ -1,5 +1,5 @@
 <template>
-    <h1>Profile</h1>
+    <h1><i class="bi bi-person-circle"></i> Profile</h1>
     <p>View and edit your profile.</p>
     <section>
         <h2>Profile Information</h2>
@@ -22,10 +22,8 @@
         <h2>Change Theme</h2>
         <p>Change the theme of the website.</p>
         <div class="join join-vertical">
-            <input type="radio" name="theme-buttons" class="btn theme-controller join-item" aria-label="Light"
-                value="light" @click="changeTheme('light')" />
-            <input type="radio" name="theme-buttons" class="btn theme-controller join-item" aria-label="Dark"
-                value="dark" @click="changeTheme('dark')" />
+            <input type="radio" name="theme-buttons" class="btn theme-controller join-item" aria-label="Light" value="light" @click="changeTheme('light')" />
+            <input type="radio" name="theme-buttons" class="btn theme-controller join-item" aria-label="Dark" value="dark" @click="changeTheme('dark')" />
         </div>
     </section>
     <br><br><br><br><br>
