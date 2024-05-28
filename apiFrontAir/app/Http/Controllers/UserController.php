@@ -34,6 +34,11 @@ class UserController extends Controller
     public function store(Request $request)
     {
         // TODO: validate request
+        $request->validate([
+            'name' => 'required|string',
+            'email' => 'required|email|unique:users',
+            'password' => 'required|string',
+        ]);
         return User::create($request->all());
     }
 
@@ -136,32 +141,44 @@ class UserController extends Controller
 
 
     /**
-     * Shows the tickets of a User.
+     * Returns the entire User and the Tickets of the user with the flight information (including the airports & airline)
      * 
      * @param  \Illuminate\Http\Request  $request
      * @return \App\Models\Ticket
      */
     public function showTickets(Request $request)
     {
-        // $user = User::find($request->id);
-        // if (!$user) {
-        //     return response()->json(['message' => 'User not found'], 404);
-        // }
-        // return [$user->tickets()->get()];
-
-        // $user = User::find($request->id);
-        // if (!$user) {
-        //     return response()->json(['message' => 'User not found'], 404);
-        // }
-        // $tickets = $user->tickets()->with('flight')->get();
-        // return ['user' => $user, 'tickets' => $tickets->toArray()];
-
-        // // ->with('flight.airline')
-
-        // return the user and the tickets of the user with the flight information (including the airline)
-        return [
-            'user' => User::find($request->id)->makeHidden(['id']),
-            'tickets' => User::find($request->id)->tickets()->makeHidden(['ticket_id', 'user_id', 'flight_id'])->with('flight.departureAirport', 'flight.arrivalAirport')->get()
-        ];
+        $user = User::find($request->user);
+        if (!$user) return response()->json(['message' => 'A valid User ID is required'], 400);
+        else {
+            $tickets = User::find($request->user)->tickets();
+            if (count($tickets->get()) == 0) {
+                return response()->json(['message' => 'No tickets found'], 404);
+            } else {
+                return [
+                    'user' => $user->makeHidden(['id']),
+                    'tickets' => $tickets->with('flight.departureAirport', 'flight.arrivalAirport', 'flight.airline')->get()
+                    // ->makeHidden(['flight_id', 'user_id', 'ticket_id'])
+                ];
+            }
+        }
     }
+
+    // /**
+    //  * Returns the entire User and the Baggage of the user with the flight information (including the airports & airline)
+    //  * 
+    //  * @param  \Illuminate\Http\Request  $request
+    //  * @return \App\Models\Baggage
+    //  */
+    // public function showBaggage(Request $request)
+    // {
+    //     if ($request->id == null) return response()->json(['message' => 'User ID is required'], 400);
+    //     else {
+    //         return [
+    //             'user' => User::find($request->id)->makeHidden(['id']),
+    //             'baggage' => User::find($request->id)->baggage()->with('flight.departureAirport', 'flight.arrivalAirport', 'flight.airline')->get()
+    //             // ->makeHidden(['flight_id', 'user_id', 'baggage_id'])
+    //         ];
+    //     }
+    // }
 }

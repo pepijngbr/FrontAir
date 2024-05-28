@@ -25,7 +25,7 @@ class Airport extends Model
 
     public function departure_gates()
     {
-        return $this->hasMany(DepartureGate::class, 'departure');
+        return $this->hasMany(DepartureGate::class);
     }
 
     public function baggages()

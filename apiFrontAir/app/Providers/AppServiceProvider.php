@@ -20,6 +20,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        Schema::defaultStringLength(191);
+        // Wamp64 -> bin -> mysql -> my.ini
+        // Change the following line:
+        // default row format from compact to dynamic
     }
 }
