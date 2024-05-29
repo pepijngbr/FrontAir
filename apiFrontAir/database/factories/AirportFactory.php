@@ -22,9 +22,8 @@ class AirportFactory extends Factory
             'country' => $this->faker->country,
             'iata_code' => strtoupper($this->faker->lexify('???')),
             'icao_code' => strtoupper($this->faker->lexify('????')),
-            // 'terminal' => $this->faker->randomElement(['Terminal 1', 'Terminal 2', 'Terminal 3']),
+            'type' => $this->faker->randomElement(['large_airport', 'medium_airport', 'small_airport', 'seaplane_base', 'heliport', 'balloonport', 'closed']), 
             'timezone' => $this->faker->timezone,
-            // 'facilities' => $this->faker->words(3, true),
         ];
     }
 }

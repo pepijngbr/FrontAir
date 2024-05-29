@@ -2,10 +2,9 @@
 
 namespace Database\Seeders;
 
+use Illuminate\Database\Seeder;
 use App\Models\Ticket;
 use App\Models\User;
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
-use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
 {
@@ -20,7 +19,6 @@ class DatabaseSeeder extends Seeder
             AirportSeeder::class,
             FlightSeeder::class,
             TicketSeeder::class,
-            DepartureGateSeeder::class,
             BaggageSeeder::class,
         ]);
     }

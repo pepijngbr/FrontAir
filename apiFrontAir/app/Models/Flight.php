@@ -16,6 +16,7 @@ class Flight extends Model
         'arrival_time',
         'flight_number',
         'airline_id',
+        'image',
         'price',
         'available_seats'
     ];
@@ -58,13 +59,5 @@ class Flight extends Model
     public function baggage()
     {
         return $this->hasMany(Baggage::class);
-    }
-
-    /**
-     * Get the departure gates for the flight.
-     */
-    public function departureGates()
-    {
-        return $this->hasMany(DepartureGate::class);
     }
 }

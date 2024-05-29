@@ -20,7 +20,7 @@ class BaggageFactory extends Factory
     public function definition(): array
     {
         return [
-            'user_id' => User::factory(),
+            'user_id' => rand(1, count(User::all())),
             'flight_id' => Flight::factory(),
             'ticket_id' => Ticket::factory(),
             'weight' => $this->faker->randomFloat(2, 5, 30),

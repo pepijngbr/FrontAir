@@ -19,7 +19,7 @@ class TicketFactory extends Factory
     public function definition(): array
     {
         return [
-            'user_id' => User::factory(),
+            'user_id' => rand(1, count(User::all())),
             'flight_id' => Flight::factory(),
             'booking_date' => $this->faker->dateTime(),
             'seat_number' => $this->faker->unique()->numberBetween(1, 300),

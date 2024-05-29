@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Airport extends Model
 {
     use HasFactory;
-    public $timestamps = false;
+    public $timestamps = true;
     protected $fillable = [
         'name', 
         'city', 
@@ -16,17 +16,7 @@ class Airport extends Model
         'iata_code', 
         'icao_code', 
         'timezone', 
-        // 'latitude', 
-        // 'longitude'
     ];
-
-    // ICAO = International Civil Aviation Organization, 4-letter airport location identifier, e.g. EGLL = London Heathrow Airport
-    // IATA = International Air Transport Association / IATA = location identifier, 3-letter code, e.g. LHR = London Heathrow Airport
-
-    public function departure_gates()
-    {
-        return $this->hasMany(DepartureGate::class);
-    }
 
     public function baggages()
     {

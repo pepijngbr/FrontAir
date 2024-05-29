@@ -19,6 +19,7 @@ return new class extends Migration
             $table->datetime('arrival_time');
             $table->string('flight_number');
             $table->unsignedBigInteger('airline_id')->foreign('airline_id')->references('id')->on('airlines');
+            $table->integer('image');
             $table->decimal('price', 10, 2);
             $table->integer('available_seats');
             $table->timestamps();

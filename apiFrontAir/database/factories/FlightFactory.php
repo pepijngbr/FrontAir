@@ -25,8 +25,8 @@ class FlightFactory extends Factory
             'arrival_time' => $this->faker->dateTimeBetween('+2 days', '+3 days'),
             'flight_number' => $this->faker->unique()->bothify('??###'),
             'airline_id' => rand(1, Airline::count()),
+            'image' => rand(1, 8),
             'price' => $this->faker->randomFloat(2, 100, 1000),
-            // 'class' => $this->faker->randomElement(['Economy', 'Business', 'First']),
             'available_seats' => $this->faker->numberBetween(50, 300),
         ];
     }
