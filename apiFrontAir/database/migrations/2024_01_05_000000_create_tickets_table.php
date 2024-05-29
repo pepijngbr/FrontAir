@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('tickets', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('user_id')->foreign('user_id')->references('id')->on('users');
-            $table->unsignedBigInteger('flight_id')->foreign('flight_id')->references('id')->on('flights');
+            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('flight_id');
             $table->datetime('booking_date');
             $table->string('seat_number');
             $table->string('class');
@@ -23,6 +23,9 @@ return new class extends Migration
             $table->string('booking_status');
             $table->string('boarding_status');
             $table->timestamps();
+
+            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('flight_id')->references('id')->on('flights');
         });
     }
 

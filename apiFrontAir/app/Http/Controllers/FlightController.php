@@ -8,12 +8,12 @@ use App\Models\Flight;
 class FlightController extends Controller
 {
     /**
-     * Returns all Flights (if needed: limit & offset).
+     * Returns all Flights (if needed: limit & offset & filter on almost any field).
      */
     public function index(Request $request)
     {
         $query = Flight::query();
-        foreach ($request->all() as $key => $value) { // key = column name (name, country, iata_code), value = search value (e.g. 'London', 'Great Brittain', 'LHR')
+        foreach ($request->all() as $key => $value) {
             if ($key !== 'id' && $key !== 'departure_airport_id' && $key !== 'arrival_airport_id' && $key !== 'airline_id' && $key !== 'limit' && $key !== 'offset' && $key !== 'sort_by' && $key !== 'sort_order') { // exclude id, limit, offset, sort_by & sorting order when filtering
                 $query->where($key, 'like', '%' . $value . '%');
             }
@@ -33,8 +33,13 @@ class FlightController extends Controller
             $query->orderBy($sortField, $sortOrder);
         }
 
-        // e.g. http://127.0.0.1:8000/api/airports?name=tes&offset=2&limit=2&sort_by=name&sort_order=asc
-        return $query->get(); // return the query result
+        // airline_id filter
+        $airlineId = $request->input('airline_id');
+        if ($airlineId) {
+            $query->where('airline_id', $airlineId);
+        }
+
+        return $query->with(['airline', 'departureAirport', 'arrivalAirport'])->get(); // return the query result
     }
 
     /**
@@ -66,8 +71,6 @@ class FlightController extends Controller
      */
     public function show(Flight $flight)
     {
-        // $flight->load('departureAirport', 'arrivalAirport', 'airline');
-        // return $flight;
         return $flight;
     }
 
