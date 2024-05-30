@@ -4,7 +4,7 @@ namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 use App\Models\Flight;
-use App\Models\Ticket;
+use App\Models\Booking;
 use App\Models\User;
 
 /**
@@ -22,7 +22,7 @@ class BaggageFactory extends Factory
         return [
             'user_id' => rand(1, count(User::all())),
             'flight_id' => Flight::factory(),
-            'ticket_id' => Ticket::factory(),
+            'booking_id' => Booking::factory(),
             'weight' => $this->faker->randomFloat(2, 5, 30),
             'status' => $this->faker->randomElement(['checked-in', 'in-transit', 'delivered']),
         ];

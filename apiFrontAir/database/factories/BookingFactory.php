@@ -7,9 +7,9 @@ use App\Models\Flight;
 use App\Models\User;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Ticket>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Booking>
  */
-class TicketFactory extends Factory
+class BookingFactory extends Factory
 {
     /**
      * Define the model's default state.

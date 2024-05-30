@@ -3,15 +3,15 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use App\Models\Ticket;
+use App\Models\Booking;
 
-class TicketSeeder extends Seeder
+class BookingSeeder extends Seeder
 {
     /**
      * Run the database seeds.
      */
     public function run(): void
     {
-        Ticket::factory()->count(200)->create();
+        Booking::factory()->count(200)->create();
     }
 }

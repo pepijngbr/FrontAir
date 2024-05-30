@@ -12,18 +12,18 @@ class Baggage extends Model
     protected $fillable = [
         'user_id',
         'flight_id',
-        'ticket_id',
+        'booking_id',
         'weight',
         'status'
     ];
 
-    /**
-     * Get the User that owns the Baggage
-     */
-    public function users()
-    {
-        return $this->hasMany(User::class);
-    }
+    // /**
+    //  * Get the User that owns the Baggage
+    //  */
+    // public function users()
+    // {
+    //     return $this->hasMany(User::class);
+    // }
 
     /**
      * Get the Flights that belong to the Baggage
@@ -34,11 +34,11 @@ class Baggage extends Model
     }
 
     /**
-     * Get the Tickets that belongs to the Baggage
+     * Get the Bookings that belongs to the Baggage
      */
-    public function tickets()
+    public function bookings()
     {
-        return $this->belongsTo(Ticket::class);
+        return $this->belongsTo(Booking::class);
     }
 
     /**

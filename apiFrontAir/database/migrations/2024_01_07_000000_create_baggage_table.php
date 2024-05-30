@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('user_id')->foreign('user_id')->references('user_id')->on('users');
             $table->unsignedBigInteger('flight_id')->foreign('flight_id')->references('id')->on('flights');
-            $table->unsignedBigInteger('ticket_id')->foreign('ticket_id')->references('ticket_id')->on('tickets');
+            $table->unsignedBigInteger('booking_id')->foreign('booking_id')->references('booking_id')->on('bookings');
             $table->float('weight');
             $table->string('status');
             $table->timestamps();

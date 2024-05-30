@@ -46,11 +46,11 @@ class Flight extends Model
     }
 
     /**
-     * Get the tickets for the flight.
+     * Get the bookings for the flight.
      */
-    public function tickets()
+    public function bookings()
     {
-        return $this->hasMany(Ticket::class);
+        return $this->hasMany(Booking::class);
     }
 
     /**

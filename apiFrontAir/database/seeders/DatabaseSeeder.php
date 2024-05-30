@@ -3,8 +3,6 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use App\Models\Ticket;
-use App\Models\User;
 
 class DatabaseSeeder extends Seeder
 {
@@ -18,7 +16,7 @@ class DatabaseSeeder extends Seeder
             AirlineSeeder::class,
             AirportSeeder::class,
             FlightSeeder::class,
-            TicketSeeder::class,
+            BookingSeeder::class,
             BaggageSeeder::class,
         ]);
     }
