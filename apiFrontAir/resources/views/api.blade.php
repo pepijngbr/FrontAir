@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>e</title>
+    <title>FrontAir API Routing</title>
     <style>
         html, body {
             margin: 0;
@@ -54,14 +54,14 @@
                 <td>Retrieves information about a specific Airport.</td>
             </tr>
             <tr>
-                <td><a href="api/tickets">/tickets</a></td>
+                <td><a href="api/bookings">/bookings</a></td>
                 <td>GET</td>
-                <td>Retrieve all Tickets.</td>
+                <td>Retrieve all Bookings.</td>
             </tr>
             <tr>
-                <td><a href="api/tickets/1">/tickets/{id}</a></td>
+                <td><a href="api/bookings/1">/bookings/{id}</a></td>
                 <td>GET</td>
-                <td>Retrieves information about a specific Ticket.</td>
+                <td>Retrieves information about a specific Booking.</td>
             </tr>
         </tbody>
     </table>
