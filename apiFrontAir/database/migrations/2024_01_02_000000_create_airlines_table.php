@@ -14,8 +14,8 @@ return new class extends Migration
         Schema::create('airlines', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('iata_code');
-            $table->string('icao_code');
+            $table->string('iata');
+            $table->string('icao');
             $table->string('callsign');
             $table->string('country');
             $table->integer('operating_since');

@@ -15,7 +15,7 @@ class AirlineController extends Controller
     public function index(Request $request)
     {
         $query = Airline::query();
-        foreach ($request->all() as $key => $value) { // key = column name (name, country, iata_code), value = search value (e.g. 'London', 'Great Brittain', 'LHR')
+        foreach ($request->all() as $key => $value) { // key = column name (name, country, iata), value = search value (e.g. 'London', 'Great Brittain', 'LHR')
             if ($key !== 'id' && $key !== 'limit' && $key !== 'offset' && $key !== 'sort_by' && $key !== 'sort_order') { // exclude id, limit, and offset when filtering
                 $query->where($key, 'like', '%' . $value . '%');
             }
@@ -40,7 +40,7 @@ class AirlineController extends Controller
 
     /**
      * Creates a new Airline.
-     * 
+     *
      * @param  \Illuminate\Http\Request  $request
      * @return \App\Models\Airline
      */
@@ -58,7 +58,7 @@ class AirlineController extends Controller
 
     /**
      * Returns a specific Airline.
-     * 
+     *
      * @param  \App\Models\Airline  $airline
      * @return \App\Models\Airline
      */
@@ -69,7 +69,7 @@ class AirlineController extends Controller
 
     /**
      * Updates a specific Airline.
-     * 
+     *
      * @param  \Illuminate\Http\Request  $request
      * @param  \App\Models\Airline  $airline
      * @return \App\Models\Airline
@@ -82,7 +82,7 @@ class AirlineController extends Controller
 
     /**
      * Deletes a specific Airline.
-     * 
+     *
      * @param  \App\Models\Airline  $airline
      */
     public function destroy(Airline $airline)

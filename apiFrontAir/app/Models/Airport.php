@@ -10,12 +10,12 @@ class Airport extends Model
     use HasFactory;
     public $timestamps = true;
     protected $fillable = [
-        'name', 
-        'city', 
-        'country', 
-        'iata_code', 
-        'icao_code', 
-        'timezone', 
+        'name',
+        'city',
+        'country',
+        'iata',
+        'icao',
+        'timezone',
     ];
 
     public function baggages()

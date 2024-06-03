@@ -16,10 +16,10 @@ return new class extends Migration
             $table->string('name');
             $table->string('city');
             $table->string('country');
-            $table->string('iata_code');
-            $table->string('icao_code');
+            $table->string('iata');
+            $table->string('icao');
             $table->string('timezone');
-            $table->string('type')->default('large_airport');
+            $table->string('type')->default('medium_airport');
             $table->timestamps();
         });
     }

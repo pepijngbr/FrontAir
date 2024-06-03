@@ -10,12 +10,12 @@ class AirportController extends Controller
     /**
      * Returns all Airports (if needed: limit & offset).
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      */
     public function index(Request $request)
     {
         $query = Airport::query();
-        foreach ($request->all() as $key => $value) { // key = column name (name, country, iata_code), value = search value (e.g. 'London', 'Great Brittain', 'LHR')
+        foreach ($request->all() as $key => $value) { // key = column name (name, country, iata), value = search value (e.g. 'London', 'Great Brittain', 'LHR')
             if ($key !== 'id' && $key !== 'limit' && $key !== 'offset' && $key !== 'sort_by' && $key !== 'sort_order') { // exclude id, limit, and offset when filtering
                 $query->where($key, 'like', '%' . $value . '%');
             }
@@ -41,13 +41,12 @@ class AirportController extends Controller
 
     /**
      * Creates a new Airport.
-     * 
-     * @param  \Illuminate\Http\Request  $request
+     *
+     * @param \Illuminate\Http\Request $request
      * @return \App\Models\Airport
      */
     public function store(Request $request)
     {
-        // TODO: validate request
         $request->validate([
             'name' => 'required|string',
             'city' => 'required|string',
@@ -68,8 +67,8 @@ class AirportController extends Controller
 
     /**
      * Returns a specific Airport.
-     * 
-     * @param  \App\Models\Airport  $airport
+     *
+     * @param \App\Models\Airport $airport
      * @return \App\Models\Airport
      */
     public function show(Airport $airport)
@@ -79,9 +78,9 @@ class AirportController extends Controller
 
     /**
      * Updates a specific Airport.
-     * 
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Airport  $airport
+     *
+     * @param \Illuminate\Http\Request $request
+     * @param \App\Models\Airport $airport
      * @return \App\Models\Airport
      */
     public function update(Request $request, Airport $airport)
@@ -92,8 +91,8 @@ class AirportController extends Controller
 
     /**
      * Deletes a specific Airport.
-     * 
-     * @param  \App\Models\Airport  $airport
+     *
+     * @param \App\Models\Airport $airport
      */
     public function destroy(Airport $airport)
     {
