@@ -1,37 +1,22 @@
-<!-- clouds -->
 <!-- Logo, links to available pages (same as top navigation bar, load dynamically via this.$router) -->
 <template>
-    <footer class="footer bg-base-200 text-base-content">
-        <div>
-            <p>FrontAir</p>
-        </div>
-        <div>
-            <p>© 2021 FrontAir</p>
-        </div>
-        <div>
-            <p>Links</p>
-            <ul>
-                <li v-for="item in items" :key="item.path">
-                    <RouterLink :to="item.path">{{ item.name }}</RouterLink>
-                </li>
-            </ul>
-        </div>
-    </footer>
+  <footer class="bg-sky-400 relative pt-20">
+    <img
+      src="../assets/images/clouds.png"
+      alt="Clouds"
+      class="z-0 w-screen drop-shadow-2xl"
+    />
+    <div class="absolute bottom-0 flex pl-20 pb-4">
+      <img src="../assets/images/FrontAir.png" alt="" class="h-80" />
+      <!--      <div class="flex items-end">-->
+      <!--        <p>© 2024 FrontAir</p>-->
+      <!--      </div>-->
+    </div>
+  </footer>
+</template>
 
-    <script lang="ts">
-    export default {
-        data() {
-            return {
-                items: []
-            }
-        },
-        created() {
-            this.$router.options.routes.forEach(route => {
-                this.items.push({
-                    name: route.name,
-                    path: route.path
-                })
-            })
-        }
-    }
+<script lang="ts">
+export default {
+  name: "MainFooter",
+};
 </script>

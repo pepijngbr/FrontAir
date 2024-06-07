@@ -4,7 +4,14 @@
 
 @layer base {
     /* font-family import */
-    @import url('https://fonts.googleapis.com/css2?family=Lexend:wght@100..900&display=swap');
+    /*@font-face {*/
+    /*    font-family: 'Lexend';*/
+    /*    font-style: normal;*/
+    /*    font-weight: 400;*/
+    /*    font-display: swap;*/
+    /*    src: url("../assets/fonts/lexend") format('truetype');*/
+    /*}*/
+    /*@import url('https://fonts.googleapis.com/css2?family=Lexend:wght@100..900&display=swap');*/
 
     /* font-family applied on site via html */
     html {
@@ -13,10 +20,13 @@
 }
 
 @layer components {
-
     html,
     body {
         @apply text-[16px] font-normal;
+    }
+
+    section {
+        @apply px-4;
     }
 
     input {
@@ -55,13 +65,13 @@
         @apply text-[20px];
     }
 
-    /* p {
-        @apply text-[16px];
-    } */
-
     /* DaisyUI Cards overlapped Header & Navigation Drawer */
     .card {
         @apply z-[1]
+    }
+
+    .card-body {
+        @apply p-4
     }
 
     header {

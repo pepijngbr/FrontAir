@@ -1,5 +1,5 @@
 <template>
-    <section class="pt-20 pb-10 mb-4">
+    <section class="mb-4 pb-10 pt-20">
         <h1>Store {{ this.$route.params }}</h1>
         <p>Show specific product information</p>
     </section>
@@ -15,35 +15,36 @@
 </template>
 
 <script lang="ts">
-    import axios from 'axios';
+import axios from 'axios';
 
-    const apiUrl = 'http://127.0.0.1:8000';
+const apiUrl = 'http://127.0.0.1:8000/api';
 
-    export default {
-        name: 'StoreShow',
-        data() {
-            return {
-                product: {}, // object
-            };
+export default {
+    name: 'StoreShow',
+    data() {
+        return {
+            product: {}, // object
+        };
+    },
+    mounted() {
+        this.retrieveProduct();
+        console.log(this.$route.params);
+    },
+    methods: {
+        retrieveProduct() {
+            axios
+                .get(apiUrl + '/products/' + this.$route.params.id)
+                .then((response) => {
+                    console.log(response.data);
+                    this.product = response.data;
+                })
+                .catch((error) => {
+                    console.error(error);
+                });
         },
-        mounted() {
-            this.retrieveProduct();
-            console.log(this.$route.params);
+        redeemProduct() {
+            console.log('Product redeemed!');
         },
-        methods: {
-            retrieveProduct() {
-                axios.get(apiUrl + '/products/' + this.$route.params.id)
-                    .then(response => {
-                        console.log(response.data);
-                        this.product = response.data;
-                    })
-                    .catch(error => {
-                        console.error(error);
-                    });
-            },
-            redeemProduct() {
-                console.log('Product redeemed!');
-            },
-        }
-    }
+    },
+};
 </script>
