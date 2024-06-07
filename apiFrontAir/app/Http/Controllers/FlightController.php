@@ -22,8 +22,8 @@ class FlightController extends Controller
         // add the limit and offset here
         $limit = $request->input('limit');
         $offset = $request->input('offset') ?? 0;
-        if ($limit && $limit > 1 && $offset >= 0) {
-            $query->take($limit)->skip($offset);
+        if ($limit && $limit >= 1 && $offset >= 0) {
+            $query->limit($limit)->offset($offset);
         }
 
         // add the sorting here
@@ -44,8 +44,8 @@ class FlightController extends Controller
 
     /**
      * Creates a new Flight.
-     * 
-     * @param  \Illuminate\Http\Request  $request
+     *
+     * @param \Illuminate\Http\Request $request
      * @return \App\Models\Flight
      */
     public function store(Request $request)
@@ -65,20 +65,40 @@ class FlightController extends Controller
 
     /**
      * Returns a specific Flight.
-     * 
-     * @param  \App\Models\Flight  $flight
+     *
+     * @param \App\Models\Flight $flight
      * @return \App\Models\Flight
      */
     public function show(Flight $flight)
     {
-        return $flight;
+        $newFlight = Flight::query();
+        $newFlight->find($flight->id);
+        return $newFlight->with('departureAirport', 'arrivalAirport', 'airline')->get();
+    }
+
+    public function showBookings(Request $request)
+    {
+        $user = User::find($request->user);
+        if (!$user) return response()->json(['message' => 'A valid User ID is required'], 400);
+        else {
+            $bookings = User::find($request->user)->bookings();
+            if (count($bookings->get()) == 0) {
+                return response()->json(['message' => 'No bookings found'], 404);
+            } else {
+                return [
+                    'user' => $user->makeHidden(['id']),
+                    'bookings' => $bookings->with('flight.departureAirport', 'flight.arrivalAirport', 'flight.airline')->get()
+                    // ->makeHidden(['flight_id', 'user_id', 'booking_id'])
+                ];
+            }
+        }
     }
 
     /**
      * Updates a specific Flight.
-     * 
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Flight  $flight
+     *
+     * @param \Illuminate\Http\Request $request
+     * @param \App\Models\Flight $flight
      * @return \App\Models\Flight
      */
     public function update(Request $request, Flight $flight)
@@ -89,8 +109,8 @@ class FlightController extends Controller
 
     /**
      * Deletes a specific Flight.
-     * 
-     * @param  \App\Models\Flight  $flight
+     *
+     * @param \App\Models\Flight $flight
      */
     public function destroy(Flight $flight)
     {

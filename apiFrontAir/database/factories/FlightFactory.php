@@ -26,9 +26,14 @@ class FlightFactory extends Factory
         // Generate flight number
         $flightNumber = $this->generateFlightNumber($airline->name);
 
+        // Retrieve the amount of Airports that already exist
+        $airportAmount = count(Airport::all());
+
         return [
-            'departure_airport_id' => Airport::factory(),
-            'arrival_airport_id' => Airport::factory(),
+            // 'departure_airport_id' => Airport::factory(),
+            'departure_airport_id' => rand(1, $airportAmount),
+            // 'arrival_airport_id' => Airport::factory(),
+            'arrival_airport_id' => rand(1, $airportAmount),
             'departure_time' => $this->faker->dateTimeBetween('+1 days', '+2 days'),
             'arrival_time' => $this->faker->dateTimeBetween('+2 days', '+3 days'),
             'flight_number' => $flightNumber,
