@@ -1,19 +1,18 @@
-import './styles/app.css' // tailwindcss
+import './styles/app.css'; // tailwindcss
 import 'bootstrap-icons/font/bootstrap-icons.css';
 
-import { createApp } from 'vue' // vue 3
-import { createPinia } from 'pinia' // state management
+import { createApp } from 'vue'; // vue 3
+import { createPinia } from 'pinia'; // state management
 import { useUserStore } from '@/stores/user';
 
-import App from './App.vue' // main component
-import router from './router' // vue-router
+import App from './App.vue'; // main component
+import router from './router'; // vue-router
 
-import axios from 'axios'
-import VueAxios from 'vue-axios'
-
-// App.config.performance = true
+import axios from 'axios';
+import VueAxios from 'vue-axios';
 
 const app = createApp(App);
+// app.config.globalProperties.apiUrl = 'http://127.0.0.1:8000/api';
 app.use(router);
 app.use(VueAxios, axios);
 app.use(createPinia());
