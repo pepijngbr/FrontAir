@@ -19,6 +19,8 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'wallet',
+        'loyalty_points'
     ];
 
     /**
@@ -51,12 +53,4 @@ class User extends Authenticatable
     {
         return $this->hasMany(Booking::class);
     }
-
-    // /**
-    //  * Get the baggage for the user.
-    //  */
-    // public function baggage()
-    // {
-    //     return $this->hasMany(Baggage::class);
-    // }
 }

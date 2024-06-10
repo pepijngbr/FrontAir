@@ -15,13 +15,7 @@ class Airport extends Model
         'country',
         'iata',
         'icao',
-        'timezone',
     ];
-
-    public function baggages()
-    {
-        return $this->hasMany(Baggage::class);
-    }
 
     public function flights()
     {

@@ -17,14 +17,6 @@ class Booking extends Model
     ];
 
     /**
-     * Get the Baggage that belongs to the Booking
-     */
-    public function baggage()
-    {
-        return $this->hasMany(Baggage::class);
-    }
-
-    /**
      * Get the Flight that belongs to the Booking
      */
     public function flight()

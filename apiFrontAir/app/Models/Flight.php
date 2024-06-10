@@ -52,12 +52,4 @@ class Flight extends Model
     {
         return $this->hasMany(Booking::class);
     }
-
-    /**
-     * Get the baggage for the flight.
-     */
-    public function baggage()
-    {
-        return $this->hasMany(Baggage::class);
-    }
 }
