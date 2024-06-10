@@ -3,10 +3,10 @@ import 'bootstrap-icons/font/bootstrap-icons.css';
 
 import { createApp } from 'vue'; // vue 3
 import { createPinia } from 'pinia'; // state management
-import { useUserStore } from '@/stores/user';
+import { useUserStore } from '@/stores/user.js';
 
 import App from './App.vue'; // main component
-import router from './router'; // vue-router
+import router from './router/index.js'; // vue-router
 
 import axios from 'axios';
 import VueAxios from 'vue-axios';

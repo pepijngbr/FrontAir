@@ -1,0 +1,15 @@
+{
+  "extends": "@vue/jsconfig/jsconfig.dom.json",
+  "include": [
+    "env.d.js", "src/**/*", "src/**/*.vue"],
+  "exclude": ["src/**/__tests__/*"],
+  "compilerOptions": {
+    "composite": true,
+    "jsBuildInfoFile": "./node_modules/.tmp/jsconfig.app.jsbuildinfo",
+
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./src/*"]
+    }
+  }
+}

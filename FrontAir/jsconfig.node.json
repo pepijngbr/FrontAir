@@ -1,5 +1,5 @@
 {
-  "extends": "@tsconfig/node20/tsconfig.json",
+  "extends": "@jsconfig/node20/jsconfig.json",
   "include": [
     "vite.config.*",
     "vitest.config.*",
@@ -10,7 +10,7 @@
   "compilerOptions": {
     "composite": true,
     "noEmit": true,
-    "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.node.tsbuildinfo",
+    "tsBuildInfoFile": "./node_modules/.tmp/jsconfig.node.jsbuildinfo",
 
     "module": "ESNext",
     "moduleResolution": "Bundler",
