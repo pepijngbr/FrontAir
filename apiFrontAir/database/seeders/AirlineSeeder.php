@@ -12,7 +12,6 @@ class AirlineSeeder extends Seeder
      */
     public function run(): void
     {
-        // Airline::factory()->count(10)->create();
         Airline::factory()->create([
             'name' => 'Ryanair',
             'iata' => 'FR',
@@ -53,14 +52,6 @@ class AirlineSeeder extends Seeder
             'country' => 'United Kingdom',
             'operating_since' => 1974
         ]);
-        // Airline::factory()->create([
-        //     'name' => 'Air France',
-        //     'iata' => 'AF',
-        //     'icao' => 'AFR',
-        //     'callsign' => 'Airfrans',
-        //     'country' => 'France',
-        //     'operating_since' => 1933
-        // ]);
         Airline::factory()->create([
             'name' => 'KLM',
             'iata' => 'KL',
@@ -69,14 +60,6 @@ class AirlineSeeder extends Seeder
             'country' => 'Netherlands',
             'operating_since' => 1919
         ]);
-        // Airline::factory()->create([
-        //     'name' => 'Turkish Airlines',
-        //     'iata' => 'TK',
-        //     'icao' => 'THY',
-        //     'callsign' => 'Turkish',
-        //     'country' => 'Turkey',
-        //     'operating_since' => 1933
-        // ]);
         Airline::factory()->create([
             'name' => 'Emirates',
             'iata' => 'EK',
@@ -85,14 +68,6 @@ class AirlineSeeder extends Seeder
             'country' => 'United Arab Emirates',
             'operating_since' => 1985
         ]);
-        // Airline::factory()->create([
-        //     'name' => 'Corendon Airlines',
-        //     'iata' => 'XC',
-        //     'icao' => 'CAI',
-        //     'callsign' => 'Corendon',
-        //     'country' => 'Turkey',
-        //     'operating_since' => 2004
-        // ]);
         Airline::factory()->create([
             'name' => 'TUI',
             'iata' => 'TUI',
@@ -109,14 +84,6 @@ class AirlineSeeder extends Seeder
             'country' => 'Netherlands',
             'operating_since' => 1965
         ]);
-        // Airline::factory()->create([
-        //     'name' => 'JetNetherlands',
-        //     'iata' => 'JN',
-        //     'icao' => 'JNL',
-        //     'callsign' => 'JetNetherlands',
-        //     'country' => 'Netherlands',
-        //     'operating_since' => 1997
-        // ]);
         Airline::factory()->create([
             'name' => 'Martinair',
             'iata' => 'MP',

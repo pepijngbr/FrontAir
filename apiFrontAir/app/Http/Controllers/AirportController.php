@@ -15,28 +15,30 @@ class AirportController extends Controller
     public function index(Request $request)
     {
         $query = Airport::query();
-        foreach ($request->all() as $key => $value) { // key = column name (name, country, iata), value = search value (e.g. 'London', 'Great Brittain', 'LHR')
+
+        // key = column name (name, country, iata), value = search value (e.g. 'London', 'Great Brittain', 'LHR')
+        foreach ($request->all() as $key => $value) {
             if ($key !== 'id' && $key !== 'limit' && $key !== 'offset' && $key !== 'sort_by' && $key !== 'sort_order') { // exclude id, limit, and offset when filtering
                 $query->where($key, 'like', '%' . $value . '%');
             }
         }
 
-        // add the limit and offset here
+        // limit & offset
         $limit = $request->input('limit');
         $offset = $request->input('offset') ?? 0;
         if ($limit && $limit > 1 && $offset >= 0) {
             $query->take($limit)->skip($offset);
         }
 
-        // add the sorting here
+        // sorting by and order
         $sortField = $request->input('sort_by');
         $sortOrder = $request->input('sort_order') ?? 'asc';
         if ($sortField) {
             $query->orderBy($sortField, $sortOrder);
         }
 
-        // e.g. http://127.0.0.1:8000/api/airports?name=tes&offset=2&limit=2&sort_by=name&sort_order=asc
-        return $query->get(); // return the query result
+        // return the query result
+        return $query->get();
     }
 
     /**
@@ -53,14 +55,7 @@ class AirportController extends Controller
             'country' => 'required|string',
             'iata' => 'required|string',
             'icao' => 'required|string',
-            'latitude' => 'required|numeric',
-            'longitude' => 'required|numeric',
-            'altitude' => 'required|numeric',
-            'timezone' => 'required|string',
-            'dst' => 'required|string',
-            'tz' => 'required|string',
             'type' => 'required|string',
-            'source' => 'required|string',
         ]);
         return Airport::create($request->all());
     }
