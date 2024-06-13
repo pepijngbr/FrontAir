@@ -21,13 +21,12 @@ class BookingFactory extends Factory
         return [
             'user_id' => rand(1, count(User::all())),
             'flight_id' => Flight::factory(),
-            'booking_date' => $this->faker->dateTime(),
+            'booking_date' => now(),
             'seat_number' => $this->faker->unique()->numberBetween(1, 300),
             'class' => $this->faker->randomElement(['Economy', 'Business', 'First']),
             'type' => $this->faker->randomElement(['one-way', 'round-trip']),
             'price' => $this->faker->randomFloat(2, 100, 1000),
             'booking_status' => $this->faker->randomElement(['booked', 'cancelled', 'pending']),
-            'boarding_status' => $this->faker->randomElement(['boarding', 'not boarding']),
         ];
     }
 }

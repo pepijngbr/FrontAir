@@ -20,8 +20,7 @@ return new class extends Migration {
             $table->string('class');
             $table->string('type');
             $table->decimal('price', 10, 2);
-            $table->string('booking_status')->default('booked');
-            $table->string('boarding_status')->default('not boarding');
+            $table->string('booking_status')->default('pending');
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users');

@@ -20,7 +20,7 @@ class BookingController extends Controller
     public function show(Booking $booking)
     {
         // return ['booking' => $booking, 'user_id' => (int)$request->user_id];
-        
+
         // $foundBooking = Booking::find($booking->id);
         // if ($booking->user_id != $foundBooking->user_id) {
         //     return response()->json(['message' => 'Unauthorized'], 401);
@@ -28,7 +28,7 @@ class BookingController extends Controller
         //         return response()->json(['message' => 'Booking not found'], 404);
         //     }
         // }
-        
+
         return $booking;
         return $booking->user()->get();
     }
