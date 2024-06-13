@@ -2,72 +2,41 @@
     <section class="mb-4 pb-10 pt-20">
         <h1><i class="bi bi-shop"></i> Store</h1>
         <p>Buy items from the store.</p>
-        <button @click="loyaltyPoints(+100)" class="btn btn-success">
+        <button
+            v-show="this.isLoggedIn"
+            @click="loyaltyPoints(+100)"
+            class="btn btn-success"
+        >
             Add 100
         </button>
-        <button @click="loyaltyPoints(-100)" class="btn btn-error">
+        <button
+            v-show="this.isLoggedIn"
+            @click="loyaltyPoints(-100)"
+            class="btn btn-error"
+        >
             Remove 100
         </button>
     </section>
     <section>
         <h2>Items</h2>
         <div class="grid grid-cols-1 gap-4 p-4 md:grid-cols-2 lg:grid-cols-3">
-            <div class="card bordered">
-                <figure>
-                    <img
-                        class="w-full"
-                        src="https://source.unsplash.com/500x250/?Airplane"
-                        alt="Airplane"
-                    />
-                </figure>
+            <div
+                v-for="item in this.items"
+                class="card bordered shadow shadow-white/30"
+            >
                 <div class="card-body">
-                    <h2>Item 1</h2>
-                    <p>Buy airplanes from the store.</p>
-                    <button class="btn btn-primary">
+                    <h2>{{ item.name }}</h2>
+                    <p class="font-bold">
+                        Price: {{ item.loyalty_points }} loyalty points
+                    </p>
+                    <button
+                        class="btn btn-primary"
+                        @click="redeemItem(item.name, item.loyalty_points)"
+                    >
                         {{
-                            this.points > 180
+                            this.points > item.loyalty_points
                                 ? 'Redeem'
-                                : 'More Loyalty Points needed'
-                        }}
-                    </button>
-                </div>
-            </div>
-            <div class="card bordered">
-                <figure>
-                    <img
-                        class="w-full"
-                        src="https://source.unsplash.com/500x250/?Airplane Airbus"
-                        alt="Airplane"
-                    />
-                </figure>
-                <div class="card-body">
-                    <h2>Item 2</h2>
-                    <p>Buy airplanes from the store.</p>
-                    <button class="btn btn-primary">
-                        {{
-                            this.points > 210
-                                ? 'Redeem'
-                                : 'More Loyalty Points needed'
-                        }}
-                    </button>
-                </div>
-            </div>
-            <div class="card bordered">
-                <figure>
-                    <img
-                        class="w-full"
-                        src="https://source.unsplash.com/500x250/?Airplane Boeing"
-                        alt="Airplane"
-                    />
-                </figure>
-                <div class="card-body">
-                    <h2>Item 3</h2>
-                    <p>Buy airplanes from the store.</p>
-                    <button class="btn btn-primary">
-                        {{
-                            this.points >= 200
-                                ? 'Redeem'
-                                : 'More Loyalty Points needed'
+                                : 'More loyalty points needed'
                         }}
                     </button>
                 </div>
@@ -76,8 +45,8 @@
     </section>
 </template>
 
-<script lang="ts">
-import { useUserStore } from '@/stores/user';
+<script>
+import { useUserStore } from '@/stores/user.js';
 
 export default {
     name: 'StoreView',
@@ -86,25 +55,57 @@ export default {
             points: useUserStore().user
                 ? useUserStore().user.loyalty_points
                 : null,
+            items: [
+                {
+                    name: 'Item 1',
+                    loyalty_points: 180,
+                },
+                {
+                    name: 'Item 2',
+                    loyalty_points: 210,
+                },
+                {
+                    name: 'Item 3',
+                    loyalty_points: 200,
+                },
+                {
+                    name: 'Item 4',
+                    loyalty_points: 700,
+                },
+            ],
         };
     },
-    // setup() {
-    //     const userStore = useUserStore();
-    //     useUserStore.user == null ? userStore.setUser({ loyalty_points: 0 }) : null;
-    // },
-    // watch: {
-    //     useUserStore() {
-    //         this.points = useUserStore().user.loyalty_points;
-    //     }
-    // },
+    props: {
+        isLoggedIn: Boolean,
+    },
     methods: {
-        loyaltyPoints(amount: number) {
+        loyaltyPoints(amount) {
             const userStore = useUserStore();
             if (userStore.user != null) {
                 userStore.addLoyaltyPoints(amount);
                 this.points = userStore.user.loyalty_points;
             } else {
                 return;
+            }
+        },
+        redeemItem(item, loyalty_points) {
+            const userStore = useUserStore();
+            if (userStore.user.loyalty_points >= loyalty_points) {
+                alert(
+                    'Succesfully redeemed ' +
+                        item +
+                        ' for ' +
+                        loyalty_points +
+                        ' loyalty points!',
+                );
+            } else {
+                const difference =
+                    loyalty_points - userStore.user.loyalty_points;
+                alert(
+                    'Failed to redeem, ' +
+                        difference +
+                        ' more loyalty points needed.',
+                );
             }
         },
     },
