@@ -1,22 +1,19 @@
-<!-- Logo, links to available pages (same as top navigation bar, load dynamically via this.$router) -->
 <template>
-  <footer class="bg-sky-400 relative pt-20">
-    <img
-      src="../assets/images/clouds.png"
-      alt="Clouds"
-      class="z-0 w-screen drop-shadow-2xl"
-    />
-    <div class="absolute bottom-0 flex pl-20 pb-4">
-      <img src="../assets/images/FrontAir.png" alt="" class="h-80" />
-      <!--      <div class="flex items-end">-->
-      <!--        <p>© 2024 FrontAir</p>-->
-      <!--      </div>-->
-    </div>
-  </footer>
+    <footer
+        class="relative bg-gradient-to-b from-base-100 to-sky-400 to-40% pt-20 lg:to-50% lg:pt-40"
+    >
+        <div class="mt-20">
+            <img
+                src="../assets/images/clouds.webp"
+                alt="Clouds"
+                class="z-0 w-screen drop-shadow-2xl"
+            />
+        </div>
+    </footer>
 </template>
 
-<script lang="ts">
+<script>
 export default {
-  name: "MainFooter",
+    name: 'MainFooter',
 };
 </script>
