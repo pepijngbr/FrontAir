@@ -1,214 +1,408 @@
 <template>
-    <div class='drawer'>
-        <input id='my-drawer-3' type='checkbox' class='drawer-toggle' />
-        <div class='drawer-content'>
-            <!-- header -->
-            <header class='sticky top-0 flex items-center px-8 py-2 shadow-md h-[63px] bg-base-100'>
-                <div class='flex-none lg:hidden'>
-                    <label for='my-drawer-3' aria-label='open sidebar' class='btn btn-square btn-ghost'>
-                        <i class='bi bi-list text-3xl h-[30px] flex items-center'></i>
+    <div class="drawer">
+        <input
+            id="my-drawer-3"
+            type="checkbox"
+            class="drawer-toggle"
+            v-model="isDrawerOpen"
+        />
+        <div class="drawer-content">
+            <!-- Header -->
+            <header
+                class="sticky top-0 flex h-[63px] items-center bg-base-100 px-8 py-2 shadow-md"
+                :class="theme == 'frontair' ? '' : 'shadow-white/30'"
+            >
+                <div class="flex-none lg:hidden">
+                    <label
+                        for="my-drawer-3"
+                        aria-label="open sidebar"
+                        class="btn btn-square btn-ghost"
+                    >
+                        <i
+                            class="bi bi-list flex h-[30px] items-center text-3xl"
+                        ></i>
                     </label>
                 </div>
-                <RouterLink to='/' class='ml-4 sm:ml-4 sm:mr-0 lg:ml-0 lg:mr-12 transition-none hover:scale-100 active:scale-100 lg:transition-transform lg:active:scale-105 lg:hover:scale-110'>
-                    <img :src="'../src/assets/images/FrontAir' + (this.theme == 'light' ? '.png' : '_White.png')" alt='FrontAir Logo' class='h-14' />
+                <RouterLink
+                    to="/"
+                    class="ml-auto h-auto w-24 transition-none hover:scale-100 active:scale-100 sm:ml-4 sm:mr-0 lg:ml-0 lg:mr-12 lg:transition-transform lg:hover:scale-110 lg:active:scale-105"
+                >
+                    <img
+                        :src="
+                            '../src/assets/images/FrontAir' +
+                            (theme == 'frontair' ? '.webp' : '_White.webp')
+                        "
+                        alt="FrontAir Logo"
+                    />
                 </RouterLink>
-                <nav class='[&>*]:mx-4 hidden lg:block'>
-                    <RouterLink :to="{ name: 'home' }" :title="'Homepage'" :class="currentRoute() == '/' ? 'text-primary' : ''">
+                <nav class="hidden lg:block [&>*]:mx-4">
+                    <RouterLink
+                        :to="{ name: 'home' }"
+                        :title="'Homepage'"
+                        :class="
+                            currentRoute() == '/'
+                                ? 'text-primary' +
+                                  ' ' +
+                                  (theme == 'frontairDark'
+                                      ? 'shadow-white drop-shadow-lg'
+                                      : '')
+                                : ''
+                        "
+                    >
                         Home
                     </RouterLink>
-                    <RouterLink :to="{ name: 'flights' }" :title="'Flight schedule'" :class="currentRoute() == '/flights' ? 'text-primary' : ''">
+                    <RouterLink
+                        :to="{ name: 'flights' }"
+                        :title="'Flight schedule'"
+                        :class="
+                            currentRoute() == '/flights' ? 'text-primary' : ''
+                        "
+                    >
                         Flights
                     </RouterLink>
-                    <RouterLink :to="{ name: 'about' }" :title="'About us'" :class="currentRoute() == '/about' ? 'text-primary' : ''">
+                    <RouterLink
+                        :to="{ name: 'about' }"
+                        :title="'About us'"
+                        :class="
+                            currentRoute() == '/about' ? 'text-primary' : ''
+                        "
+                    >
                         About
                     </RouterLink>
-                    <RouterLink :to="{ name: 'contact' }" :title="'Contact us'" :class="currentRoute() == '/contact' ? 'text-primary' : ''">
+                    <RouterLink
+                        :to="{ name: 'contact' }"
+                        :title="'Contact us'"
+                        :class="
+                            currentRoute() == '/contact' ? 'text-primary' : ''
+                        "
+                    >
                         Contact
                     </RouterLink>
-                    <RouterLink v-if='isLoggedIn' :to="{ name: 'dashboard.overview' }" :title="'Dashboard Overview'" :class="currentRoute() == '/dashboard' ? 'text-primary' : ''">
-                        Dashboard
-                    </RouterLink>
                 </nav>
-                <div class='hidden flex-1 justify-end items-center gap-4 sm:flex'>
-                    <p v-if='isLoggedIn'>{{ user.loyalty_points }} Loyalty Points</p>
-                    <RouterLink :to="{ name: 'store' }" class='btn btn-secondary'>
-                        <i class='bi bi-shop'></i> Store
+                <div
+                    class="hidden flex-1 items-center justify-end gap-4 sm:flex"
+                >
+                    <p v-if="isLoggedIn">
+                        {{ user.loyalty_points }} Loyalty Points
+                    </p>
+                    <RouterLink
+                        :to="{ name: 'store' }"
+                        class="btn btn-secondary"
+                    >
+                        <i class="bi bi-shop"></i> Store
                     </RouterLink>
-                    <div class='dropdown dropdown-end dropdown-hover'>
-                        <div tabindex='0' role='button' class='btn'>
-                            <i v-if='isLoggedIn' class='bi bi-person-gear'></i>
-                            <i v-else class='bi bi-person-circle'></i> Account
+                    <div
+                        class="dropdown dropdown-end dropdown-hover"
+                        :open="isDropdownOpen"
+                    >
+                        <div tabindex="0" role="button" class="btn">
+                            <i v-if="isLoggedIn" class="bi bi-person-gear"></i>
+                            <i v-else class="bi bi-person-circle"></i> Account
                         </div>
-                        <ul tabindex='0' class='dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52'>
-                            <li v-if='isLoggedIn'><p><i class='bi bi-wallet'></i> Wallet: €{{ user.wallet }}</p></li>
-                            <li v-if='isLoggedIn'>
-                                <RouterLink :to="{ name: 'bookings.index' }">
-                                    <i class='bi bi-ticket'></i> My Bookings
+                        <ul
+                            tabindex="0"
+                            class="menu dropdown-content z-[1] w-60 rounded-box bg-base-100 p-2 shadow"
+                        >
+                            <div
+                                v-if="isLoggedIn"
+                                class="my-2 ml-4 flex flex-col"
+                            >
+                                <p class="font-bold">
+                                    {{ user.name }}
+                                </p>
+                                <p class="opacity-75">{{ user.email }}</p>
+                            </div>
+                            <li v-if="isLoggedIn">
+                                <RouterLink
+                                    :to="{ name: 'wallet' }"
+                                    @click="toggleDropdown"
+                                >
+                                    <i class="bi bi-wallet"></i> Wallet: €{{
+                                        user.wallet
+                                    }}
                                 </RouterLink>
                             </li>
-                            <li v-if='isLoggedIn'>
-                                <RouterLink :to="{ name: 'profile' }" :class="currentRoute() == '/bookings' ? '' : ''">
-                                    <i class='bi bi-person-circle'></i> Profile
+                            <li v-if="isLoggedIn">
+                                <RouterLink :to="{ name: 'bookings.index' }">
+                                    <i class="bi bi-ticket"></i> My Bookings
+                                </RouterLink>
+                            </li>
+                            <li v-if="isLoggedIn">
+                                <RouterLink :to="{ name: 'profile' }">
+                                    <i class="bi bi-person-circle"></i> Profile
                                 </RouterLink>
                             </li>
                             <li>
                                 <RouterLink :to="{ name: 'reset-password' }">
-                                    <i class='bi bi-arrow-counterclockwise'></i> Reset Password
+                                    <i class="bi bi-arrow-counterclockwise"></i>
+                                    Reset Password
                                 </RouterLink>
                             </li>
-                            <li v-if='isLoggedIn'>
-                                <button @click='logout()' class='bg-red-400 hover:bg-red-500'>
-                                    <i class='bi bi-box-arrow-left'></i> Logout
+                            <li v-if="isLoggedIn">
+                                <button
+                                    @click="logout()"
+                                    class="bg-red-400 hover:bg-red-500"
+                                >
+                                    <i class="bi bi-box-arrow-left"></i> Logout
                                 </button>
                             </li>
-                            <li v-if='!isLoggedIn'>
+                            <li v-if="!isLoggedIn">
                                 <RouterLink :to="{ name: 'login' }">
-                                    <i class='bi bi-box-arrow-in-right'></i> Login
+                                    <i class="bi bi-box-arrow-in-right"></i>
+                                    Login
                                 </RouterLink>
                             </li>
-                            <li v-if='!isLoggedIn'>
+                            <li v-if="!isLoggedIn">
                                 <RouterLink :to="{ name: 'register' }">
-                                    <i class='bi bi-person-plus'></i> Register
+                                    <i class="bi bi-person-plus"></i> Register
                                 </RouterLink>
                             </li>
                         </ul>
                     </div>
                 </div>
             </header>
-            <!-- site content -->
-            <!-- TODO: theme should be stored and accessed globally through Pinia state management -->
-            <RouterView :theme='this.theme' />
-            <!--      <MainFooter />-->
+            <!-- Content -->
+            <RouterView :isLoggedIn="this.isLoggedIn" />
+            <MainFooter
+                v-show="
+                    currentRoute() != '/login' &&
+                    currentRoute() != '/register' &&
+                    currentRoute() != '/reset-password' &&
+                    currentRoute() != '/profile' &&
+                    currentRoute() != '/wallet' &&
+                    currentRoute() != '/dashboard' &&
+                    currentRoute() != '/bookings'
+                "
+            />
         </div>
-        <div class='drawer-side'>
+        <div class="drawer-side">
             <label
-                for='my-drawer-3'
-                aria-label='close sidebar'
-                class='drawer-overlay'
+                for="my-drawer-3"
+                aria-label="close sidebar"
+                class="drawer-overlay"
             ></label>
-            <ul class='menu p-4 w-80 min-h-full bg-base-200 z-2'>
-                <div class='flex items-start gap-4 mb-4 justify-between'>
-                    <img src='./assets/images/FrontAir.png' class='h-24' alt='FrontAir Logo' />
+            <div class="z-2 menu min-h-full w-80 bg-base-200 p-4">
+                <div class="mb-4 flex items-start justify-between gap-4">
+                    <img
+                        :src="
+                            '../src/assets/images/FrontAir' +
+                            (theme == 'frontair' ? '.webp' : '_White.webp')
+                        "
+                        class="h-24"
+                        alt="FrontAir Logo"
+                    />
                     <label
-                        for='my-drawer-3'
-                        aria-label='close sidebar'
-                        class='btn btn-square btn-ghost'
+                        for="my-drawer-3"
+                        aria-label="close sidebar"
+                        class="btn btn-square btn-ghost"
                     >
-                        <i class='bi bi-x-lg text-3xl h-[30px] flex items-center'></i>
+                        <i
+                            class="bi bi-x-lg flex h-[30px] items-center text-3xl"
+                        ></i>
                     </label>
                 </div>
-                <b class='text-2xl mb-2'>Navigation</b>
-                <li>
-                    <RouterLink :to="{ name: 'home' }">
-                        <i class='bi bi-house'></i> Home
-                    </RouterLink>
-                </li>
-                <li>
-                    <RouterLink :to="{ name: 'flights' }">
-                        <i class='bi bi-airplane'></i> Flights
-                    </RouterLink>
-                </li>
-                <li>
-                    <RouterLink :to="{ name: 'about' }">
-                        <i class='bi bi-question-lg'></i> About Us
-                    </RouterLink>
-                </li>
-                <li>
-                    <RouterLink :to="{ name: 'contact' }">
-                        <i class='bi bi-pen'></i> Contact
-                    </RouterLink>
-                </li>
-                <li>
-                    <RouterLink :to="{ name: 'store' }">
-                        <i class='bi bi-shop'></i> Store
-                    </RouterLink>
-                </li>
-                <div class='divider'></div>
-                <b class='text-2xl mb-2'><i class='bi bi-person-circle'></i> Account</b>
+                <b class="mb-2 text-2xl">Navigation</b>
                 <ul>
-                    <li v-if='isLoggedIn'>
-                        <RouterLink :to="{ name: 'dashboard.overview' }">
-                            <i class='bi bi-tools-fill'></i> Dashboard
-                        </RouterLink>
-                    </li>
-                    <li v-if='isLoggedIn'>
-                        <RouterLink :to="{ name: 'profile' }">
-                            <i class='bi bi-person-circle'></i> Profile
-                        </RouterLink>
-                    </li>
-                    <li v-if='!isLoggedIn'>
-                        <RouterLink :to="{ name: 'login' }">
-                            <i class='bi bi-box-arrow-in-right'></i> Login
-                        </RouterLink>
-                    </li>
-                    <li v-if='!isLoggedIn'>
-                        <RouterLink :to="{ name: 'register' }">
-                            <i class='bi bi-person-plus'></i> Register
+                    <li>
+                        <RouterLink
+                            :to="{ name: 'home' }"
+                            @click="toggleDrawer"
+                        >
+                            <i class="bi bi-house"></i> Home
                         </RouterLink>
                     </li>
                     <li>
-                        <RouterLink :to="{ name: 'reset-password' }">
-                            <i class='bi bi-arrow-counterclockwise'></i> Reset Password
+                        <RouterLink
+                            :to="{ name: 'flights' }"
+                            @click="toggleDrawer"
+                        >
+                            <i class="bi bi-airplane"></i> Flights
                         </RouterLink>
                     </li>
+                    <li>
+                        <RouterLink
+                            :to="{ name: 'about' }"
+                            @click="toggleDrawer"
+                        >
+                            <i class="bi bi-question-lg"></i> About
+                        </RouterLink>
+                    </li>
+                    <li>
+                        <RouterLink
+                            :to="{ name: 'contact' }"
+                            @click="toggleDrawer"
+                        >
+                            <i class="bi bi-pen"></i> Contact
+                        </RouterLink>
+                    </li>
+                    <li>
+                        <RouterLink
+                            :to="{ name: 'store' }"
+                            @click="toggleDrawer"
+                        >
+                            <i class="bi bi-shop"></i> Store
+                        </RouterLink>
+                    </li>
+                    <div class="divider sm:hidden"></div>
+                    <b class="mb-2 block text-2xl sm:hidden"
+                        ><i class="bi bi-person-circle"></i> Account</b
+                    >
+                    <ul class="sm:hidden">
+                        <li v-if="isLoggedIn">
+                            <RouterLink
+                                :to="{ name: 'wallet' }"
+                                @click="toggleDrawer"
+                            >
+                                <i class="bi bi-wallet"></i> Wallet: €{{
+                                    user.wallet
+                                }}
+                            </RouterLink>
+                        </li>
+                        <li v-if="isLoggedIn">
+                            <RouterLink
+                                :to="{ name: 'bookings.index' }"
+                                @click="toggleDrawer"
+                            >
+                                <i class="bi bi-ticket"></i> My Bookings
+                            </RouterLink>
+                        </li>
+                        <li v-if="isLoggedIn">
+                            <RouterLink
+                                :to="{ name: 'profile' }"
+                                @click="toggleDrawer"
+                            >
+                                <i class="bi bi-person-circle"></i> Profile
+                            </RouterLink>
+                        </li>
+                        <li v-if="!isLoggedIn">
+                            <RouterLink
+                                :to="{ name: 'login' }"
+                                @click="toggleDrawer"
+                            >
+                                <i class="bi bi-box-arrow-in-right"></i> Login
+                            </RouterLink>
+                        </li>
+                        <li v-if="!isLoggedIn">
+                            <RouterLink
+                                :to="{ name: 'register' }"
+                                @click="toggleDrawer"
+                            >
+                                <i class="bi bi-person-plus"></i> Register
+                            </RouterLink>
+                        </li>
+                        <li>
+                            <RouterLink
+                                :to="{ name: 'reset-password' }"
+                                @click="toggleDrawer"
+                            >
+                                <i class="bi bi-arrow-counterclockwise"></i>
+                                Reset Password
+                            </RouterLink>
+                        </li>
+                        <li v-if="isLoggedIn">
+                            <button
+                                class="bg-red-400 hover:bg-red-500"
+                                @click="
+                                    logout();
+                                    toggleDrawer();
+                                "
+                            >
+                                <i class="bi bi-box-arrow-left"></i> Logout
+                            </button>
+                        </li>
+                    </ul>
                 </ul>
-            </ul>
+            </div>
         </div>
     </div>
 </template>
 
-<script lang='ts'>
-import { RouterLink, RouterView } from "vue-router";
-import MainFooter from "../src/components/MainFooter.vue";
-import { useUserStore } from "@/stores/user";
-
-// const lenis = new Lenis();
-// lenis.on("scroll", (e) => {
-//   // console.log(e)
-// });
-//
-// function raf(time: any) {
-//   lenis.raf(time);
-//   requestAnimationFrame(raf);
-// }
-//
-// requestAnimationFrame(raf);
+<script>
+import { RouterLink, RouterView, useRouter } from 'vue-router';
+import MainFooter from '@/components/MainFooter.vue';
+import { useUserStore } from '@/stores/user.js';
+import { useSiteThemeStore } from '@/stores/siteTheme.js';
 
 export default {
-    name: "App",
+    name: 'App',
     components: {
         MainFooter,
         RouterLink,
-        RouterView
+        RouterView,
     },
     data() {
         return {
-            theme: "light"
+            theme: '',
+            isDrawerOpen: false,
+            isDropdownOpen: false,
         };
     },
     // mounted() {
-    //   this.theme = JSON.parse(localStorage.getItem("theme") || "frontair");
+    //     const siteThemeStore = useSiteThemeStore(); // Access the Pinia store
+    //     this.theme = siteThemeStore.siteTheme;
+    //     // Apply the theme stored in the store to the document element
+    //     document.documentElement.setAttribute(
+    //         'data-theme',
+    //         siteThemeStore.siteTheme,
+    //     );
+    //     console.log(siteThemeStore.siteTheme);
+    // },
+
+    // mounted() {
+    //     // Check if 'theme' is in localStorage
+    //     if (!localStorage.getItem('theme')) {
+    //         // Set default theme if not found
+    //         this.theme = 'frontair';
+    //         localStorage.setItem('theme', this.theme);
+    //     } else {
+    //         // Retrieve theme from localStorage
+    //         this.theme = localStorage.getItem('theme');
+    //     }
+    //
+    //     // Apply the theme to the document element
+    //     document.documentElement.setAttribute('data-theme', this.theme);
+    //     console.log(this.theme);
     // },
     setup() {
         // Access User state directly
         const userStore = useUserStore();
-
-        const user = userStore.user;
+        // const user = userStore.user;
         const isLoggedIn = userStore.isLoggedIn;
 
         return {
-            user,
-            isLoggedIn
+            // user, // user object
+            isLoggedIn, // boolean
         };
     },
     methods: {
         async logout() {
             const userStore = useUserStore();
             await userStore.logout();
+            const router = useRouter();
+            router.push('/').then(() => {
+                window.location.reload();
+            });
         },
         currentRoute() {
             return this.$router.currentRoute.value.path;
-        }
-    }
+        },
+        toggleDrawer() {
+            this.isDrawerOpen = !this.isDrawerOpen;
+        },
+        toggleDropdown() {
+            this.isDropdownOpen = !this.isDropdownOpen;
+        },
+    },
+    computed: {
+        user() {
+            return useUserStore().user;
+        },
+        theme() {
+            return useSiteThemeStore().siteTheme;
+        },
+    },
+    mounted() {
+        useSiteThemeStore().loadTheme();
+    },
 };
 </script>

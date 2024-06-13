@@ -1,14 +1,9 @@
 import { createRouter, createWebHistory } from 'vue-router';
-
-// Layouts
-// import DefaultLayout from '../layouts/DefaultLayout.vue'
-import DashboardLayout from '../layouts/DashboardLayout.vue';
-// import AuthLayout from '../layouts/AuthLayout.vue'
+import { useUserStore } from '@/stores/user.js';
 
 const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),
     routes: [
-        //   TODO: Make use of the default layout
         {
             path: '',
             children: [
@@ -23,13 +18,6 @@ const router = createRouter({
             path: '/flights',
             name: 'flights',
             component: () => import('../views/FlightsView.vue'),
-            // children: [
-            //   {
-            //     path: ':id', // having an empty path will make this the default route
-            //     name: 'flights.show',
-            //     component: () => import('../views/FlightsShow.vue')
-            //   },
-            // ]
         },
         {
             path: '/flights/:id',
@@ -50,22 +38,24 @@ const router = createRouter({
             path: '/wallet',
             name: 'wallet',
             component: () => import('../views/WalletView.vue'),
+            // meta: { requiresAuth: true },
         },
-
-        // TODO: add authentication guard for bookings
         {
             path: '',
             name: 'bookings',
+            // meta: { requiresAuth: true },
             children: [
                 {
                     path: 'bookings',
                     name: 'bookings.index',
                     component: () => import('../views/BookingsView.vue'),
+                    // meta: { requiresAuth: true },
                 },
                 {
                     path: 'bookings/:id',
                     name: 'bookings.show',
                     component: () => import('../views/BookingsShow.vue'),
+                    // meta: { requiresAuth: true },
                 },
             ],
         },
@@ -85,21 +75,23 @@ const router = createRouter({
             path: '/profile',
             name: 'profile',
             component: () => import('../views/ProfileView.vue'),
+            // meta: { requiresAuth: true },
         },
         {
             path: '',
             name: 'auth',
-            component: () => import('../layouts/AuthLayout.vue'),
             children: [
                 {
                     path: 'login',
                     name: 'login',
                     component: () => import('../views/auth/LoginView.vue'),
+                    // meta: { requiresGuest: true },
                 },
                 {
                     path: 'register',
                     name: 'register',
                     component: () => import('../views/auth/RegisterView.vue'),
+                    // meta: { requiresGuest: true },
                 },
                 {
                     path: 'reset-password',
@@ -109,32 +101,34 @@ const router = createRouter({
                 },
             ],
         },
-        // TODO: Add authentication guard for dashboard
         {
             path: '/dashboard',
             name: 'dashboard',
-            meta: { requiresAuth: true, layout: DashboardLayout },
-            // component: () => import('../layouts/DashboardLayout.vue'),
+            meta: { requiresAuth: true },
             children: [
                 {
                     path: '', // having an empty path will make this the default child route
                     name: 'dashboard.overview',
+                    meta: { requiresAuth: true },
                     component: () =>
                         import('../views/dashboard/OverviewView.vue'),
                 },
                 {
                     path: 'analytics',
                     name: 'dashboard.analytics',
+                    meta: { requiresAuth: true },
                     component: () =>
                         import('../views/dashboard/AnalyticsView.vue'),
                 },
                 {
                     path: 'users',
                     name: 'dashboard.users',
+                    meta: { requiresAuth: true },
                     children: [
                         {
                             path: '',
                             name: 'dashboard.users.index',
+                            meta: { requiresAuth: true },
                             component: () =>
                                 import(
                                     '../views/dashboard/users/UsersView.vue'
@@ -143,6 +137,7 @@ const router = createRouter({
                         {
                             path: ':id',
                             name: 'dashboard.users.show',
+                            meta: { requiresAuth: true },
                             component: () =>
                                 import(
                                     '../views/dashboard/users/UsersShow.vue'
@@ -153,6 +148,29 @@ const router = createRouter({
             ],
         },
     ],
+});
+
+// Authentication for each route that has the meta "requiresAuth" (pages that require user information) or "requiresGuest" (login & register pages)
+router.beforeEach((to, from, next) => {
+    if (to.matched.some((record) => record.meta.requiresAuth)) {
+        if (!useUserStore().loadUser()) {
+            // Redirect to login page if not authenticated
+            next({ name: 'login' });
+        } else {
+            next();
+        }
+    }
+    // else if (to.matched.some((record) => record.meta.requiresGuest)) {
+    //     if (useUserStore().loadUser()) {
+    //         // Redirect to home page if authenticated
+    //         next({ name: 'home' });
+    //     } else {
+    //         next();
+    //     }
+    // }
+    else {
+        next();
+    }
 });
 
 export default router;

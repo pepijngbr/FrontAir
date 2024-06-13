@@ -1,16 +1,23 @@
-// Pinia state management for site theme
 import { defineStore } from 'pinia';
 
 export const useSiteThemeStore = defineStore('siteTheme', {
-  state: () => ({
-    siteTheme: ''
-  }),
-  actions: {
-    toggleTheme() {
-      this.siteTheme = !this.siteTheme;
+    state: () => ({
+        siteTheme: '',
+    }),
+    actions: {
+        setTheme(value) {
+            this.siteTheme = value;
+            localStorage.setItem('theme', value);
+        },
+        loadTheme() {
+            const theme = localStorage.getItem('theme');
+            if (theme) {
+                this.siteTheme = theme;
+                document.documentElement.setAttribute('data-theme', theme);
+            }
+        },
     },
-    setTheme(value) {
-      this.siteTheme = value;
-    }
-  }
+    mounted() {
+        this.loadTheme();
+    },
 });
