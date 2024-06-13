@@ -35,7 +35,6 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        // TODO: validate request
         $request->validate([
             'name' => 'required|string',
             'email' => 'required|email|unique:users',

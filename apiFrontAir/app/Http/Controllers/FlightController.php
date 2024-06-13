@@ -76,24 +76,6 @@ class FlightController extends Controller
         return $newFlight->with('departureAirport', 'arrivalAirport', 'airline')->get();
     }
 
-    public function showBookings(Request $request)
-    {
-        $user = User::find($request->user);
-        if (!$user) return response()->json(['message' => 'A valid User ID is required'], 400);
-        else {
-            $bookings = User::find($request->user)->bookings();
-            if (count($bookings->get()) == 0) {
-                return response()->json(['message' => 'No bookings found'], 404);
-            } else {
-                return [
-                    'user' => $user->makeHidden(['id']),
-                    'bookings' => $bookings->with('flight.departureAirport', 'flight.arrivalAirport', 'flight.airline')->get()
-                    // ->makeHidden(['flight_id', 'user_id', 'booking_id'])
-                ];
-            }
-        }
-    }
-
     /**
      * Updates a specific Flight.
      *
