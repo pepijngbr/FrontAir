@@ -14,6 +14,7 @@
                 class="input input-bordered w-full max-w-xs"
                 required
                 v-model="this.name"
+                maxlength="255"
             />
             <button type="submit" class="btn btn-accent">Update</button>
         </form>
@@ -38,7 +39,6 @@
                 </p>
                 <div class="modal-action">
                     <form method="dialog">
-                        <!-- if there is a button in form, it will close the modal -->
                         <button class="btn">Close</button>
                     </form>
                 </div>
@@ -105,11 +105,10 @@
 </template>
 
 <script>
-import { useUserStore } from '@/stores/user.js';
 import { useSiteThemeStore } from '@/stores/siteTheme.js';
+import { useUserStore } from '@/stores/user.js';
 
 import axios from 'axios';
-
 const apiUrl = 'http://127.0.0.1:8000/api';
 
 export default {

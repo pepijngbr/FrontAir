@@ -68,9 +68,13 @@
 
 <script>
 import { useSiteThemeStore } from '@/stores/siteTheme.js';
+import { RouterLink } from 'vue-router';
 
 export default {
     name: 'ResetPasswordView',
+    components: {
+        RouterLink,
+    },
     data() {
         return {
             email: '',

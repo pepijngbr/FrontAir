@@ -8,7 +8,6 @@
         />
         <div class="drawer-content">
             <!-- Header -->
-
             <header
                 v-show="
                     currentRoute() != '/login' &&
@@ -344,13 +343,8 @@ export default {
         };
     },
     setup() {
-        // Access User state directly
-        const userStore = useUserStore();
-        // const user = userStore.user;
         const isLoggedIn = userStore.isLoggedIn;
-
         return {
-            // user, // user object
             isLoggedIn, // boolean
         };
     },
@@ -360,6 +354,7 @@ export default {
             await userStore.logout();
             const router = useRouter();
             router.push('/').then(() => {
+                useSiteThemeStore().setTheme('frontair');
                 window.location.reload();
             });
         },

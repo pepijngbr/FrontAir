@@ -1,4 +1,3 @@
-<!-- Landing page for Dashboard -->
 <template>
     <section class="mb-4 pb-10 pt-20">
         <h1>Dashboard</h1>
@@ -93,9 +92,8 @@
     </div>
 </template>
 
-<script lang="ts">
+<script>
 import axios from 'axios';
-
 const apiUrl = 'http://127.0.0.1:8000';
 
 export default {

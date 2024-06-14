@@ -1,7 +1,8 @@
 <template>
     <section class="mb-4 pb-10 pt-20">
         <h1><i class="bi bi-shop"></i> Store</h1>
-        <p>Buy items from the store.</p>
+        <p>Buy items from the store using your Loyalty Points!</p>
+        <p>Receive Loyalty Points by booking Flights.</p>
         <button
             v-show="this.isLoggedIn"
             @click="loyaltyPoints(+100)"
