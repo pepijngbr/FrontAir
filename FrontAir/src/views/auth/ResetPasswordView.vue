@@ -55,11 +55,12 @@
             <RouterLink
                 :to="{ name: 'home' }"
                 class="mt-12 text-center font-bold text-primary"
-                >Enter as Guest</RouterLink
-            >
+                >Enter as Guest
+            </RouterLink>
         </form>
         <img
             src="@/assets/images/unsplash_q_1aQ_jXLr0.webp"
+            alt="Airplane Background With Sunset"
             class="hidden h-full w-[calc(100vw-500px)] object-cover object-left lg:block"
         />
     </div>

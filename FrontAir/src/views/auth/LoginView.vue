@@ -22,7 +22,7 @@
                     class="input input-bordered w-full border caret-primary outline-none transition-colors focus:border-primary focus:outline-none"
                 />
             </label>
-            <label class="form-control mb-4">
+            <label class="form-control">
                 <input
                     v-model="this.password"
                     type="password"
@@ -30,6 +30,11 @@
                     class="input input-bordered w-full border caret-primary outline-none transition-colors focus:border-primary focus:outline-none"
                 />
             </label>
+            <RouterLink
+                to="/reset-password"
+                class="mb-4 text-right font-bold text-secondary"
+                >Forgot your password?
+            </RouterLink>
             <button class="btn btn-primary h-14 w-full text-white lg:w-auto">
                 Login
             </button>
@@ -39,23 +44,15 @@
                     Register
                 </RouterLink>
             </p>
-            <p class="mt-2 text-center font-extralight">
-                Forgot your password?
-                <RouterLink
-                    to="/reset-password"
-                    class="font-bold text-secondary"
-                >
-                    Reset Password
-                </RouterLink>
-            </p>
             <RouterLink
                 :to="{ name: 'home' }"
                 class="mt-12 text-center font-bold text-primary"
-                >Enter as Guest</RouterLink
-            >
+                >Enter as Guest
+            </RouterLink>
         </form>
         <img
             src="@/assets/images/unsplash_q_1aQ_jXLr0.webp"
+            alt="Airplane Background With Sunset"
             class="left-0 hidden h-full w-[calc(100vw-500px)] object-cover object-left md:block"
         />
     </div>
