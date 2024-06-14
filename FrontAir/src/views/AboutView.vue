@@ -25,7 +25,15 @@
 </template>
 
 <script>
+import { useHead } from '@vueuse/head';
+
 export default {
     name: 'AboutView',
+    setup() {
+        useHead({
+            title: 'About - FrontAir',
+            meta: [],
+        });
+    },
 };
 </script>

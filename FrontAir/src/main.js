@@ -7,6 +7,8 @@ import { useUserStore } from '@/stores/user.js';
 
 import App from './App.vue'; // main component
 import router from './router/index.js'; // vue-router
+import { createHead } from '@vueuse/head';
+const head = createHead();
 
 import axios from 'axios';
 import VueAxios from 'vue-axios';
@@ -14,6 +16,7 @@ import VueAxios from 'vue-axios';
 const app = createApp(App);
 // app.config.globalProperties.apiUrl = 'http://127.0.0.1:8000/api';
 app.use(router);
+app.use(head);
 app.use(VueAxios, axios);
 app.use(createPinia());
 app.mount('#app');

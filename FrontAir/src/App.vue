@@ -324,9 +324,10 @@
 
 <script>
 import { RouterLink, RouterView, useRouter } from 'vue-router';
+import MainFooter from '@/components/MainFooter.vue';
 import { useUserStore } from '@/stores/user.js';
 import { useSiteThemeStore } from '@/stores/siteTheme.js';
-import MainFooter from '@/components/MainFooter.vue';
+import { useHead } from '@vueuse/head';
 
 export default {
     name: 'App',
@@ -343,15 +344,21 @@ export default {
         };
     },
     setup() {
-        const isLoggedIn = userStore.isLoggedIn;
+        useHead({
+            title: 'FrontAir',
+        });
+
+        const isLoggedIn = useUserStore().isLoggedIn;
         return {
             isLoggedIn, // boolean
         };
     },
     methods: {
         async logout() {
-            const userStore = useUserStore();
-            await userStore.logout();
+            if (this.isLoggedIn) {
+                const userStore = useUserStore();
+                await userStore.logout();
+            }
             const router = useRouter();
             router.push('/').then(() => {
                 useSiteThemeStore().setTheme('frontair');

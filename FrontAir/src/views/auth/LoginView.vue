@@ -62,6 +62,7 @@
 import { useSiteThemeStore } from '@/stores/siteTheme.js';
 import { useUserStore } from '@/stores/user.js';
 import { RouterLink } from 'vue-router';
+import { useHead } from '@vueuse/head';
 
 import axios from 'axios';
 const apiUrl = 'http://127.0.0.1:8000/api';
@@ -70,6 +71,12 @@ export default {
     name: 'LoginView',
     components: {
         RouterLink,
+    },
+    setup() {
+        useHead({
+            title: 'Login - FrontAir',
+            meta: [],
+        });
     },
     data() {
         return {
