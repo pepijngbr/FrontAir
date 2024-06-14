@@ -1,13 +1,16 @@
-<!-- Fallback view for not being able to find a route/view -->
 <template>
-    <div>
-        <h1 class="text-3xl">Not Found</h1>
-        <p>Sorry, the page you are looking for does not exist.</p>
-    </div>
+    <h1>Not Found</h1>
+    <p>Sorry, the page you are looking for does not exist.</p>
+    <RouterLink :to="{ name: 'home' }">Return to Home</RouterLink>
 </template>
 
-<script lang="ts">
+<script>
+import { RouterLink } from 'vue-router';
+
 export default {
     name: 'NotFoundView',
+    components: {
+        RouterLink,
+    },
 };
 </script>

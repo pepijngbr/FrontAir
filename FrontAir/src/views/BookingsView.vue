@@ -105,9 +105,9 @@
 </template>
 
 <script>
+import { useSiteThemeStore } from '@/stores/siteTheme.js';
 import { useUserStore } from '@/stores/user.js';
 import { RouterLink } from 'vue-router';
-import { useSiteThemeStore } from '@/stores/siteTheme.js';
 
 import axios from 'axios';
 const apiUrl = 'http://127.0.0.1:8000/api';
