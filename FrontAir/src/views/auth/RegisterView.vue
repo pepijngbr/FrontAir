@@ -1,8 +1,9 @@
 <template>
-    <div class="flex h-[calc(100vh-63px)] w-screen flex-col lg:flex-row">
+    <!-- h-[calc(100vh-63px)] -->
+    <div class="flex h-screen w-screen flex-col lg:flex-row">
         <form
             @submit.prevent="register"
-            class="flex w-full flex-col items-center p-6 lg:w-[600px] lg:p-10 [&>*]:w-full"
+            class="mt-40 flex w-full flex-col items-center p-6 lg:mt-20 lg:w-[600px] lg:p-10 [&>*]:w-full"
         >
             <img
                 :src="
@@ -10,64 +11,59 @@
                     (theme == 'frontair' ? '.webp' : '_White.webp')
                 "
                 alt="FrontAir Logo"
-                class="mx-auto h-20 w-auto object-contain lg:mx-0 lg:h-40"
+                class="mx-auto h-40 w-auto object-contain lg:mx-0"
             />
-            <h1 class="my-4 text-2xl font-bold lg:text-3xl">Register</h1>
-            <p class="mb-4">Register for an account.</p>
+            <h1 class="my-4 text-2xl font-extralight lg:text-3xl">Register</h1>
             <label class="form-control mb-4">
-                <div class="label">
-                    <span class="label-text"><b>What is your name?</b></span>
-                </div>
                 <input
-                    v-model="this.name"
+                    v-model="name"
                     type="text"
-                    placeholder="Daisy"
-                    class="input input-bordered w-full"
+                    placeholder="Name"
+                    class="input input-bordered w-full border caret-primary outline-none transition-colors focus:border-primary focus:outline-none"
                 />
             </label>
             <label class="form-control mb-4">
-                <div class="label">
-                    <span class="label-text"
-                        ><b>Where can we send your emails to?</b></span
-                    >
-                </div>
                 <input
                     v-model="this.email"
                     type="text"
-                    placeholder="daisy@gmail.com"
-                    class="input input-bordered w-full"
+                    placeholder="Email Address"
+                    class="input input-bordered w-full border caret-primary outline-none transition-colors focus:border-primary focus:outline-none"
                 />
             </label>
             <label class="form-control mb-4">
-                <div class="label">
-                    <span class="label-text"><b>Create a password</b></span>
-                </div>
                 <input
                     v-model="this.password"
                     type="password"
-                    placeholder="Enter your password"
-                    class="input input-bordered w-full"
+                    placeholder="Password"
+                    class="input input-bordered w-full border caret-primary outline-none transition-colors focus:border-primary focus:outline-none"
                 />
             </label>
-            <button class="btn btn-primary w-full lg:w-auto">Register</button>
-            <p class="mt-4 text-center">
+            <button class="btn btn-primary h-14 w-full text-white lg:w-auto">
+                Register
+            </button>
+            <p class="mt-4 text-center font-extralight">
                 Already have an account?
                 <RouterLink to="/login" class="font-bold text-primary"
-                    >Login</RouterLink
-                >
+                    >Login
+                </RouterLink>
             </p>
-            <p class="mt-2 text-center">
+            <p class="mt-2 text-center font-extralight">
                 Forgot your password?
                 <RouterLink
                     to="/reset-password"
                     class="font-bold text-secondary"
-                    >Reset Password</RouterLink
-                >
+                    >Reset Password
+                </RouterLink>
             </p>
+            <RouterLink
+                :to="{ name: 'home' }"
+                class="mt-12 text-center font-bold text-primary"
+                >Enter as Guest</RouterLink
+            >
         </form>
         <img
-            src="@/assets/images/unsplash_q_1aQ_jXLr0.png"
-            class="hidden h-full w-[calc(100vw-500px)] object-cover lg:block"
+            src="@/assets/images/unsplash_q_1aQ_jXLr0.webp"
+            class="hidden h-full w-[calc(100vw-500px)] object-cover object-left lg:block"
         />
     </div>
 </template>
@@ -76,6 +72,7 @@
 import { useSiteThemeStore } from '@/stores/siteTheme.js';
 
 import axios from 'axios';
+
 const apiUrl = 'http://127.0.0.1:8000/api';
 
 export default {

@@ -8,7 +8,13 @@
         />
         <div class="drawer-content">
             <!-- Header -->
+
             <header
+                v-show="
+                    currentRoute() != '/login' &&
+                    currentRoute() != '/register' &&
+                    currentRoute() != '/reset-password'
+                "
                 class="sticky top-0 flex h-[63px] items-center bg-base-100 px-8 py-2 shadow-md"
                 :class="theme == 'frontair' ? '' : 'shadow-white/30'"
             >
@@ -319,16 +325,16 @@
 
 <script>
 import { RouterLink, RouterView, useRouter } from 'vue-router';
-import MainFooter from '@/components/MainFooter.vue';
 import { useUserStore } from '@/stores/user.js';
 import { useSiteThemeStore } from '@/stores/siteTheme.js';
+import MainFooter from '@/components/MainFooter.vue';
 
 export default {
     name: 'App',
     components: {
-        MainFooter,
         RouterLink,
         RouterView,
+        MainFooter,
     },
     data() {
         return {
@@ -337,32 +343,6 @@ export default {
             isDropdownOpen: false,
         };
     },
-    // mounted() {
-    //     const siteThemeStore = useSiteThemeStore(); // Access the Pinia store
-    //     this.theme = siteThemeStore.siteTheme;
-    //     // Apply the theme stored in the store to the document element
-    //     document.documentElement.setAttribute(
-    //         'data-theme',
-    //         siteThemeStore.siteTheme,
-    //     );
-    //     console.log(siteThemeStore.siteTheme);
-    // },
-
-    // mounted() {
-    //     // Check if 'theme' is in localStorage
-    //     if (!localStorage.getItem('theme')) {
-    //         // Set default theme if not found
-    //         this.theme = 'frontair';
-    //         localStorage.setItem('theme', this.theme);
-    //     } else {
-    //         // Retrieve theme from localStorage
-    //         this.theme = localStorage.getItem('theme');
-    //     }
-    //
-    //     // Apply the theme to the document element
-    //     document.documentElement.setAttribute('data-theme', this.theme);
-    //     console.log(this.theme);
-    // },
     setup() {
         // Access User state directly
         const userStore = useUserStore();
