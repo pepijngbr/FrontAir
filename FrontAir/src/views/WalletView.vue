@@ -28,12 +28,19 @@
 
 <script>
 import { useUserStore } from '@/stores/user.js';
+import { useHead } from '@vueuse/head';
 
 import axios from 'axios';
 const apiUrl = 'http://127.0.0.1:8000/api';
 
 export default {
     name: 'WalletView',
+    setup() {
+        useHead({
+            title: 'Wallet - FrontAir',
+            meta: [],
+        });
+    },
     data() {
         return {
             balance: 0,

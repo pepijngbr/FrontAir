@@ -58,8 +58,16 @@
 </template>
 
 <script>
+import { useHead } from '@vueuse/head';
+
 export default {
     name: 'ContactView',
+    setup() {
+        useHead({
+            title: 'Contact - FrontAir',
+            meta: [],
+        });
+    },
     data() {
         return {
             name: '',

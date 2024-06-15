@@ -6,11 +6,18 @@
 
 <script>
 import { RouterLink } from 'vue-router';
+import { useHead } from '@vueuse/head';
 
 export default {
     name: 'NotFoundView',
     components: {
         RouterLink,
+    },
+    setup() {
+        useHead({
+            title: 'Not Found - FrontAir',
+            meta: [],
+        });
     },
 };
 </script>

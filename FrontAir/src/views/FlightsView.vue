@@ -176,6 +176,7 @@
 import { useSiteThemeStore } from '@/stores/siteTheme.js';
 import { useUserStore } from '@/stores/user.js';
 import { RouterLink } from 'vue-router';
+import { useHead } from '@vueuse/head';
 
 const userStore = useUserStore();
 
@@ -186,6 +187,12 @@ export default {
     name: 'FlightsView',
     components: {
         RouterLink,
+    },
+    setup() {
+        useHead({
+            title: 'Flights - FrontAir',
+            meta: [],
+        });
     },
     data() {
         return {

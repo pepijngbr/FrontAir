@@ -140,6 +140,7 @@ export default {
     setup() {
         useHead({
             title: 'Home - FrontAir',
+            meta: [],
         });
     },
     data() {

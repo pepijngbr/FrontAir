@@ -48,9 +48,16 @@
 
 <script>
 import { useUserStore } from '@/stores/user.js';
+import { useHead } from '@vueuse/head';
 
 export default {
     name: 'StoreView',
+    setup() {
+        useHead({
+            title: 'Store - FrontAir',
+            meta: [],
+        });
+    },
     data() {
         return {
             points: useUserStore().user

@@ -69,11 +69,17 @@
 <script>
 import { useSiteThemeStore } from '@/stores/siteTheme.js';
 import { RouterLink } from 'vue-router';
+import { useHead } from '@vueuse/head';
 
 export default {
     name: 'ResetPasswordView',
     components: {
         RouterLink,
+    },
+    setup() {
+        useHead({
+            title: 'Reset Password - FrontAir',
+        });
     },
     data() {
         return {
