@@ -3,6 +3,12 @@ import { useUserStore } from '@/stores/user.js';
 
 const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),
+    scrollBehavior(to, from, savedPosition) {
+        return {
+            top: 0,
+            behavior: 'smooth',
+        };
+    },
     routes: [
         {
             path: '',
@@ -146,6 +152,21 @@ const router = createRouter({
                     ],
                 },
             ],
+        },
+        {
+            path: '/refund-policy',
+            name: 'policy.refund',
+            component: () => import('../views/RefundPolicyView.vue'),
+        },
+        {
+            path: '/privacy-policy',
+            name: 'policy.privacy',
+            component: () => import('../views/PrivacyPolicyView.vue'),
+        },
+        {
+            path: '/terms-of-service',
+            name: 'tos.index',
+            component: () => import('../views/TermsOfServiceView.vue'),
         },
     ],
 });

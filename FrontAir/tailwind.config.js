@@ -2,15 +2,16 @@
 export default {
     content: ['./index.html', './src/**/*.{vue,js,ts,jsx,tsx}'],
     theme: {
-        extend: {},
+        extend: {
+            backgroundImage: {
+                clouds: "url('../assets/images/clouds.webp')",
+            },
+        },
     },
     plugins: [require('daisyui')],
-    // https://daisyui.com/docs/config/
-    // https://components.willpinha.link/
     daisyui: {
         themes: [
             {
-                // https://daisyui.com/theme-generator/
                 frontair: {
                     'color-scheme': 'light',
                     primary: '#0778F0',
