@@ -2,7 +2,10 @@
     <div class="container mx-auto max-w-[800px] px-4 py-20">
         <div class="mb-8 text-center">
             <img
-                src="../assets/images/FrontAir.webp"
+                :src="
+                    '../src/assets/images/FrontAir' +
+                    (theme == 'frontair' ? '.webp' : '_White.webp')
+                "
                 alt="FrontAir Logo"
                 class="mx-auto mb-4"
             />
@@ -20,7 +23,21 @@
 </template>
 
 <script>
+import { useSiteThemeStore } from '@/stores/siteTheme.js';
+import { useHead } from '@vueuse/head';
+
 export default {
     name: 'RefundPolicyView',
+    setup() {
+        useHead({
+            title: 'Refund Policy - FrontAir',
+            meta: [],
+        });
+    },
+    computed: {
+        theme() {
+            return useSiteThemeStore().siteTheme;
+        },
+    },
 };
 </script>
