@@ -12,13 +12,8 @@ const router = createRouter({
     routes: [
         {
             path: '',
-            children: [
-                {
-                    path: '',
-                    name: 'home',
-                    component: () => import('../views/HomeView.vue'),
-                },
-            ],
+            name: 'home',
+            component: () => import('../views/HomeView.vue'),
         },
         {
             path: '/flights',
@@ -43,115 +38,78 @@ const router = createRouter({
         {
             path: '/wallet',
             name: 'wallet',
+            meta: { requiresAuth: true },
             component: () => import('../views/WalletView.vue'),
-            // meta: { requiresAuth: true },
         },
         {
-            path: '',
-            name: 'bookings',
-            // meta: { requiresAuth: true },
-            children: [
-                {
-                    path: 'bookings',
-                    name: 'bookings.index',
-                    component: () => import('../views/BookingsView.vue'),
-                    // meta: { requiresAuth: true },
-                },
-                {
-                    path: 'bookings/:id',
-                    name: 'bookings.show',
-                    component: () => import('../views/BookingsShow.vue'),
-                    // meta: { requiresAuth: true },
-                },
-            ],
+            path: '/bookings',
+            name: 'bookings.index',
+            meta: { requiresAuth: true },
+            component: () => import('../views/BookingsView.vue'),
+        },
+        {
+            path: '/bookings/:id',
+            name: 'bookings.show',
+            meta: { requiresAuth: true },
+            component: () => import('../views/BookingsShow.vue'),
         },
         {
             path: '/store',
             name: 'store',
             component: () => import('../views/StoreView.vue'),
-            children: [
-                {
-                    path: ':id',
-                    name: 'store.show',
-                    component: () => import('../views/StoreShow.vue'),
-                },
-            ],
+        },
+        {
+            path: '/store/:id',
+            name: 'store.show',
+            component: () => import('../views/StoreShow.vue'),
         },
         {
             path: '/profile',
             name: 'profile',
+            meta: { requiresAuth: true },
             component: () => import('../views/ProfileView.vue'),
-            // meta: { requiresAuth: true },
         },
         {
-            path: '',
-            name: 'auth',
-            children: [
-                {
-                    path: 'login',
-                    name: 'login',
-                    component: () => import('../views/auth/LoginView.vue'),
-                    // meta: { requiresGuest: true },
-                },
-                {
-                    path: 'register',
-                    name: 'register',
-                    component: () => import('../views/auth/RegisterView.vue'),
-                    // meta: { requiresGuest: true },
-                },
-                {
-                    path: 'reset-password',
-                    name: 'reset-password',
-                    component: () =>
-                        import('../views/auth/ResetPasswordView.vue'),
-                },
-            ],
+            path: '/login',
+            name: 'login',
+            meta: { requiresGuest: true },
+            component: () => import('../views/auth/LoginView.vue'),
         },
+        {
+            path: '/register',
+            name: 'register',
+            meta: { requiresGuest: true },
+            component: () => import('../views/auth/RegisterView.vue'),
+        },
+        {
+            path: '/reset-password',
+            name: 'reset-password',
+            component: () => import('../views/auth/ResetPasswordView.vue'),
+        },
+        // TODO: Dashboard (maybe another time)
         {
             path: '/dashboard',
-            name: 'dashboard',
+            name: 'dashboard.overview',
             meta: { requiresAuth: true },
-            children: [
-                {
-                    path: '', // having an empty path will make this the default child route
-                    name: 'dashboard.overview',
-                    meta: { requiresAuth: true },
-                    component: () =>
-                        import('../views/dashboard/OverviewView.vue'),
-                },
-                {
-                    path: 'analytics',
-                    name: 'dashboard.analytics',
-                    meta: { requiresAuth: true },
-                    component: () =>
-                        import('../views/dashboard/AnalyticsView.vue'),
-                },
-                {
-                    path: 'users',
-                    name: 'dashboard.users',
-                    meta: { requiresAuth: true },
-                    children: [
-                        {
-                            path: '',
-                            name: 'dashboard.users.index',
-                            meta: { requiresAuth: true },
-                            component: () =>
-                                import(
-                                    '../views/dashboard/users/UsersView.vue'
-                                ),
-                        },
-                        {
-                            path: ':id',
-                            name: 'dashboard.users.show',
-                            meta: { requiresAuth: true },
-                            component: () =>
-                                import(
-                                    '../views/dashboard/users/UsersShow.vue'
-                                ),
-                        },
-                    ],
-                },
-            ],
+            component: () => import('../views/dashboard/OverviewView.vue'),
+        },
+        {
+            path: '/dashboard/analytics',
+            name: 'dashboard.analytics',
+            meta: { requiresAuth: true },
+            component: () => import('../views/dashboard/AnalyticsView.vue'),
+        },
+        {
+            path: '/dashboard/users',
+            name: 'dashboard.users.index',
+            meta: { requiresAuth: true },
+            component: () => import('../views/dashboard/users/UsersView.vue'),
+        },
+        {
+            path: '/dashboard/users/:id',
+            name: 'dashboard.users.show',
+            meta: { requiresAuth: true },
+            component: () => import('../views/dashboard/users/UsersShow.vue'),
         },
         {
             path: '/refund-policy',
@@ -173,23 +131,22 @@ const router = createRouter({
 
 // Authentication for each route that has the meta "requiresAuth" (pages that require user information) or "requiresGuest" (login & register pages)
 router.beforeEach((to, from, next) => {
+    const userStore = useUserStore();
     if (to.matched.some((record) => record.meta.requiresAuth)) {
-        if (!useUserStore().loadUser()) {
+        if (!userStore.isLoggedIn) {
             // Redirect to login page if not authenticated
             next({ name: 'login' });
         } else {
             next();
         }
-    }
-    // else if (to.matched.some((record) => record.meta.requiresGuest)) {
-    //     if (useUserStore().loadUser()) {
-    //         // Redirect to home page if authenticated
-    //         next({ name: 'home' });
-    //     } else {
-    //         next();
-    //     }
-    // }
-    else {
+    } else if (to.matched.some((record) => record.meta.requiresGuest)) {
+        if (userStore.isLoggedIn) {
+            // Redirect to home page if authenticated
+            next({ name: 'home' });
+        } else {
+            next();
+        }
+    } else {
         next();
     }
 });
