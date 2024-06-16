@@ -29,10 +29,6 @@ export const useUserStore = defineStore('user', {
                 return false;
             }
         },
-        addLoyaltyPoints(points) {
-            this.user.loyalty_points += points;
-            localStorage.setItem('user', JSON.stringify(this.user));
-        },
     },
     mounted() {
         this.loadUser();

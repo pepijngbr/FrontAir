@@ -3,20 +3,6 @@
         <h1><i class="bi bi-shop"></i> Store</h1>
         <p>Buy items from the store using your Loyalty Points!</p>
         <p>Receive Loyalty Points by booking Flights.</p>
-        <button
-            v-show="this.isLoggedIn"
-            @click="loyaltyPoints(+100)"
-            class="btn btn-success"
-        >
-            Add 100
-        </button>
-        <button
-            v-show="this.isLoggedIn"
-            @click="loyaltyPoints(-100)"
-            class="btn btn-error"
-        >
-            Remove 100
-        </button>
     </section>
     <section>
         <h2>Items</h2>
@@ -87,15 +73,6 @@ export default {
         isLoggedIn: Boolean,
     },
     methods: {
-        loyaltyPoints(amount) {
-            const userStore = useUserStore();
-            if (userStore.user != null) {
-                userStore.addLoyaltyPoints(amount);
-                this.points = userStore.user.loyalty_points;
-            } else {
-                return;
-            }
-        },
         redeemItem(item, loyalty_points) {
             const userStore = useUserStore();
             if (userStore.user.loyalty_points >= loyalty_points) {
