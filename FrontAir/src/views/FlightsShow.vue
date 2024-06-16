@@ -1,99 +1,138 @@
 <template>
-    <section v-if="this.flight">
-        <h1>
-            {{ this.flight.flight_number }} - {{ this.flight.airline.name }}
-        </h1>
-        Price: €{{ this.flight.price }}
-        <form @submit.prevent="bookFlight">
-            <label class="form-control max-w-xs">
-                <div class="label">
-                    <span class="label-text">Class</span>
+    <section class="py-10" v-if="this.flight">
+        <div
+            class="mx-12 grid auto-rows-fr grid-cols-1 rounded-lg bg-base-200 md:auto-rows-[750px] lg:grid-cols-3"
+        >
+            <img
+                class="col-span-2 h-full w-full rounded-lg object-cover object-center"
+                :src="
+                    '../src/assets/images/airlines/' +
+                    this.flight.airline.name.toLowerCase().replace(/\s/g, '_') +
+                    '/' +
+                    this.flight.image +
+                    '.webp'
+                "
+                :alt="
+                    flight.airline.name != null
+                        ? flight.airline.name
+                        : 'Image of Airline'
+                "
+            />
+            <div class="col-span-3 p-4 md:col-span-1">
+                <h1>
+                    {{ this.flight.flight_number }} -
+                    {{ this.flight.airline.icao }}
+                </h1>
+                <p class="text-2xl">Price: €{{ this.flight.price }}</p>
+                <p class="my-4">
+                    From: {{ this.flight.departure_airport.name }}
+                    <span class="text-sm opacity-80"
+                        >({{ this.flight.departure_airport.city }},
+                        {{ this.flight.departure_airport.country }})</span
+                    ><br />
+                    To: {{ this.flight.arrival_airport.name }}
+                    <span class="text-sm opacity-80"
+                        >({{ this.flight.arrival_airport.city }},
+                        {{ this.flight.arrival_airport.country }})</span
+                    >
+                </p>
+                <p>Estimated times</p>
+                <div class="flex flex-col gap-4 lg:flex-row">
+                    <div class="h-30 rounded-lg bg-base-100 p-2 lg:p-4">
+                        <p class="font-bold">Departure</p>
+                        {{ this.flight.departure_time }}
+                    </div>
+                    <div class="h-30 rounded-lg bg-base-100 p-2 lg:p-4">
+                        <p class="font-bold">Arrival</p>
+                        {{ this.flight.arrival_time }}
+                    </div>
                 </div>
-                <select v-model="this.class" class="select select-bordered">
-                    <option value="Economy">Economy</option>
-                    <option value="Business">Business</option>
-                    <option value="First">First</option>
-                </select>
-            </label>
-            <label class="form-control max-w-xs">
-                <div class="label">
-                    <span class="label-text">Type</span>
+                <p class="my-4">Airline: {{ this.flight.airline.name }}</p>
+                <p class="my-4">
+                    Seats available: {{ this.flight.available_seats }}
+                </p>
+                <form
+                    v-if="user.isLoggedIn && !isFlightBooked(flight.id)"
+                    @submit.prevent="bookFlight"
+                    class="my-4 flex w-full flex-col gap-0 lg:flex-row lg:gap-4"
+                >
+                    <label class="form-control max-w-xs">
+                        <div class="label">
+                            <span class="label-text">Class</span>
+                        </div>
+                        <select
+                            v-model="this.class"
+                            class="select select-bordered w-full border caret-primary outline-none transition-colors focus:border-primary focus:outline-none"
+                        >
+                            <option value="Economy">Economy</option>
+                            <option value="Business">Business</option>
+                            <option value="First">First</option>
+                        </select>
+                    </label>
+                    <label class="form-control max-w-xs">
+                        <div class="label">
+                            <span class="label-text">Type</span>
+                        </div>
+                        <select
+                            v-model="this.type"
+                            class="select select-bordered w-full border caret-primary outline-none transition-colors focus:border-primary focus:outline-none"
+                        >
+                            <option value="one-way">one-way</option>
+                            <option value="round-trip">round-trip</option>
+                        </select>
+                    </label>
+                </form>
+                <label
+                    for="confirmation"
+                    class="my-4 flex gap-2"
+                    v-if="user.isLoggedIn && !isFlightBooked(flight.id)"
+                >
+                    <input
+                        v-model="this.confirmation"
+                        type="checkbox"
+                        name="confirmation"
+                        class="checkbox"
+                        id="confirmation"
+                    />
+                    Confirm
+                </label>
+                <button
+                    type="submit"
+                    v-if="user.isLoggedIn && !isFlightBooked(flight.id)"
+                    class="btn btn-primary w-full sm:w-1/2 md:w-auto"
+                    @click="bookFlight"
+                >
+                    Book Flight
+                </button>
+                <RouterLink
+                    v-else-if="!user.isLoggedIn"
+                    :to="{ name: 'login' }"
+                    class="btn btn-warning w-full sm:w-1/2 md:w-auto"
+                    >Login to book
+                </RouterLink>
+                <div v-else class="mt-4">
+                    <p>Flight already booked.</p>
+                    <RouterLink
+                        :to="{
+                            name: 'bookings.index',
+                        }"
+                        class="btn btn-warning w-full sm:w-1/2 md:w-auto"
+                        >View booked flight
+                    </RouterLink>
                 </div>
-                <select v-model="this.type" class="select select-bordered">
-                    <option value="one-way">one-way</option>
-                    <option value="round-trip">round-trip</option>
-                </select>
-            </label>
-            <label for="confirmation" class="flex gap-2">
-                <input
-                    v-model="this.confirmation"
-                    type="checkbox"
-                    name="confirmation"
-                    class="checkbox"
-                    id="confirmation"
-                />
-                Confirm</label
-            >
-            <button class="btn btn-primary" type="submit">Book Flight</button>
-        </form>
-        <img
-            class="object-cover object-center"
-            :src="
-                '../src/assets/images/airlines/' +
-                this.flight.airline.name.toLowerCase().replace(/\s/g, '_') +
-                '/' +
-                this.flight.image +
-                '.webp'
-            "
-            :alt="
-                flight.airline.name != null
-                    ? flight.airline.name
-                    : 'Image of Airline'
-            "
-        />
-        <!--        <p>$route params id: {{ flightId }}</p>-->
-        <!--        <div class="divider"></div>-->
-        <!--        <h3>Departure Airport</h3>-->
-        <!--        <p>Name:</p>-->
-        <!--        <p>City: {{ this.flight.departure_airport.city }}</p>-->
-        <!--        <p>Country: {{ this.flight.departure_airport.country }}</p>-->
-        <!--        <p>IATA: {{ this.flight.departure_airport.iata }}</p>-->
-        <!--        <p>ICAO: {{ this.flight.departure_airport.icao }}</p>-->
-        <!--        <p>Type: {{ this.flight.departure_airport.type }}</p>-->
-        <!--        <p>Created At: {{ this.flight.departure_airport.created_at }}</p>-->
-        <!--        <p>Updated At: {{ this.flight.departure_airport.updated_at }}</p>-->
-        <!--        <div class="divider"></div>-->
-        <!--        <h3>Arrival Airport</h3>-->
-        <!--        <p>Name: {{ this.flight.arrival_airport.name }}</p>-->
-        <!--        <p>City: {{ this.flight.arrival_airport.city }}</p>-->
-        <!--        <p>Country: {{ this.flight.arrival_airport.country }}</p>-->
-        <!--        <p>IATA: {{ this.flight.arrival_airport.iata }}</p>-->
-        <!--        <p>ICAO: {{ this.flight.arrival_airport.icao }}</p>-->
-        <!--        <p>Type: {{ this.flight.arrival_airport.type }}</p>-->
-        <!--        <p>Created At: {{ this.flight.arrival_airport.created_at }}</p>-->
-        <!--        <p>Updated At: {{ this.flight.arrival_airport.updated_at }}</p>-->
-        <!--        <div class="divider"></div>-->
-        <!--        <h3>Airline</h3>-->
-        <!--        <p>Name: {{ this.flight.airline.name }}</p>-->
-        <!--        <p>IATA: {{ this.flight.airline.iata }}</p>-->
-        <!--        <p>ICAO: {{ this.flight.airline.icao }}</p>-->
-        <!--        <p>Callsign: {{ this.flight.airline.callsign }}</p>-->
-        <!--        <p>Country: {{ this.flight.airline.country }}</p>-->
-        <!--        <p>Operating since: {{ this.flight.airline.operating_since }}</p>-->
-        <!--        <p>Created At: {{ this.flight.airline.created_at }}</p>-->
-        <!--        <p>Updated At: {{ this.flight.airline.updated_at }}</p>-->
+            </div>
+        </div>
     </section>
     <section v-else>
         <p>No flight found.</p>
     </section>
-    <!--    <div class="divider"></div>-->
-    <!--    <h3>Information</h3>-->
-    <!--    <input type="text" />-->
 </template>
 
 <script>
 import { useUserStore } from '@/stores/user.js';
 import { useHead } from '@vueuse/head';
+
+const userStore = useUserStore();
 
 import axios from 'axios';
 const apiUrl = 'http://127.0.0.1:8000/api';
@@ -106,16 +145,14 @@ export default {
             class: '',
             type: '',
             confirmation: false,
+            bookings: [],
         };
     },
-    computed: {
-        flightId() {
-            return this.$route.params.id;
-        },
-    },
     created() {
-        console.log('FlightsShow component mounted');
         this.retrieveFlight();
+        if (userStore.user) {
+            this.retrieveBookings();
+        }
     },
     methods: {
         retrieveFlight() {
@@ -124,6 +161,7 @@ export default {
                 .then((response) => {
                     console.log(response.data);
                     this.flight = response.data[0];
+                    this.updateMetaData();
                 })
                 .catch((error) => {
                     console.error(error);
@@ -140,31 +178,35 @@ export default {
                 price: Number(this.flight.price),
             };
             if (this.confirmation === true) {
-                if (userStore.user.wallet < this.flight.price) {
-                    alert(
-                        'Insufficient wallet balance. Please top up your Wallet.',
-                    );
-                } else {
+                if (
+                    Number(userStore.user.wallet) >= Number(this.flight.price)
+                ) {
                     axios
                         .post(apiUrl + '/bookings', data)
                         .then((response) => {
                             alert('Flight booked!');
                             console.log(response);
-                            const cost = response.data.flight.price;
-                            const data = {
-                                wallet: userStore.user.wallet - cost,
+
+                            const cost = Number(response.data.flight.price);
+                            const updatedWallet = (
+                                Number(userStore.user.wallet) - cost
+                            ).toFixed(2);
+                            const updatedLoyaltyPoints = Math.round(
+                                Number(userStore.user.loyalty_points) + cost,
+                            );
+
+                            const updateUserData = {
+                                wallet: updatedWallet,
+                                loyalty_points: updatedLoyaltyPoints,
                             };
                             axios
                                 .put(
                                     apiUrl + '/users/' + userStore.user.id,
-                                    data,
+                                    updateUserData,
                                 )
                                 .then((response) => {
                                     console.log(response.data);
-                                    // Update the Pinia state management
                                     userStore.setUser(response.data);
-
-                                    // Update the wallet balance in localStorage
                                     localStorage.setItem(
                                         'user',
                                         JSON.stringify(response.data),
@@ -173,73 +215,127 @@ export default {
                                 .catch((error) => {
                                     console.error(error);
                                 });
+
+                            const updateFlightData = {
+                                available_seats:
+                                    this.flight.available_seats - 1,
+                            };
+                            axios
+                                .put(
+                                    apiUrl + '/flights/' + this.flight.id,
+                                    updateFlightData,
+                                )
+                                .then((response) => {
+                                    console.log(response.data);
+                                    this.retrieveFlight();
+                                })
+                                .catch((error) => {
+                                    console.error(error);
+                                });
                         })
                         .catch((error) => {
                             console.error(error);
                         });
+                } else {
+                    alert(
+                        'Insufficient wallet balance. Please top up your Wallet.',
+                    );
                 }
             } else {
                 alert(
-                    'Try again. Please select a Class, Type and click on the checkbox.',
+                    'Try again. Please select a Class, Type and click the checkbox to confirm.',
                 );
             }
         },
-    },
-    setup() {
-        useHead({
-            title: `${this.flight.flight_number} - ${this.flight.airline.name}`,
-            meta: [
-                {
-                    name: 'description',
-                    content: `Book your flight ${this.flight.flight_number} with ${this.flight.airline.name}. Fly from ${this.flight.departure_airport.city}, ${this.flight.departure_airport.country} to ${this.flight.arrival_airport.city}, ${this.flight.arrival_airport.country}.`,
-                },
-                {
-                    name: 'keywords',
-                    content: `flight, ${this.flight.value.airline.name}, ${this.flight.flight_number}, book flight, ${this.flight.departure_airport.city}, ${this.flight.arrival_airport.city}`,
-                },
-            ],
-            script: [
-                {
-                    type: 'application/ld+json',
-                    json: {
-                        '@context': 'http://schema.org',
-                        '@type': 'Flight',
-                        flightNumber: this.flight.flight_number,
-                        airline: {
-                            '@type': 'Airline',
-                            name: this.flight.airline.name,
-                        },
-                        departureAirport: {
-                            '@type': 'Airport',
-                            name: this.flight.departure_airport.city,
-                            address: {
-                                '@type': 'PostalAddress',
-                                addressLocality:
-                                    this.flight.departure_airport.city,
-                                addressCountry:
-                                    this.flight.departure_airport.country,
+        updateMetaData() {
+            useHead({
+                title: `Flight ${this.flight.flight_number} - ${this.flight.airline.name}`,
+                meta: [
+                    {
+                        name: 'description',
+                        content: `Book your flight ${this.flight.flight_number} with ${this.flight.airline.name}. Fly from ${this.flight.departure_airport.city}, ${this.flight.departure_airport.country} to ${this.flight.arrival_airport.city}, ${this.flight.arrival_airport.country}.`,
+                    },
+                    {
+                        name: 'keywords',
+                        content: `flight, ${this.flight.airline.name}, ${this.flight.flight_number}, book flight, ${this.flight.departure_airport.city}, ${this.flight.arrival_airport.city}`,
+                    },
+                ],
+                script: [
+                    {
+                        type: 'application/ld+json',
+                        json: {
+                            '@context': 'http://schema.org',
+                            '@type': 'Flight',
+                            flightNumber: this.flight.flight_number,
+                            airline: {
+                                '@type': 'Airline',
+                                name: this.flight.airline.name,
                             },
-                        },
-                        arrivalAirport: {
-                            '@type': 'Airport',
-                            name: this.flight.arrival_airport.city,
-                            address: {
-                                '@type': 'PostalAddress',
-                                addressLocality:
-                                    this.flight.arrival_airport.city,
-                                addressCountry:
-                                    this.flight.arrival_airport.country,
+                            departureAirport: {
+                                '@type': 'Airport',
+                                name: this.flight.departure_airport.city,
+                                address: {
+                                    '@type': 'PostalAddress',
+                                    addressLocality:
+                                        this.flight.departure_airport.city,
+                                    addressCountry:
+                                        this.flight.departure_airport.country,
+                                },
                             },
-                        },
-                        offers: {
-                            '@type': 'Offer',
-                            priceCurrency: 'EUR',
-                            price: this.value.price,
+                            arrivalAirport: {
+                                '@type': 'Airport',
+                                name: this.flight.arrival_airport.city,
+                                address: {
+                                    '@type': 'PostalAddress',
+                                    addressLocality:
+                                        this.flight.arrival_airport.city,
+                                    addressCountry:
+                                        this.flight.arrival_airport.country,
+                                },
+                            },
+                            offers: {
+                                '@type': 'Offer',
+                                priceCurrency: 'EUR',
+                                price: this.flight.price,
+                            },
                         },
                     },
-                },
-            ],
-        });
+                ],
+            });
+        },
+        retrieveBookings() {
+            axios
+                .get(apiUrl + '/users/' + userStore.user.id + '/bookings')
+                .then((response) => {
+                    console.log(response.data);
+                    this.bookings = response.data.bookings;
+                })
+                .catch((error) => {
+                    console.error(error);
+                });
+        },
+        isFlightBooked(flight_id) {
+            if (this.bookings.length > 0) {
+                for (let i = 0; i < this.bookings.length; i++) {
+                    if (this.bookings[i].flight_id == flight_id) {
+                        return true;
+                    }
+                }
+            } else {
+                return false;
+            }
+        },
+    },
+    computed: {
+        flightId() {
+            return this.$route.params.id;
+        },
+        useUserStore() {
+            return useUserStore();
+        },
+        user() {
+            return userStore;
+        },
     },
 };
 </script>
