@@ -45,7 +45,6 @@ class AirportSeeder extends Seeder
             'icao' => 'EHRD',
             'type' => 'medium_airport'
         ]);
-
         Airport::factory()->create([
             'name' => 'Groningen Airport Eelde',
             'city' => 'Groningen',
@@ -54,7 +53,6 @@ class AirportSeeder extends Seeder
             'icao' => 'EHGG',
             'type' => 'medium_airport'
         ]);
-
         Airport::factory()->create([
             'name' => 'Maastricht Aachen Airport',
             'city' => 'Maastricht',
@@ -63,7 +61,6 @@ class AirportSeeder extends Seeder
             'icao' => 'EHBK',
             'type' => 'medium_airport'
         ]);
-
         Airport::factory()->create([
             'name' => 'Lelystad Airport',
             'city' => 'Lelystad',
@@ -72,16 +69,14 @@ class AirportSeeder extends Seeder
             'icao' => 'EHLE',
             'type' => 'medium_airport'
         ]);
-
         Airport::factory()->create([
-            'name' => 'Los Angeles International Airport',
+            'name' => 'Los Angeles Int. Airport',
             'city' => 'Los Angeles',
             'country' => 'United States',
             'iata' => 'LAX',
             'icao' => 'KLAX',
             'type' => 'large_airport'
         ]);
-
         Airport::factory()->create([
             'name' => 'Heathrow Airport',
             'city' => 'London',
@@ -90,7 +85,6 @@ class AirportSeeder extends Seeder
             'icao' => 'EGLL',
             'type' => 'large_airport'
         ]);
-
         Airport::factory()->create([
             'name' => 'Charles de Gaulle Airport',
             'city' => 'Paris',
@@ -99,31 +93,20 @@ class AirportSeeder extends Seeder
             'icao' => 'LFPG',
             'type' => 'large_airport'
         ]);
-
         Airport::factory()->create([
-            'name' => 'Dubai International Airport',
+            'name' => 'Dubai Int. Airport',
             'city' => 'Dubai',
             'country' => 'United Arab Emirates',
             'iata' => 'DXB',
             'icao' => 'OMDB',
             'type' => 'large_airport'
         ]);
-
         Airport::factory()->create([
-            'name' => 'Beijing Capital International Airport',
+            'name' => 'Beijing Capital Int. Airport',
             'city' => 'Beijing',
             'country' => 'China',
             'iata' => 'PEK',
             'icao' => 'ZBAA',
-            'type' => 'large_airport'
-        ]);
-
-        Airport::factory()->create([
-            'name' => 'Sydney Kingsford Smith Airport',
-            'city' => 'Sydney',
-            'country' => 'Australia',
-            'iata' => 'SYD',
-            'icao' => 'YSSY',
             'type' => 'large_airport'
         ]);
     }
