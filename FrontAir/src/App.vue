@@ -14,7 +14,7 @@
                     currentRoute() != '/register' &&
                     currentRoute() != '/reset-password'
                 "
-                class="sticky top-0 flex h-[63px] items-center bg-base-100 px-8 py-2 shadow-md"
+                class="sticky top-0 flex h-[63px] flex-row-reverse items-center bg-base-100 px-8 py-2 shadow-md sm:flex-row"
                 :class="theme == 'frontair' ? '' : 'shadow-white/30'"
             >
                 <div class="flex-none lg:hidden">
@@ -30,7 +30,7 @@
                 </div>
                 <RouterLink
                     to="/"
-                    class="ml-auto h-auto w-24 transition-none hover:scale-100 active:scale-100 sm:ml-4 sm:mr-0 lg:ml-0 lg:mr-12 lg:transition-transform lg:hover:scale-110 lg:active:scale-105"
+                    class="mr-auto h-auto w-24 transition-none hover:scale-100 active:scale-100 sm:ml-4 sm:mr-0 lg:ml-0 lg:mr-12 lg:transition-transform lg:hover:scale-110 lg:active:scale-105"
                 >
                     <img
                         :src="
@@ -96,10 +96,7 @@
                     >
                         <i class="bi bi-shop"></i> Store
                     </RouterLink>
-                    <div
-                        class="dropdown dropdown-end dropdown-hover"
-                        :open="isDropdownOpen"
-                    >
+                    <div class="dropdown dropdown-end dropdown-hover">
                         <div tabindex="0" role="button" class="btn">
                             <i v-if="isLoggedIn" class="bi bi-person-gear"></i>
                             <i v-else class="bi bi-person-circle"></i> Account
@@ -118,10 +115,7 @@
                                 <p class="opacity-75">{{ user.email }}</p>
                             </div>
                             <li v-if="isLoggedIn">
-                                <RouterLink
-                                    :to="{ name: 'wallet' }"
-                                    @click="toggleDropdown"
-                                >
+                                <RouterLink :to="{ name: 'wallet' }">
                                     <i class="bi bi-wallet"></i> Wallet: €{{
                                         user.wallet
                                     }}
@@ -259,7 +253,7 @@
                                 @click="toggleDrawer"
                             >
                                 <i class="bi bi-wallet"></i> Wallet: €{{
-                                    user.wallet
+                                    this.balance
                                 }}
                             </RouterLink>
                         </li>
@@ -329,6 +323,9 @@ import { useUserStore } from '@/stores/user.js';
 import { useSiteThemeStore } from '@/stores/siteTheme.js';
 import { useHead } from '@vueuse/head';
 
+import axios from 'axios';
+const apiUrl = 'http://127.0.0.1:8000/api';
+
 export default {
     name: 'App',
     components: {
@@ -339,13 +336,70 @@ export default {
     data() {
         return {
             theme: '',
+            balance: '',
             isDrawerOpen: false,
-            isDropdownOpen: false,
         };
     },
     setup() {
         useHead({
             title: 'FrontAir',
+            meta: [
+                {
+                    name: 'description',
+                    content:
+                        'Welcome to FrontAir, your one-stop destination for booking flights at the best prices. Find deals on international and domestic flights, compare airlines, and plan your perfect trip.',
+                },
+                {
+                    name: 'keywords',
+                    content:
+                        'flights, flight booking, cheap flights, airline tickets, travel, FrontAir, flight deals, international flights, domestic flights',
+                },
+                {
+                    name: 'author',
+                    content: 'FrontAir',
+                },
+                // og: = Open Graph, for sharing using social media, reference: https://ogp.me/
+                {
+                    property: 'og:title',
+                    content: 'Home - FrontAir',
+                },
+                {
+                    property: 'og:description',
+                    content:
+                        'Welcome to FrontAir, your one-stop destination for booking flights at the best prices. Find deals on international and domestic flights, compare airlines, and plan your perfect trip.',
+                },
+                {
+                    property: 'og:type',
+                    content: 'website',
+                },
+                {
+                    property: 'og:url',
+                    content: 'https://www.frontair.nl',
+                },
+                {
+                    property: 'og:image',
+                    content:
+                        'https://www.frontair.nl/images/frontair_logo.webp',
+                },
+                {
+                    name: 'twitter:card',
+                    content: 'summary_large_image',
+                },
+                {
+                    name: 'twitter:title',
+                    content: 'Home - FrontAir',
+                },
+                {
+                    name: 'twitter:description',
+                    content:
+                        'Welcome to FrontAir, your one-stop destination for booking flights at the best prices. Find deals on international and domestic flights, compare airlines, and plan your perfect trip.',
+                },
+                {
+                    name: 'twitter:image',
+                    content:
+                        'https://www.frontair.nl/images/frontair_logo.webp',
+                },
+            ],
         });
 
         const isLoggedIn = useUserStore().isLoggedIn;
@@ -371,8 +425,19 @@ export default {
         toggleDrawer() {
             this.isDrawerOpen = !this.isDrawerOpen;
         },
-        toggleDropdown() {
-            this.isDropdownOpen = !this.isDropdownOpen;
+        retrieveBalance() {
+            const userStore = useUserStore();
+            const user = userStore.user;
+            axios
+                .get(apiUrl + '/users/' + user.id)
+                .then((response) => {
+                    console.log(response.data);
+                    userStore.updateUser(response.data);
+                    this.balance = parseFloat(response.data.wallet).toFixed(2);
+                })
+                .catch((error) => {
+                    console.error('Error retrieving balance: ', error);
+                });
         },
     },
     computed: {
@@ -385,6 +450,11 @@ export default {
     },
     mounted() {
         useSiteThemeStore().loadTheme();
+    },
+    created() {
+        if (useUserStore().user) {
+            this.retrieveBalance();
+        }
     },
 };
 </script>
