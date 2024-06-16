@@ -8,7 +8,7 @@
         </p>
     </section>
     <section v-if="bookings.length > 0 && this.userStore.isLoggedIn == true">
-        <div class="grid grid-cols-1 gap-4 p-4 md:grid-cols-2 lg:grid-cols-3">
+        <div class="grid grid-cols-1 gap-4 p-4 lg:grid-cols-2 xl:grid-cols-3">
             <div
                 class="card bordered shadow-lg"
                 :class="theme == 'frontair' ? '' : 'shadow-white/30'"
@@ -34,6 +34,7 @@
                         "
                     />
                 </figure>
+
                 <div class="card-header relative">
                     <div class="absolute left-0 right-0 top-0 mt-4">
                         <img
@@ -53,30 +54,90 @@
                         />
                     </div>
                 </div>
-
                 <div class="card-body mt-20">
-                    <div class="grid grid-cols-2">
-                        <p>Airline: {{ booking.flight.airline.name }}</p>
-                        <!--                    <p>-->
-                        <!--                        Departure: {{ booking.flight.departure_airport.name }}-->
-                        <!--                    </p>-->
-                        <!--                    <p>Arrival: {{ booking.flight.arrival_airport.name }}</p>-->
-                        <!--                    <p>Departure Time: {{ booking.flight.departure_time }}</p>-->
-                        <!--                    <p>Arrival Time: {{ booking.flight.arrival_time }}</p>-->
-                        <p>Seat Number: {{ booking.seat_number }}</p>
-                        <p>Class: {{ booking.class }}</p>
-                        <p>Type: {{ booking.type }}</p>
-                        <p>Price: €{{ booking.price }}</p>
-                        <p>Booking status: {{ booking.booking_status }}</p>
+                    <div class="grid grid-cols-4 [&>*]:text-center">
+                        <div>
+                            <p class="text-lg font-bold">Status</p>
+                            <p>{{ booking.booking_status }}</p>
+                        </div>
+                        <div>
+                            <p class="text-lg font-bold">Class</p>
+                            <p>{{ booking.class }}</p>
+                        </div>
+                        <div>
+                            <p class="text-lg font-bold">Type</p>
+                            <p>{{ booking.type }}</p>
+                        </div>
+                        <div>
+                            <p class="text-lg font-bold">Airline</p>
+                            <p>{{ booking.flight.airline.name }}</p>
+                        </div>
                     </div>
-
+                    <div class="divider my-2"></div>
+                    <div class="mb-4 grid grid-cols-1 sm:grid-cols-2">
+                        <div class="flex flex-col">
+                            <p class="text-lg font-bold">From</p>
+                            <p>
+                                {{ booking.flight.departure_airport.name }}
+                            </p>
+                            <p>
+                                {{ booking.flight.departure_airport.city }},
+                                {{ booking.flight.departure_airport.country }}
+                            </p>
+                            <p>{{ booking.flight.departure_time }}</p>
+                        </div>
+                        <div class="flex flex-col text-left sm:text-right">
+                            <p class="text-lg font-bold">To</p>
+                            <p>
+                                {{ booking.flight.arrival_airport.name }}
+                            </p>
+                            <p>
+                                {{ booking.flight.arrival_airport.city }},
+                                {{ booking.flight.arrival_airport.country }}
+                            </p>
+                            <p>{{ booking.flight.arrival_time }}</p>
+                        </div>
+                    </div>
+                    <p class="text-center text-2xl font-bold">Ticket</p>
+                    <Barcode
+                        v-show="booking.booking_status == 'booked'"
+                        :value="
+                            booking.user_id +
+                            '' +
+                            booking.flight.departure_airport.id +
+                            '' +
+                            booking.flight.arrival_airport.id +
+                            booking.flight.flight_number +
+                            booking.id
+                        "
+                    />
+                    <button
+                        @click="confirmBooking(booking.id)"
+                        v-if="booking.booking_status == 'pending'"
+                        class="btn btn-success absolute left-4 top-4"
+                    >
+                        Confirm
+                    </button>
                     <button
                         v-if="booking.booking_status == 'pending'"
-                        class="btn btn-error"
+                        class="btn btn-error absolute right-4 top-4"
                         @click="cancelBooking(booking.id)"
                     >
                         Cancel
                     </button>
+                    <div class="card-actions mt-auto items-end justify-end">
+                        <p class="text-center text-2xl font-bold sm:text-left">
+                            Price: €{{ booking.price }}
+                        </p>
+                        <RouterLink
+                            class="btn btn-info w-full sm:w-1/2 md:w-auto"
+                            :to="{
+                                name: 'bookings.show',
+                                params: { id: booking.id },
+                            }"
+                            >More details</RouterLink
+                        >
+                    </div>
                 </div>
             </div>
         </div>
@@ -109,6 +170,7 @@ import { useSiteThemeStore } from '@/stores/siteTheme.js';
 import { useUserStore } from '@/stores/user.js';
 import { RouterLink } from 'vue-router';
 import { useHead } from '@vueuse/head';
+import Barcode from '@/components/Barcode.vue';
 
 import axios from 'axios';
 const apiUrl = 'http://127.0.0.1:8000/api';
@@ -117,6 +179,7 @@ export default {
     name: 'BookingsView',
     components: {
         RouterLink,
+        Barcode,
     },
     setup() {
         useHead({
@@ -128,6 +191,7 @@ export default {
         return {
             bookings: [],
             userStore: useUserStore(),
+            balance: '',
         };
     },
     mounted() {
@@ -165,19 +229,45 @@ export default {
                     .then((response) => {
                         console.log(response.data);
                         this.retrieveBookings();
-                        // const updatedWallet = useUserStore().user.wallet + ;
-                        // const data = {
-                        //     wallet: updatedWallet,
-                        // };
-                        // axios
-                        //     .put(apiUrl + '/users/' + userStore.user.id, data)
-                        //     .then((response) => {
-                        //         console.log(response.data);
-                        //         userStore.updateUser(response.data);
-                        //     })
-                        //     .catch((error) => {
-                        //         console.error(error);
-                        //     });
+                        const updatedWallet =
+                            Number(userStore.user.wallet) +
+                            Number(response.data.flight.price);
+                        const userData = {
+                            wallet: updatedWallet,
+                        };
+                        // Add Flight price back to user wallet
+                        axios
+                            .put(
+                                apiUrl + '/users/' + userStore.user.id,
+                                userData,
+                            )
+                            .then((response) => {
+                                console.log(response.data);
+                                userStore.updateUser(response.data);
+                                this.balance = parseFloat(
+                                    response.data.wallet,
+                                ).toFixed(2);
+                            })
+                            .catch((error) => {
+                                console.error(error);
+                            });
+
+                        const flightData = {
+                            available_seats:
+                                response.data.flight.available_seats + 1,
+                        };
+                        // Add available seats back with +1
+                        axios
+                            .put(
+                                apiUrl + '/flights/' + response.data.flight.id,
+                                flightData,
+                            )
+                            .then((response) => {
+                                console.log(response.data);
+                            })
+                            .catch((error) => {
+                                console.error(error);
+                            });
                     })
                     .catch((error) => {
                         console.error(error);
@@ -185,6 +275,35 @@ export default {
             } else {
                 return;
             }
+        },
+        confirmBooking(booking_id) {
+            if (confirm('Are you sure you want to confirm this booking?')) {
+                const data = {
+                    booking_status: 'booked',
+                };
+                axios
+                    .put(apiUrl + '/bookings/' + booking_id, data)
+                    .then((response) => {
+                        console.log(response.data);
+                        this.retrieveBookings();
+                    })
+                    .catch((error) => {
+                        console.error(error);
+                    });
+            } else {
+                return;
+            }
+        },
+        formatDate(datetime) {
+            const date = new Date(datetime);
+            return date.toLocaleDateString('nl-NL', {
+                year: 'numeric',
+                month: 'numeric',
+                day: 'numeric',
+                hour: 'numeric',
+                minute: 'numeric',
+                timeZone: 'GMT', // Adjust time zone as per your application
+            });
         },
     },
     computed: {

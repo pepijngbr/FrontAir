@@ -7,7 +7,7 @@ import { useUserStore } from '@/stores/user.js';
 
 import App from './App.vue'; // main component
 import router from './router/index.js'; // vue-router
-import { createHead } from '@vueuse/head';
+import { createHead } from '@vueuse/head'; // dynamic meta data
 const head = createHead();
 
 import axios from 'axios';
@@ -19,6 +19,7 @@ app.use(router);
 app.use(head);
 app.use(VueAxios, axios);
 app.use(createPinia());
+app.config.devtools = true;
 app.mount('#app');
 
 const userStore = useUserStore();
