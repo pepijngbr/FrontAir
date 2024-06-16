@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Airport extends Model
 {
@@ -17,7 +18,12 @@ class Airport extends Model
         'icao',
     ];
 
-    public function flights()
+    /**
+     * Get the flights for the airport.
+     *
+     * @return HasMany
+     */
+    public function flights(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany(Flight::class);
     }

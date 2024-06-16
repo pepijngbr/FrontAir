@@ -49,7 +49,7 @@ class User extends Authenticatable
     /**
      * Get the bookings for the user.
      */
-    public function bookings()
+    public function bookings(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany(Booking::class);
     }

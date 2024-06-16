@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 use App\Models\Flight;
 
@@ -9,34 +10,41 @@ class FlightController extends Controller
 {
     /**
      * Returns all Flights (if needed: limit & offset & filter on almost any field).
+     *
+     * @param Request $request
+     * @return Collection|array
      */
-    public function index(Request $request)
+    public function index(Request $request): \Illuminate\Database\Eloquent\Collection|array
     {
+        // Build a new query
         $query = Flight::query();
+
+        // Loop through each request field
         foreach ($request->all() as $key => $value) {
-            if ($key !== 'id' && $key !== 'departure_airport_id' && $key !== 'arrival_airport_id' && $key !== 'airline_id' && $key !== 'limit' && $key !== 'offset' && $key !== 'sort_by' && $key !== 'sort_order') { // exclude id, limit, offset, sort_by & sorting order when filtering
+            // exclude id, limit, offset, sort_by & sorting order when filtering
+            if ($key !== 'id' && $key !== 'departure_airport_id' && $key !== 'arrival_airport_id' && $key !== 'airline_id' && $key !== 'limit' && $key !== 'offset' && $key !== 'sort_by' && $key !== 'sort_order') {
                 $query->where($key, 'like', '%' . $value . '%');
             }
         }
 
-        // limiting and offset filter
+        // Limit and offset filter
         $limit = $request->input('limit');
         $offset = $request->input('offset') ?? 0;
         if ($limit && $limit >= 1 && $offset >= 0) {
-            $query->limit($limit)->offset($offset);
+            $query->limit($limit)->offset($offset); // Get all Flights, add limit if requested, offset is always 0
         }
 
-        // sorting by and order filter
+        // Sort by and order filter
         $sortField = $request->input('sort_by');
         $sortOrder = $request->input('sort_order') ?? 'asc';
         if ($sortField) {
-            $query->orderBy($sortField, $sortOrder);
+            $query->orderBy($sortField, $sortOrder); // Get Flights with sort_by field value from request
         }
 
         // airline_id filter
         $airlineId = $request->input('airline_id');
         if ($airlineId) {
-            $query->where('airline_id', $airlineId);
+            $query->where('airline_id', $airlineId); // Get Flights with airline_id field value from request
         }
 
         // Departure and arrival airports filter
@@ -65,10 +73,10 @@ class FlightController extends Controller
     /**
      * Creates a new Flight.
      *
-     * @param \Illuminate\Http\Request $request
-     * @return \App\Models\Flight
+     * @param Request $request
+     * @return Flight
      */
-    public function store(Request $request)
+    public function store(Request $request): Flight
     {
         $request->validate([
             'departure_airport_id' => 'required|integer',
@@ -86,10 +94,10 @@ class FlightController extends Controller
     /**
      * Returns a specific Flight.
      *
-     * @param \App\Models\Flight $flight
-     * @return \App\Models\Flight
+     * @param Flight $flight
+     * @return Collection|\Illuminate\Database\Eloquent\Builder[]
      */
-    public function show(Flight $flight)
+    public function show(Flight $flight): Collection|array
     {
         $newFlight = Flight::query();
         $newFlight->find($flight->id);
@@ -99,11 +107,11 @@ class FlightController extends Controller
     /**
      * Updates a specific Flight.
      *
-     * @param \Illuminate\Http\Request $request
-     * @param \App\Models\Flight $flight
-     * @return \App\Models\Flight
+     * @param Request $request
+     * @param Flight $flight
+     * @return Flight
      */
-    public function update(Request $request, Flight $flight)
+    public function update(Request $request, Flight $flight): Flight
     {
         $flight->update($request->all());
         return $flight;
@@ -112,9 +120,9 @@ class FlightController extends Controller
     /**
      * Deletes a specific Flight.
      *
-     * @param \App\Models\Flight $flight
+     * @param Flight $flight
      */
-    public function destroy(Flight $flight)
+    public function destroy(Flight $flight): void
     {
         $flight->delete();
     }

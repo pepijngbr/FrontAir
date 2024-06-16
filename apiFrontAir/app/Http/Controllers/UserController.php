@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Airline;
 use App\Models\Booking;
 use App\Models\User;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
@@ -13,9 +15,10 @@ class UserController extends Controller
     /**
      * Returns all Users (if needed: limit & offset).
      *
-     * @param \Illuminate\Http\Request $request
+     * @param Request $request
+     * @return Collection
      */
-    public function index(Request $request)
+    public function index(Request $request): Collection
     {
         $limit = $request->input('limit');
         $offset = $request->input('offset') ?? 0;
@@ -30,10 +33,10 @@ class UserController extends Controller
     /**
      * Creates a new User.
      *
-     * @param \Illuminate\Http\Request $request
-     * @return \App\Models\User
+     * @param Request $request
+     * @return User
      */
-    public function store(Request $request)
+    public function store(Request $request): User
     {
         $request->validate([
             'name' => 'required|string',
@@ -46,10 +49,10 @@ class UserController extends Controller
     /**
      * Returns a specific User.
      *
-     * @param \App\Models\User $user
-     * @return \App\Models\User
+     * @param User $user
+     * @return User
      */
-    public function show(User $user)
+    public function show(User $user): User
     {
         if (!$user) {
             return response()->json(['message' => 'User not found'], 404);
@@ -60,23 +63,22 @@ class UserController extends Controller
     /**
      * Updates a specific User.
      *
-     * @param \Illuminate\Http\Request $request
-     * @param \App\Models\User $user
-     * @return \App\Models\User
+     * @param Request $request
+     * @param User $user
+     * @return User
      */
-    public function update(Request $request, User $user)
+    public function update(Request $request, User $user): User
     {
         $user->update($request->all());
         return $user;
-//        return response()->json(['message' => 'User updated successfully'], 200);
     }
 
     /**
      * Deletes a specific User.
      *
-     * @param \App\Models\User $user
+     * @param User $user
      */
-    public function destroy(User $user)
+    public function destroy(User $user): void
     {
         $user->delete();
     }
@@ -84,10 +86,10 @@ class UserController extends Controller
     /**
      * Registers a new User.
      *
-     * @param \Illuminate\Http\Request $request
-     * @return \App\Models\User
+     * @param Request $request
+     * @return User
      */
-    public function register(Request $request)
+    public function register(Request $request): User
     {
         $user = $request->validate([
             'name' => 'required|string',
@@ -101,10 +103,10 @@ class UserController extends Controller
     /**
      * Logs in a User.
      *
-     * @param \Illuminate\Http\Request $request
-     * @return \App\Models\User
+     * @param Request $request
+     * @return User
      */
-    public function login(Request $request)
+    public function login(Request $request): User
     {
         $credentials = $request->validate([
             'email' => 'required|email',
@@ -120,10 +122,10 @@ class UserController extends Controller
     /**
      * Resets the password of a User.
      *
-     * @param \Illuminate\Http\Request $request
-     * @return \App\Models\User
+     * @param Request $request
+     * @return User
      */
-    public function resetPassword(Request $request)
+    public function resetPassword(Request $request): User
     {
         $credentials = $request->validate([
             'email' => 'required|email',
@@ -142,10 +144,10 @@ class UserController extends Controller
     /**
      * Returns the entire User and the Bookings of the user including the flight information, airports & airline
      *
-     * @param \Illuminate\Http\Request $request
-     * @return array|\Illuminate\Http\JsonResponse
+     * @param Request $request
+     * @return array|JsonResponse
      */
-    public function showBookings(Request $request)
+    public function showBookings(Request $request): JsonResponse|array
     {
         $user = User::find($request->user);
         if (!$user) return response()->json(['message' => 'A valid User ID is required'], 400);
@@ -154,7 +156,6 @@ class UserController extends Controller
             if (count($bookings->get()) == 0) {
                 return response()->json(['message' => 'No bookings found'], 404);
             } else {
-                // add the sorting here
                 $sortField = $request->input('sort_by');
                 $sortOrder = $request->input('sort_order') ?? 'asc';
                 if ($sortField) {
@@ -170,10 +171,13 @@ class UserController extends Controller
         }
     }
 
-    /*
+    /**
      * Returns a specific booking with validation
+     *
+     * @param Request $request
+     * @return Collection|JsonResponse|array
      */
-    public function showBooking(Request $request)
+    public function showBooking(Request $request): Collection|JsonResponse|array
     {
         $query = Booking::query();
         $query->find($request->booking);

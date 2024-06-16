@@ -24,7 +24,7 @@ class Flight extends Model
     /**
      * Get the airline that owns the Flight
      */
-    public function airline()
+    public function airline(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(Airline::class);
     }
@@ -32,7 +32,7 @@ class Flight extends Model
     /**
      * Get the departure airport that owns the Flight
      */
-    public function departureAirport()
+    public function departureAirport(): \Illuminate\Database\Eloquent\Relations\HasOne
     {
         return $this->hasOne(Airport::class, 'id', 'departure_airport_id');
     }
@@ -40,7 +40,7 @@ class Flight extends Model
     /**
      * Get the arrival airport that owns the Flight
      */
-    public function arrivalAirport()
+    public function arrivalAirport(): \Illuminate\Database\Eloquent\Relations\HasOne
     {
         return $this->hasOne(Airport::class, 'id', 'arrival_airport_id');
     }
@@ -48,7 +48,7 @@ class Flight extends Model
     /**
      * Get the bookings for the flight.
      */
-    public function bookings()
+    public function bookings(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany(Booking::class);
     }

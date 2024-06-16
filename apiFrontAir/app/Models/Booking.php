@@ -23,7 +23,7 @@ class Booking extends Model
     /**
      * Get the Flight that belongs to the Booking
      */
-    public function flight()
+    public function flight(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(Flight::class);
     }
@@ -31,7 +31,7 @@ class Booking extends Model
     /**
      * Get the User that belongs to the Booking
      */
-    public function user()
+    public function user(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(User::class);
     }

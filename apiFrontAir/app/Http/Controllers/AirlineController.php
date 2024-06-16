@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 use App\Models\Airline;
 
@@ -10,9 +12,10 @@ class AirlineController extends Controller
     /**
      * Returns all Airlines (if needed: limit & offset).
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param Request $request
+     * @return Builder[]|Collection
      */
-    public function index(Request $request)
+    public function index(Request $request): Collection|array
     {
         $query = Airline::query();
         foreach ($request->all() as $key => $value) { // key = column name (name, country, iata), value = search value (e.g. 'London', 'Great Brittain', 'LHR')
@@ -41,10 +44,10 @@ class AirlineController extends Controller
     /**
      * Creates a new Airline.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \App\Models\Airline
+     * @param Request $request
+     * @return Airline
      */
-    public function store(Request $request)
+    public function store(Request $request): Airline
     {
         $airline = $request->validate([
             'name' => 'required|string',
@@ -59,10 +62,10 @@ class AirlineController extends Controller
     /**
      * Returns a specific Airline.
      *
-     * @param  \App\Models\Airline  $airline
-     * @return \App\Models\Airline
+     * @param Airline $airline
+     * @return Airline
      */
-    public function show(Airline $airline)
+    public function show(Airline $airline): Airline
     {
         return $airline;
     }
@@ -70,11 +73,11 @@ class AirlineController extends Controller
     /**
      * Updates a specific Airline.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Airline  $airline
-     * @return \App\Models\Airline
+     * @param Request $request
+     * @param Airline $airline
+     * @return Airline
      */
-    public function update(Request $request, Airline $airline)
+    public function update(Request $request, Airline $airline): Airline
     {
         $airline->update($request->all());
         return $airline;
@@ -83,9 +86,9 @@ class AirlineController extends Controller
     /**
      * Deletes a specific Airline.
      *
-     * @param  \App\Models\Airline  $airline
+     * @param Airline $airline
      */
-    public function destroy(Airline $airline)
+    public function destroy(Airline $airline): void
     {
         $airline->delete();
     }

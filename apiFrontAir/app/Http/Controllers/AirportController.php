@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 use App\Models\Airport;
 
@@ -10,9 +12,10 @@ class AirportController extends Controller
     /**
      * Returns all Airports (if needed: limit & offset).
      *
-     * @param \Illuminate\Http\Request $request
+     * @param Request $request
+     * @return Builder[]|Collection
      */
-    public function index(Request $request)
+    public function index(Request $request): Collection|array
     {
         $query = Airport::query();
 
@@ -44,10 +47,10 @@ class AirportController extends Controller
     /**
      * Creates a new Airport.
      *
-     * @param \Illuminate\Http\Request $request
-     * @return \App\Models\Airport
+     * @param Request $request
+     * @return Airport
      */
-    public function store(Request $request)
+    public function store(Request $request): Airport
     {
         $request->validate([
             'name' => 'required|string',
@@ -63,10 +66,10 @@ class AirportController extends Controller
     /**
      * Returns a specific Airport.
      *
-     * @param \App\Models\Airport $airport
-     * @return \App\Models\Airport
+     * @param Airport $airport
+     * @return Airport
      */
-    public function show(Airport $airport)
+    public function show(Airport $airport): Airport
     {
         return $airport;
     }
@@ -74,11 +77,11 @@ class AirportController extends Controller
     /**
      * Updates a specific Airport.
      *
-     * @param \Illuminate\Http\Request $request
-     * @param \App\Models\Airport $airport
-     * @return \App\Models\Airport
+     * @param Request $request
+     * @param Airport $airport
+     * @return Airport
      */
-    public function update(Request $request, Airport $airport)
+    public function update(Request $request, Airport $airport): Airport
     {
         $airport->update($request->all());
         return $airport;
@@ -87,9 +90,9 @@ class AirportController extends Controller
     /**
      * Deletes a specific Airport.
      *
-     * @param \App\Models\Airport $airport
+     * @param Airport $airport
      */
-    public function destroy(Airport $airport)
+    public function destroy(Airport $airport): void
     {
         $airport->delete();
     }
