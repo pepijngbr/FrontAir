@@ -26,7 +26,7 @@ class BookingFactory extends Factory
             'class' => $this->faker->randomElement(['Economy', 'Business', 'First']),
             'type' => $this->faker->randomElement(['one-way', 'round-trip']),
             'price' => $this->faker->randomFloat(2, 100, 1000),
-            'booking_status' => $this->faker->randomElement(['booked', 'cancelled', 'pending']),
+            'booking_status' => $this->faker->randomElement(['booked', 'pending']),
         ];
     }
 }

@@ -14,23 +14,22 @@ class BookingController extends Controller
 
     public function store(Request $request)
     {
-        return Booking::create($request->all());
+        // Create new Booking
+        $newBooking = Booking::create($request->all());
+
+        // Retrieve the newly created Booking with the related Flight with airline and airports
+        $query = Booking::query();
+        $bookingWithFlight = $query->with(['flight.airline', 'flight.departureAirport', 'flight.arrivalAirport'])
+            ->where('id', $newBooking->id)
+            ->first();
+
+        // Return the booked Flight
+        return response()->json($bookingWithFlight);
     }
 
     public function show(Booking $booking)
     {
-        // return ['booking' => $booking, 'user_id' => (int)$request->user_id];
-
-        // $foundBooking = Booking::find($booking->id);
-        // if ($booking->user_id != $foundBooking->user_id) {
-        //     return response()->json(['message' => 'Unauthorized'], 401);
-        //     if (!$booking) {
-        //         return response()->json(['message' => 'Booking not found'], 404);
-        //     }
-        // }
-
         return $booking;
-        return $booking->user()->get();
     }
 
     public function update(Request $request, Booking $booking)
@@ -41,6 +40,16 @@ class BookingController extends Controller
 
     public function destroy(Booking $booking)
     {
+        // Retrieve the old booking data with related flight and other relationships
+        $query = Booking::query();
+        $oldBooking = $query->with(['flight.airline', 'flight.departureAirport', 'flight.arrivalAirport'])
+            ->where('id', $booking->id)
+            ->first();
+
+        // Delete the booking
         $booking->delete();
+
+        // Return the old booking data as JSON
+        return response()->json($oldBooking);
     }
 }

@@ -19,14 +19,14 @@ class FlightController extends Controller
             }
         }
 
-        // add the limit and offset here
+        // limiting and offset filter
         $limit = $request->input('limit');
         $offset = $request->input('offset') ?? 0;
         if ($limit && $limit >= 1 && $offset >= 0) {
             $query->limit($limit)->offset($offset);
         }
 
-        // add the sorting here
+        // sorting by and order filter
         $sortField = $request->input('sort_by');
         $sortOrder = $request->input('sort_order') ?? 'asc';
         if ($sortField) {
@@ -37,6 +37,26 @@ class FlightController extends Controller
         $airlineId = $request->input('airline_id');
         if ($airlineId) {
             $query->where('airline_id', $airlineId);
+        }
+
+        // Departure and arrival airports filter
+        $departureAirportId = $request->input('departure_airport_id');
+        $arrivalAirportId = $request->input('arrival_airport_id');
+        if ($departureAirportId) {
+            $query->where('departure_airport_id', $departureAirportId);
+        }
+        if ($arrivalAirportId) {
+            $query->where('arrival_airport_id', $arrivalAirportId);
+        }
+
+        // Departure and arrival time filter
+        $departureTime = $request->input('departure_time');
+        $arrivalTime = $request->input('arrival_time');
+        if ($departureTime) {
+            $query->where('departure_time', $departureTime);
+        }
+        if ($arrivalTime) {
+            $query->where('arrival_time', $arrivalTime);
         }
 
         return $query->with(['airline', 'departureAirport', 'arrivalAirport'])->get(); // return the query result
