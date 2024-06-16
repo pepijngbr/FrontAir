@@ -1,5 +1,4 @@
 <template>
-    <!-- h-[calc(100vh-63px)] -->
     <div class="flex h-screen w-screen flex-col md:flex-row">
         <form
             @submit.prevent="login"
@@ -118,7 +117,6 @@ export default {
         },
     },
     mounted() {
-        // document.documentElement.setAttribute('data-theme', 'frontair');
         useSiteThemeStore().loadTheme();
     },
 };

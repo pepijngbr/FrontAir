@@ -235,7 +235,8 @@ export default {
                         const userData = {
                             wallet: updatedWallet,
                         };
-                        // Add Flight price back to user wallet
+
+                        // Add Flight price back to user wallet after cancelling
                         axios
                             .put(
                                 apiUrl + '/users/' + userStore.user.id,
@@ -256,7 +257,8 @@ export default {
                             available_seats:
                                 response.data.flight.available_seats + 1,
                         };
-                        // Add available seats back with +1
+
+                        // Add available seats back with +1 because of cancelling
                         axios
                             .put(
                                 apiUrl + '/flights/' + response.data.flight.id,
@@ -302,7 +304,7 @@ export default {
                 day: 'numeric',
                 hour: 'numeric',
                 minute: 'numeric',
-                timeZone: 'GMT', // Adjust time zone as per your application
+                timeZone: 'GMT',
             });
         },
     },

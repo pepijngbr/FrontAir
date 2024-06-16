@@ -43,7 +43,7 @@ export default {
     },
     data() {
         return {
-            balance: 0,
+            balance: 0 || useUserStore().user.wallet,
             amount: null,
         };
     },

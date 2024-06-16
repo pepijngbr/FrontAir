@@ -13,7 +13,7 @@
         </div>
         <div class="rounded-lg bg-white p-8 shadow-lg">
             <p class="text-gray-700">
-                By accessing the website at https://www.frontair.com, you are
+                By accessing the website at https://www.frontair.nl, you are
                 agreeing to be bound by these terms of service, all applicable
                 laws and regulations, and agree that you are responsible for
                 compliance with any applicable local laws.

@@ -11,7 +11,7 @@
             <input
                 type="text"
                 placeholder="Type here"
-                class="input input-bordered w-full max-w-xs"
+                class="input input-bordered mr-2 w-full max-w-xs border caret-primary outline-none transition-colors focus:border-primary focus:outline-none"
                 required
                 v-model="this.name"
                 maxlength="255"
@@ -50,33 +50,44 @@
     </section>
     <section class="my-12">
         <b class="text-2xl">Change Password</b>
-        <form class="my-4">
+        <form class="my-4" @submit.prevent="changePassword">
             <label for="old-password">Old Password</label><br />
             <input
                 type="password"
                 placeholder="Type here"
-                class="input input-bordered w-full max-w-xs"
+                class="input input-bordered mb-4 mr-2 w-full max-w-xs border caret-primary outline-none transition-colors focus:border-primary focus:outline-none"
                 id="old-password"
                 name="old-password"
-            /><br />
+                v-model="this.old_password"
+            /><RouterLink
+                :to="{ name: 'reset-password' }"
+                class="text-primary hover:underline"
+                >Forgot password?</RouterLink
+            ><br />
             <label for="new-password">New Password</label><br />
             <input
                 type="password"
                 placeholder="Type here"
-                class="input input-bordered w-full max-w-xs"
+                class="input input-bordered mb-4 w-full max-w-xs border caret-primary outline-none transition-colors focus:border-primary focus:outline-none"
                 id="new-password"
                 name="new-password"
+                v-model="this.new_password"
             /><br />
             <label for="confirm-password">Confirm Password</label><br />
             <input
                 type="password"
                 placeholder="Type here"
-                class="input input-bordered w-full max-w-xs"
+                class="input input-bordered mb-4 w-full max-w-xs border caret-primary outline-none transition-colors focus:border-primary focus:outline-none"
                 id="confirm-password"
                 name="confirm-password"
-            /><br /><br />
-            <button type="submit" class="btn btn-accent">
-                Change Password
+                v-model="this.confirm_password"
+            /><br />
+            <button
+                type="submit"
+                class="btn btn-accent"
+                @click="updatePassword"
+            >
+                Update
             </button>
         </form>
     </section>
@@ -128,6 +139,9 @@ export default {
                 first_name: useUserStore().user.name,
                 email: useUserStore().user.email,
             },
+            old_password: '',
+            new_password: '',
+            confirm_password: '',
         };
     },
     mounted() {
@@ -137,17 +151,10 @@ export default {
     },
     methods: {
         setTheme(theme) {
-            // Access the Pinia store
-            const siteThemeStore = useSiteThemeStore();
-
-            // Update the theme state in the store
-            siteThemeStore.setTheme(theme);
-
-            // Update localStorage
-            localStorage.setItem('theme', theme);
-
-            // Apply the theme to the document element
-            document.documentElement.setAttribute('data-theme', theme);
+            const siteThemeStore = useSiteThemeStore(); // pinia
+            siteThemeStore.setTheme(theme); // set theme
+            localStorage.setItem('theme', theme); // local storage
+            document.documentElement.setAttribute('data-theme', theme); // modify theme via attribute data-theme (DaisyUI)
         },
         updateInformation() {
             const data = {
@@ -163,6 +170,31 @@ export default {
                 .catch((error) => {
                     console.error(error);
                 });
+        },
+        updatePassword() {
+            if (
+                this.old_password === '' ||
+                this.new_password === '' ||
+                this.confirm_password === ''
+            ) {
+                alert('Fill in all fields to update your password.');
+            } else if (this.new_password !== this.confirm_password) {
+                alert('Confirm password does not match the New password.');
+            } else {
+                const data = {
+                    password: this.new_password,
+                };
+                axios
+                    .put(apiUrl + '/users/' + useUserStore().user.id, data)
+                    .then((response) => {
+                        console.log(response.data);
+                        useUserStore().updateUser(response.data);
+                        alert('Succesfully updated user information!');
+                    })
+                    .catch((error) => {
+                        console.error(error);
+                    });
+            }
         },
     },
 };

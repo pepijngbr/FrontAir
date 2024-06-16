@@ -1,5 +1,4 @@
 <template>
-    <!-- h-[calc(100vh-63px)] -->
     <div class="flex h-screen w-screen flex-col lg:flex-row">
         <form
             @submit.prevent="register"
@@ -124,7 +123,6 @@ export default {
         },
     },
     mounted() {
-        // document.documentElement.setAttribute('data-theme', 'frontair');
         useSiteThemeStore().loadTheme();
     },
 };

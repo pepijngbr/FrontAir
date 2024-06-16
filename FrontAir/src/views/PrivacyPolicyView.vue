@@ -15,7 +15,7 @@
             <p class="text-gray-700">
                 Your privacy is important to us. It is FrontAir's policy to
                 respect your privacy regarding any information we may collect
-                from you across our website, https://www.frontair.com, and other
+                from you across our website, https://www.frontair.nl, and other
                 sites we own and operate.
             </p>
         </div>

@@ -3,12 +3,12 @@
         class="relative bg-gradient-to-b from-base-100 to-sky-400 pt-20 lg:pt-56"
     >
         <div class="relative">
-            <div class="container relative z-10 mx-auto pb-20">
+            <div class="container relative z-[1] mx-auto pb-20">
                 <div
                     class="grid grid-cols-1 gap-8 rounded-lg bg-base-100 p-10 shadow-lg md:grid-cols-2 lg:grid-cols-4"
                 >
                     <!-- FrontAir Logo -->
-                    <div class="space-y-4">
+                    <div>
                         <img
                             :src="
                                 '../src/assets/images/FrontAir' +
@@ -17,17 +17,17 @@
                             alt="FrontAir Logo"
                         />
                     </div>
-                    <div class="space-y-4">
+                    <div class="flex flex-col gap-4">
                         <h3 class="text-lg font-semibold">Support Hours</h3>
-                        <ul class="space-y-2">
+                        <ul class="[&>*]:mb-2">
                             <li>Monday - Friday: 9:00 AM - 5:00 PM</li>
                             <li>Saturday: 10:00 AM - 4:00 PM</li>
                             <li>Sunday: Closed</li>
                         </ul>
                     </div>
-                    <div class="space-y-4">
+                    <div class="flex flex-col gap-4">
                         <h3 class="text-lg font-semibold">FAQ</h3>
-                        <ul class="space-y-2">
+                        <ul class="[&>*]:mb-2">
                             <li>
                                 <a href="#" class="text-primary hover:underline"
                                     >How do I book a flight?</a
@@ -45,9 +45,9 @@
                             </li>
                         </ul>
                     </div>
-                    <div class="space-y-4">
+                    <div class="flex flex-col gap-4">
                         <h3 class="text-lg font-semibold">Policies</h3>
-                        <ul class="space-y-2">
+                        <ul class="[&>*]:mb-2">
                             <li>
                                 <RouterLink
                                     :to="{ name: 'policy.privacy' }"
@@ -82,7 +82,7 @@
             </div>
             <!-- Clouds (Background Image using tailwind.config.js) -->
             <div
-                class="bg-clouds absolute inset-0 z-0 h-full w-full bg-cover bg-no-repeat opacity-50"
+                class="absolute inset-0 z-0 h-full w-full bg-clouds bg-cover bg-no-repeat opacity-50"
             ></div>
         </div>
     </footer>

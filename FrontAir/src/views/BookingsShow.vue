@@ -210,7 +210,7 @@ export default {
                 day: 'numeric',
                 hour: 'numeric',
                 minute: 'numeric',
-                timeZone: 'GMT', // Adjust time zone as per your application
+                timeZone: 'GMT',
             });
         },
     },
