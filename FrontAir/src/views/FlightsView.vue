@@ -9,36 +9,49 @@
             <h1>Flight Schedule</h1>
         </div>
         <p>View our Flight Schedule below and book a flight!</p>
-        <div
-            v-if="this.flights.length > 0"
-            class="mx-auto mb-12 mt-4 flex max-w-[400px] flex-col md:mx-0"
-        >
+        <div class="mx-auto mb-12 mt-4 flex max-w-[400px] flex-col md:mx-0">
             <div class="collapse collapse-arrow mr-auto bg-base-200">
                 <input type="checkbox" />
                 <div class="collapse-title text-xl font-medium">Filters</div>
                 <div class="collapse-content text-center md:text-left">
                     <p class="font-bold">Destination</p>
-                    <select class="select select-bordered w-1/2">
-                        <option disabled selected>From</option>
+                    <select
+                        class="select select-bordered w-1/2 border caret-primary outline-none transition-colors focus:border-primary focus:outline-none"
+                        v-model="this.departure_airport"
+                    >
+                        <option disabled>From</option>
+                        <option value="0" selected>Any</option>
                         <option
                             v-for="airport in this.airports"
                             :key="airport.id"
+                            :value="airport.id"
+                            v-show="this.arrival_airport != airport.id"
                         >
-                            {{ airport.name }} ({{ airport.icao }})
+                            {{ airport.country }}, {{ airport.name }} ({{
+                                airport.iata
+                            }})
                         </option>
                     </select>
-                    <select class="select select-bordered w-1/2">
-                        <option disabled selected>To</option>
+                    <select
+                        class="select select-bordered w-1/2 border caret-primary outline-none transition-colors focus:border-primary focus:outline-none"
+                        v-model="this.arrival_airport"
+                    >
+                        <option disabled>To</option>
+                        <option value="0" selected>Any</option>
                         <option
                             v-for="airport in this.airports"
                             :key="airport.id"
+                            :value="airport.id"
+                            v-show="this.departure_airport != airport.id"
                         >
-                            {{ airport.name }} ({{ airport.icao }})
-                        </option></select
-                    ><br /><br />
-                    <p class="font-bold">Airline</p>
+                            {{ airport.country }}, {{ airport.name }} ({{
+                                airport.iata
+                            }})
+                        </option>
+                    </select>
+                    <p class="mt-4 font-bold">Airline</p>
                     <select
-                        class="select select-bordered w-full"
+                        class="select select-bordered w-full border caret-primary outline-none transition-colors focus:border-primary focus:outline-none"
                         v-model="this.airline"
                     >
                         <option value="0" selected>All</option>
@@ -48,20 +61,18 @@
                             :key="airline.id"
                         >
                             {{ airline.name }}
-                        </option></select
-                    ><br /><br />
-                    <p class="font-bold">Date selection</p>
+                        </option>
+                    </select>
+                    <p class="mt-4 font-bold">Date selection</p>
                     <div class="relative max-w-sm">
                         <div
                             class="pointer-events-none absolute inset-y-0 start-0 flex items-center ps-3.5"
                         >
-                            <i
-                                class="bi bi-calendar-fill text-lg text-gray-500 dark:text-gray-400"
-                            ></i>
+                            <i class="bi bi-calendar-fill text-lg"></i>
                         </div>
                         <input
                             type="text"
-                            class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 ps-10 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
+                            class="block w-full rounded-lg border p-2.5 ps-10 text-sm caret-primary transition-colors focus:border-primary focus:outline-none focus:ring-blue-500"
                             placeholder="Select date"
                         />
                     </div>
@@ -69,7 +80,6 @@
             </div>
         </div>
     </section>
-
     <div
         v-if="this.flights.length > 0"
         class="grid auto-rows-fr grid-cols-12 gap-4 px-4"
@@ -104,23 +114,49 @@
                             name: 'flights.show',
                             params: { id: flight.id },
                         }"
+                        class="hover:underline"
                     >
                         {{
-                            flight.airline.name +
+                            flight.flight_number.toUpperCase() +
                             ' - ' +
-                            flight.flight_number.toUpperCase()
+                            flight.airline.name
                         }}
                     </RouterLink>
                 </h2>
-                <div class="card-body">
-                    {{ flight.departure_airport.name }} ({{
-                        flight.departure_airport.icao
-                    }}) - {{ flight.arrival_airport.name }} ({{
-                        flight.arrival_airport.icao
-                    }})<br />
-                    {{ flight.departure_time }} - {{ flight.arrival_time
-                    }}<br />
-                    {{ flight.available_seats }} seats available<br />
+                <div
+                    class="relative flex justify-between rounded-lg bg-base-200 px-4"
+                >
+                    <div class="p-1 text-center lg:col-span-2">
+                        <p class="text-2xl">
+                            {{ flight.departure_airport.iata }}
+                        </p>
+
+                        <p class="text-xs">
+                            {{ flight.departure_airport.name }},<br />
+                            {{ flight.departure_airport.country }}
+                        </p>
+                        <p class="mt-4 hidden lg:block">
+                            {{ formatDate(flight.departure_time) }}
+                        </p>
+                    </div>
+                    <div
+                        class="mt-3 flex h-10 w-10 rotate-90 items-center justify-center"
+                    >
+                        <i class="bi bi-airplane-fill"></i>
+                    </div>
+                    <div class="p-1 text-center lg:col-span-2">
+                        <p class="text-2xl">
+                            {{ flight.arrival_airport.iata }}
+                        </p>
+
+                        <p class="text-xs">
+                            {{ flight.arrival_airport.name }},<br />
+                            {{ flight.arrival_airport.country }}
+                        </p>
+                        <p class="mt-4 hidden lg:block">
+                            {{ formatDate(flight.arrival_time) }}
+                        </p>
+                    </div>
                 </div>
                 <div class="card-actions items-end justify-between">
                     <b
@@ -142,24 +178,22 @@
                         v-else-if="!user.isLoggedIn"
                         :to="{ name: 'login' }"
                         class="btn btn-warning w-full sm:w-1/2 md:w-auto"
-                        >Login to book</RouterLink
-                    >
-                    <div v-else>
-                        <p>Flight already booked.</p>
-                        <RouterLink
-                            :to="{
-                                name: 'bookings.index',
-                            }"
-                            class="btn btn-warning w-full sm:w-1/2 md:w-auto"
-                            >View booked flight
-                        </RouterLink>
-                    </div>
+                        >Login to book
+                    </RouterLink>
+                    <RouterLink
+                        v-else
+                        :to="{
+                            name: 'bookings.index',
+                        }"
+                        class="btn btn-warning w-full sm:w-1/2 md:w-auto"
+                        >View booked flight
+                    </RouterLink>
                 </div>
             </div>
         </div>
     </div>
     <div v-else class="h-screen p-4 text-center">
-        <p>No flights available.</p>
+        <p>No flights found.</p>
     </div>
     <div
         v-if="this.flights && this.limit <= this.flights.length"
@@ -191,7 +225,16 @@ export default {
     setup() {
         useHead({
             title: 'Flights - FrontAir',
-            meta: [],
+            meta: [
+                {
+                    name: 'description',
+                    content: 'Browse and book flights with ease.',
+                },
+                {
+                    name: 'keywords',
+                    content: 'flights, airline, booking, travel',
+                },
+            ],
         });
     },
     data() {
@@ -200,9 +243,10 @@ export default {
             airports: [],
             airlines: [],
             bookings: [],
-            date_from: '', // filter
-            date_to: '', // filter
-            airline: '', // filter
+            airline: '',
+            departure_airport: '',
+            arrival_airport: '',
+            date: '',
             limit: 10,
         };
     },
@@ -218,17 +262,37 @@ export default {
         airline: function () {
             this.retrieveFlights();
         },
+        departure_airport: function () {
+            this.retrieveFlights();
+        },
+        arrival_airport: function () {
+            this.retrieveFlights();
+        },
     },
     methods: {
+        formatDate(datetime) {
+            const date = new Date(datetime);
+            return date.toLocaleDateString('nl-NL', {
+                year: 'numeric',
+                month: 'numeric',
+                day: 'numeric',
+                hour: 'numeric',
+                minute: 'numeric',
+                timeZone: 'GMT',
+            });
+        },
         retrieveFlights() {
-            // axios.get(apiUrl + '/flights?limit=' + this.limit + '&date_from=' + this.date_from + '&date_to=' + this.date_to + '&airline=' + this.airline)
             axios
                 .get(
                     apiUrl +
                         '/flights?sort_by=id&sort_order=DESC&limit=' +
                         this.limit +
                         '&airline_id=' +
-                        this.airline,
+                        this.airline +
+                        '&departure_airport_id=' +
+                        this.departure_airport +
+                        '&arrival_airport_id=' +
+                        this.arrival_airport,
                 )
                 .then((response) => {
                     console.log(response.data);
@@ -276,12 +340,6 @@ export default {
                 });
         },
         isFlightBooked(flight_id) {
-            // this.bookings.forEach((booking) => {
-            //     if (booking.flight_id === flight_id) {
-            //         return true;
-            //     }
-            // });
-
             if (this.bookings.length > 0) {
                 for (let i = 0; i < this.bookings.length; i++) {
                     if (this.bookings[i].flight_id == flight_id) {
@@ -292,16 +350,6 @@ export default {
             } else {
                 return false;
             }
-
-            // return this.bookings.some(
-            //     (booking) => booking.flight_id === flight_id,
-            // );
-
-            // return (
-            //     this.bookings.find(
-            //         (booking) => booking.flight_id === flight_id,
-            //     ) !== undefined
-            // );
         },
     },
     computed: {
