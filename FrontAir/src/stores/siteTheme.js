@@ -10,7 +10,7 @@ export const useSiteThemeStore = defineStore('siteTheme', {
             localStorage.setItem('theme', value);
         },
         loadTheme() {
-            const theme = localStorage.getItem('theme');
+            const theme = localStorage.getItem('theme') || 'frontair';
             if (theme) {
                 this.siteTheme = theme;
                 document.documentElement.setAttribute('data-theme', theme);

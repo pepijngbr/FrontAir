@@ -87,30 +87,30 @@ const router = createRouter({
             component: () => import('../views/auth/ResetPasswordView.vue'),
         },
         // TODO: Dashboard (maybe another time)
-        {
-            path: '/dashboard',
-            name: 'dashboard.overview',
-            meta: { requiresAuth: true },
-            component: () => import('../views/dashboard/OverviewView.vue'),
-        },
-        {
-            path: '/dashboard/analytics',
-            name: 'dashboard.analytics',
-            meta: { requiresAuth: true },
-            component: () => import('../views/dashboard/AnalyticsView.vue'),
-        },
-        {
-            path: '/dashboard/users',
-            name: 'dashboard.users.index',
-            meta: { requiresAuth: true },
-            component: () => import('../views/dashboard/users/UsersView.vue'),
-        },
-        {
-            path: '/dashboard/users/:id',
-            name: 'dashboard.users.show',
-            meta: { requiresAuth: true },
-            component: () => import('../views/dashboard/users/UsersShow.vue'),
-        },
+        // {
+        //     path: '/dashboard',
+        //     name: 'dashboard.overview',
+        //     meta: { requiresAuth: true },
+        //     component: () => import('../views/dashboard/OverviewView.vue'),
+        // },
+        // {
+        //     path: '/dashboard/analytics',
+        //     name: 'dashboard.analytics',
+        //     meta: { requiresAuth: true },
+        //     component: () => import('../views/dashboard/AnalyticsView.vue'),
+        // },
+        // {
+        //     path: '/dashboard/users',
+        //     name: 'dashboard.users.index',
+        //     meta: { requiresAuth: true },
+        //     component: () => import('../views/dashboard/users/UsersView.vue'),
+        // },
+        // {
+        //     path: '/dashboard/users/:id',
+        //     name: 'dashboard.users.show',
+        //     meta: { requiresAuth: true },
+        //     component: () => import('../views/dashboard/users/UsersShow.vue'),
+        // },
         {
             path: '/refund-policy',
             name: 'policy.refund',
