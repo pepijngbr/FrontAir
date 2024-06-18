@@ -9,7 +9,7 @@
         <div class="drawer-content">
             <!-- Header -->
             <header
-                v-show="
+                v-if="
                     currentRoute() != '/login' &&
                     currentRoute() != '/register' &&
                     currentRoute() != '/reset-password'
@@ -34,7 +34,7 @@
                 >
                     <img
                         :src="
-                            '../src/assets/images/FrontAir' +
+                            '/src/assets/images/FrontAir' +
                             (theme == 'frontair' ? '.webp' : '_White.webp')
                         "
                         alt="FrontAir Logo"
@@ -163,7 +163,7 @@
             <!-- Content -->
             <RouterView :isLoggedIn="this.isLoggedIn" />
             <MainFooter
-                v-show="
+                v-if="
                     currentRoute() != '/login' &&
                     currentRoute() != '/register' &&
                     currentRoute() != '/reset-password' &&
@@ -184,7 +184,7 @@
                 <div class="mb-4 flex items-start justify-between gap-4">
                     <img
                         :src="
-                            '../src/assets/images/FrontAir' +
+                            '/src/assets/images/FrontAir' +
                             (theme == 'frontair' ? '.webp' : '_White.webp')
                         "
                         class="h-24"
@@ -253,7 +253,7 @@
                                 @click="toggleDrawer"
                             >
                                 <i class="bi bi-wallet"></i> Wallet: €{{
-                                    this.balance
+                                    user.wallet
                                 }}
                             </RouterLink>
                         </li>
@@ -336,7 +336,6 @@ export default {
     data() {
         return {
             theme: '',
-            balance: '',
             isDrawerOpen: false,
         };
     },
@@ -381,24 +380,6 @@ export default {
                     content:
                         'https://www.frontair.nl/images/frontair_logo.webp',
                 },
-                {
-                    name: 'twitter:card',
-                    content: 'summary_large_image',
-                },
-                {
-                    name: 'twitter:title',
-                    content: 'Home - FrontAir',
-                },
-                {
-                    name: 'twitter:description',
-                    content:
-                        'Welcome to FrontAir, your one-stop destination for booking flights at the best prices. Find deals on international and domestic flights, compare airlines, and plan your perfect trip.',
-                },
-                {
-                    name: 'twitter:image',
-                    content:
-                        'https://www.frontair.nl/images/frontair_logo.webp',
-                },
             ],
         });
 
@@ -425,20 +406,6 @@ export default {
         toggleDrawer() {
             this.isDrawerOpen = !this.isDrawerOpen;
         },
-        retrieveBalance() {
-            const userStore = useUserStore();
-            const user = userStore.user;
-            axios
-                .get(apiUrl + '/users/' + user.id)
-                .then((response) => {
-                    console.log(response.data);
-                    userStore.updateUser(response.data);
-                    this.balance = parseFloat(response.data.wallet).toFixed(2);
-                })
-                .catch((error) => {
-                    console.error('Error retrieving balance: ', error);
-                });
-        },
     },
     computed: {
         user() {
@@ -450,11 +417,6 @@ export default {
     },
     mounted() {
         useSiteThemeStore().loadTheme();
-    },
-    created() {
-        if (useUserStore().user) {
-            this.retrieveBalance();
-        }
     },
 };
 </script>
