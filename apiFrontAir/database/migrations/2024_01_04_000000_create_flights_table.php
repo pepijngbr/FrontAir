@@ -12,16 +12,20 @@ return new class extends Migration {
     {
         Schema::create('flights', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('departure_airport_id')->foreign('departure_airport_id')->references('id')->on('airports');
-            $table->unsignedBigInteger('arrival_airport_id')->foreign('arrival_airport_id')->references('id')->on('airports');
+            $table->foreignId('departure_airport_id');
+            $table->foreignId('arrival_airport_id');
             $table->datetime('departure_time');
             $table->datetime('arrival_time');
             $table->string('flight_number');
-            $table->unsignedBigInteger('airline_id')->foreign('airline_id')->references('id')->on('airlines');
+            $table->foreignId('airline_id');
             $table->integer('image');
             $table->decimal('price', 10, 2);
             $table->integer('available_seats');
             $table->timestamps();
+
+            $table->foreign('departure_airport_id')->references('id')->on('airports')->onDelete('cascade');
+            $table->foreign('arrival_airport_id')->references('id')->on('airports')->onDelete('cascade');
+            $table->foreign('airline_id')->references('id')->on('airlines')->onDelete('cascade');
         });
     }
 

@@ -13,8 +13,8 @@ return new class extends Migration {
     {
         Schema::create('bookings', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('user_id');
-            $table->unsignedBigInteger('flight_id');
+            $table->foreignId('user_id');
+            $table->foreignId('flight_id');
             $table->datetime('booking_date')->default(now());
             $table->string('seat_number');
             $table->string('class');
@@ -23,8 +23,8 @@ return new class extends Migration {
             $table->string('booking_status')->default('pending');
             $table->timestamps();
 
-            $table->foreign('user_id')->references('id')->on('users');
-            $table->foreign('flight_id')->references('id')->on('flights');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('flight_id')->references('id')->on('flights')->onDelete('cascade');
         });
     }
 
