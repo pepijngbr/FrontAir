@@ -1,8 +1,10 @@
 <template>
-    <div class="flex h-screen w-screen flex-col md:flex-row">
+    <div
+        class="flex min-h-screen w-screen flex-col justify-center md:h-screen md:flex-row"
+    >
         <form
             @submit.prevent="login"
-            class="mt-40 flex w-full flex-col items-center p-6 md:w-[600px] md:p-10 lg:mt-20 [&>*]:w-full"
+            class="flex w-full flex-col items-center justify-center p-6 md:w-[600px] md:p-10 lg:mt-20 [&>*]:w-full"
         >
             <img
                 :src="
@@ -31,7 +33,7 @@
             </label>
             <RouterLink
                 to="/reset-password"
-                class="mb-4 text-right font-bold text-secondary"
+                class="mb-4 text-right font-bold text-secondary hover:underline"
                 >Forgot your password?
             </RouterLink>
             <button class="btn btn-primary h-14 w-full text-white lg:w-auto">
@@ -39,21 +41,25 @@
             </button>
             <p class="mt-4 text-center font-extralight">
                 New to FrontAir?
-                <RouterLink to="/register" class="font-bold text-primary">
+                <RouterLink
+                    to="/register"
+                    class="font-bold text-primary hover:underline"
+                >
                     Register
                 </RouterLink>
             </p>
             <RouterLink
                 :to="{ name: 'home' }"
-                class="mt-12 text-center font-bold text-primary"
+                class="mt-4 text-center font-bold hover:underline"
                 >Enter as Guest
             </RouterLink>
         </form>
         <img
-            src="@/assets/images/unsplash_q_1aQ_jXLr0.webp"
+            src="/src/assets/images/unsplash_q_1aQ_jXLr0.webp"
             alt="Airplane Background With Sunset"
             class="left-0 hidden h-full w-[calc(100vw-500px)] object-cover object-left md:block"
         />
+        <!-- image: hidden h-full w-[calc(100vw-500px)] object-cover object-left lg:block-->
     </div>
 </template>
 
@@ -74,7 +80,13 @@ export default {
     setup() {
         useHead({
             title: 'Login - FrontAir',
-            meta: [],
+            meta: [
+                {
+                    name: 'description',
+                    content:
+                        'The login page of FrontAir, a flight booking web application.',
+                },
+            ],
         });
     },
     data() {
@@ -102,12 +114,20 @@ export default {
                     const userStore = useUserStore();
                     userStore.setUser(response.data);
 
+                    alert(
+                        'Login successful, you will not be redirected to the homepage.',
+                    );
+
                     this.$router.push('/').then(() => {
                         window.location.reload();
                     });
                 })
                 .catch((error) => {
-                    console.error('An error has occurred', error);
+                    console.error(
+                        'An error has occurred during login: ',
+                        error,
+                    );
+                    alert('Login failed, please try again.');
                 });
         },
     },

@@ -1,8 +1,10 @@
 <template>
-    <div class="flex h-screen w-screen flex-col lg:flex-row">
+    <div
+        class="flex min-h-screen w-screen flex-col justify-center md:h-screen md:flex-row"
+    >
         <form
             @submit.prevent="resetPassword"
-            class="mt-40 flex w-full flex-col items-center p-6 lg:mt-20 lg:w-[600px] lg:p-10 [&>*]:w-full"
+            class="flex w-full flex-col items-center justify-center p-6 md:w-[600px] md:p-10 [&>*]:w-full"
         >
             <img
                 :src="
@@ -38,30 +40,34 @@
             >
                 Submit
             </button>
-
             <p class="mt-4 text-center font-extralight">
                 Remember your password?
-                <RouterLink to="/login" class="font-bold text-primary"
+                <RouterLink
+                    to="/login"
+                    class="font-bold text-primary hover:underline"
                     >Login
                 </RouterLink>
             </p>
             <p class="mt-2 text-center font-extralight">
                 New to FrontAir?
-                <RouterLink to="/register" class="font-bold text-secondary"
+                <RouterLink
+                    to="/register"
+                    class="font-bold text-secondary hover:underline"
                     >Register
                 </RouterLink>
             </p>
             <RouterLink
                 :to="{ name: 'home' }"
-                class="mt-12 text-center font-bold text-primary"
+                class="mt-4 text-center font-bold hover:underline"
                 >Enter as Guest
             </RouterLink>
         </form>
         <img
-            src="@/assets/images/unsplash_q_1aQ_jXLr0.webp"
+            src="/src/assets/images/unsplash_q_1aQ_jXLr0.webp"
             alt="Airplane Background With Sunset"
-            class="hidden h-full w-[calc(100vw-500px)] object-cover object-left lg:block"
+            class="left-0 hidden h-full w-[calc(100vw-500px)] object-cover object-left md:block"
         />
+        <!-- image: hidden h-full w-[calc(100vw-500px)] object-cover object-left lg:block -->
     </div>
 </template>
 
@@ -78,6 +84,13 @@ export default {
     setup() {
         useHead({
             title: 'Reset Password - FrontAir',
+            meta: [
+                {
+                    name: 'description',
+                    content:
+                        'The reset password page of FrontAir, a flight booking web application',
+                },
+            ],
         });
     },
     data() {
