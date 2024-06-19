@@ -22,7 +22,7 @@ class AirportSeeder extends Seeder
             'type' => 'medium_airport'
         ]);
         Airport::factory()->create([
-            'name' => 'Amsterdam Airport Schiphol',
+            'name' => 'Schiphol Airport',
             'city' => 'Amsterdam',
             'country' => 'The Netherlands',
             'iata' => 'AMS',
@@ -30,15 +30,7 @@ class AirportSeeder extends Seeder
             'type' => 'large_airport'
         ]);
         Airport::factory()->create([
-            'name' => 'Klein Brögel Airport',
-            'city' => 'Peer',
-            'country' => 'Belgium',
-            'iata' => 'EBBL',
-            'icao' => 'EBBL',
-            'type' => 'small_airport'
-        ]);
-        Airport::factory()->create([
-            'name' => 'Rotterdam The Hague Airport',
+            'name' => 'The Hague Airport',
             'city' => 'Rotterdam',
             'country' => 'The Netherlands',
             'iata' => 'RTM',
@@ -46,7 +38,7 @@ class AirportSeeder extends Seeder
             'type' => 'medium_airport'
         ]);
         Airport::factory()->create([
-            'name' => 'Groningen Airport Eelde',
+            'name' => 'Airport Eelde',
             'city' => 'Groningen',
             'country' => 'The Netherlands',
             'iata' => 'GRQ',
@@ -54,7 +46,7 @@ class AirportSeeder extends Seeder
             'type' => 'medium_airport'
         ]);
         Airport::factory()->create([
-            'name' => 'Maastricht Aachen Airport',
+            'name' => 'Aachen Airport',
             'city' => 'Maastricht',
             'country' => 'The Netherlands',
             'iata' => 'MST',
@@ -94,15 +86,7 @@ class AirportSeeder extends Seeder
             'type' => 'large_airport'
         ]);
         Airport::factory()->create([
-            'name' => 'Dubai Int. Airport',
-            'city' => 'Dubai',
-            'country' => 'United Arab Emirates',
-            'iata' => 'DXB',
-            'icao' => 'OMDB',
-            'type' => 'large_airport'
-        ]);
-        Airport::factory()->create([
-            'name' => 'Beijing Capital Int. Airport',
+            'name' => 'Beijing Int. Airport',
             'city' => 'Beijing',
             'country' => 'China',
             'iata' => 'PEK',
