@@ -1,8 +1,3 @@
 User-agent: *
-Disallow: /login
-Disallow: /register
-Disallow: /reset-password
-Disallow: /bookings/
-Disallow: /flights/
-Disallow: /store/
 Disallow: /dashboard/
+Allow: /
