@@ -1,8 +1,23 @@
 <template>
     <section class="pt-20" v-if="this.booking.flight">
+        <img
+            class="h-60 w-full rounded-lg object-cover object-center"
+            :src="
+                '../src/assets/images/airlines/' +
+                booking.flight.airline.name.toLowerCase().replace(/\s/g, '_') +
+                '/' +
+                booking.flight.image +
+                '.webp'
+            "
+            :alt="
+                booking.flight.airline.name != null
+                    ? booking.flight.airline.name
+                    : 'Image of Airline'
+            "
+        />
         <h1>{{ this.booking.flight.flight_number }}</h1>
     </section>
-    <section class="py-20">
+    <section class="py-10">
         <h2>Your Ticket</h2>
         <div class="max-w-[300px]">
             <Barcode
@@ -18,7 +33,7 @@
             />
         </div>
     </section>
-    <section class="py-20" v-if="this.booking.user">
+    <section class="py-10" v-if="this.booking.user">
         <h2>Billing information</h2>
         <p>
             Booking made by: {{ this.booking.user.name }} ({{
@@ -26,32 +41,39 @@
             }})
         </p>
     </section>
-    <section class="py-20">
+    <section class="py-10">
         <h2>Flight</h2>
-        <h3>{{ this.booking.name }}</h3>
-        <p>Price: {{ this.booking.price }}</p>
-        <p>{{ this.booking.flight.arrival_airport }}</p>
-        <p>{{ this.booking.flight.departure_airport }}</p>
-        <p>{{ this.booking.flight.airline }}</p>
+        <h3>{{ this.booking.flight.flight_number }}</h3>
+        <p>Price: €{{ this.booking.price }}</p>
+        <p>
+            Arrival Airport: {{ this.booking.flight.arrival_airport.name }} ({{
+                this.booking.flight.arrival_airport.iata
+            }})
+        </p>
+        <p>
+            Departure Airport:
+            {{ this.booking.flight.departure_airport.name }} ({{
+                this.booking.flight.departure_airport.iata
+            }})
+        </p>
+        <p>Airline: {{ this.booking.flight.airline.name }}</p>
         <p>Available seats: {{ this.booking.flight.available_seats }}</p>
         <p>Your seat number: {{ this.booking.seat_number }}</p>
     </section>
     <section class="py-20">
         <h2>Airports</h2>
-        <h3>Departure airport</h3>
-        <div v-for="airport in airports" :key="airport.id">
-            <h3>{{ airport.name }}</h3>
-            <p>{{ airport.code }}</p>
-            <p>{{ airport.city }}</p>
-            <p>{{ airport.country }}</p>
-        </div>
-        <h4>Arrival airport</h4>
-        <div v-for="airport in airports" :key="airport.id">
-            <h3>{{ airport.name }}</h3>
-            <p>{{ airport.code }}</p>
-            <p>{{ airport.city }}</p>
-            <p>{{ airport.country }}</p>
-        </div>
+        <b
+            >Departure airport:
+            {{ this.booking.flight.departure_airport.name }}</b
+        >
+        <p>Code: {{ this.booking.flight.departure_airport.iata }}</p>
+        <p>City: {{ this.booking.flight.departure_airport.city }}</p>
+        <p>Country: {{ this.booking.flight.departure_airport.country }}</p>
+        <br /><br />
+        <b>Arrival airport: {{ this.booking.flight.arrival_airport.name }}</b>
+        <p>Code: {{ this.booking.flight.arrival_airport.iata }}</p>
+        <p>City: {{ this.booking.flight.arrival_airport.city }}</p>
+        <p>Country: {{ this.booking.flight.arrival_airport.country }}</p>
     </section>
 </template>
 
