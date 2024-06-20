@@ -239,7 +239,7 @@
 <script>
 import { useSiteThemeStore } from '@/stores/siteTheme.js';
 import { useUserStore } from '@/stores/user.js';
-import { RouterLink } from 'vue-router';
+import { RouterLink, useRoute } from 'vue-router';
 import { useHead } from '@vueuse/head';
 
 const userStore = useUserStore();
