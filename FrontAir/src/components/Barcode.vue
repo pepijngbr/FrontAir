@@ -4,9 +4,6 @@
     </div>
 </template>
 
-<!-- using ref="{value}", is like querySelector but for Vue -->
-<!-- this can be used for retrieving values or manipulating the DOM -->
-
 <script>
 import JsBarcode from 'jsbarcode';
 

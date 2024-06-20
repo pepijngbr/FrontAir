@@ -1,17 +1,12 @@
 <template>
     <section class="mb-4 pt-20 text-center md:text-left">
         <div class="flex justify-center gap-4 md:justify-start">
-            <img
-                src="../assets/images/FrontAir_Aeroplane_V2.webp"
-                class="hidden h-14"
-                alt="FrontAir Airplane"
-            />
             <h1>Flight Schedule</h1>
         </div>
         <p>View our Flight Schedule below and book a flight!</p>
         <div class="mx-auto mb-12 mt-4 flex max-w-[400px] flex-col md:mx-0">
             <div class="collapse collapse-arrow mr-auto bg-base-200">
-                <input type="checkbox" />
+                <input type="checkbox" name="checkbox" />
                 <div class="collapse-title text-xl font-medium">Filters</div>
                 <div class="collapse-content text-center md:text-left">
                     <p class="font-bold">Destination</p>
@@ -81,13 +76,13 @@
         </div>
     </section>
     <div
-        v-if="this.flights.length > 0"
+        v-if="this.flights.length > 0 && !this.loading"
         class="grid auto-rows-fr grid-cols-12 gap-4 px-4"
     >
         <div
             v-for="flight in this.flights"
             :key="flight.id"
-            class="group card col-span-12 bg-base-100 shadow-lg md:col-span-6 xl:col-span-4 2xl:col-span-3"
+            class="group card col-span-12 min-h-[443px] bg-base-100 shadow-lg md:col-span-6 xl:col-span-4 2xl:col-span-3"
             :class="theme == 'frontair' ? '' : 'shadow-white/30'"
         >
             <figure>
@@ -186,14 +181,49 @@
                             name: 'bookings.index',
                         }"
                         class="btn btn-warning w-full sm:w-1/2 md:w-auto"
-                        >View booked flight
+                        >View booking
                     </RouterLink>
                 </div>
             </div>
         </div>
     </div>
-    <div v-else class="h-screen p-4 text-center">
+    <div
+        v-else-if="this.flights.length === 0 && !this.loading"
+        class="h-screen w-full text-center"
+    >
         <p>No flights found.</p>
+    </div>
+    <div v-else class="grid auto-rows-fr grid-cols-12 gap-4 px-4">
+        <div
+            class="card skeleton col-span-12 min-h-[443px] shadow-lg md:col-span-6 xl:col-span-4 2xl:col-span-3"
+        ></div>
+        <div
+            class="card skeleton col-span-12 min-h-[443px] shadow-lg md:col-span-6 xl:col-span-4 2xl:col-span-3"
+        ></div>
+        <div
+            class="card skeleton col-span-12 min-h-[443px] shadow-lg md:col-span-6 xl:col-span-4 2xl:col-span-3"
+        ></div>
+        <div
+            class="card skeleton col-span-12 min-h-[443px] shadow-lg md:col-span-6 xl:col-span-4 2xl:col-span-3"
+        ></div>
+        <div
+            class="card skeleton col-span-12 min-h-[443px] shadow-lg md:col-span-6 xl:col-span-4 2xl:col-span-3"
+        ></div>
+        <div
+            class="card skeleton col-span-12 min-h-[443px] shadow-lg md:col-span-6 xl:col-span-4 2xl:col-span-3"
+        ></div>
+        <div
+            class="card skeleton col-span-12 min-h-[443px] shadow-lg md:col-span-6 xl:col-span-4 2xl:col-span-3"
+        ></div>
+        <div
+            class="card skeleton col-span-12 min-h-[443px] shadow-lg md:col-span-6 xl:col-span-4 2xl:col-span-3"
+        ></div>
+        <div
+            class="card skeleton col-span-12 min-h-[443px] shadow-lg md:col-span-6 xl:col-span-4 2xl:col-span-3"
+        ></div>
+        <div
+            class="card skeleton col-span-12 min-h-[443px] shadow-lg md:col-span-6 xl:col-span-4 2xl:col-span-3"
+        ></div>
     </div>
     <div
         v-if="this.flights && this.limit <= this.flights.length"
@@ -223,16 +253,54 @@ export default {
         RouterLink,
     },
     setup() {
+        const route = useRoute();
+        const canonicalUrl = 'https://www.frontair.nl' + route.path;
+
         useHead({
             title: 'Flights - FrontAir',
+            link: [
+                {
+                    rel: 'canonical',
+                    href: canonicalUrl,
+                },
+            ],
             meta: [
                 {
                     name: 'description',
-                    content: 'Browse and book flights with ease.',
+                    content:
+                        'The flight schedule page of FrontAir, a flight booking web application. Welcome to FrontAir, your one-stop destination for booking flights at the best prices. Find deals on international and domestic flights, compare airlines, and plan your perfect trip.',
                 },
                 {
                     name: 'keywords',
-                    content: 'flights, airline, booking, travel',
+                    content:
+                        'flight schedule, flights, flight booking, cheap flights, airline tickets, travel, FrontAir, flight deals, international flights, domestic flights',
+                },
+                {
+                    name: 'author',
+                    content: 'FrontAir',
+                },
+                // og: = Open Graph, for sharing using social media, reference: https://ogp.me/
+                {
+                    property: 'og:title',
+                    content: 'Flights - FrontAir',
+                },
+                {
+                    property: 'og:description',
+                    content:
+                        'The flight schedule page of FrontAir, a flight booking web application. Welcome to FrontAir, your one-stop destination for booking flights at the best prices. Find deals on international and domestic flights, compare airlines, and plan your perfect trip.',
+                },
+                {
+                    property: 'og:type',
+                    content: 'website',
+                },
+                {
+                    property: 'og:url',
+                    content: 'https://www.frontair.nl',
+                },
+                {
+                    property: 'og:image',
+                    content:
+                        'https://www.frontair.nl/images/frontair_logo.webp',
                 },
             ],
         });
@@ -248,6 +316,7 @@ export default {
             arrival_airport: '',
             date: '',
             limit: 10,
+            loading: true,
         };
     },
     mounted() {
@@ -300,6 +369,9 @@ export default {
                 })
                 .catch((error) => {
                     console.error(error);
+                })
+                .finally(() => {
+                    this.loading = false;
                 });
         },
         retrieveAirports() {

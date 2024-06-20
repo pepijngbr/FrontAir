@@ -21,7 +21,10 @@
             </div>
             <img
                 class="rounded-lg"
-                src="../assets/images/suhyeon-choi-tTfDMaRq-FE-unsplash.webp"
+                src="
+                    @/assets/images/suhyeon-choi-tTfDMaRq-FE-unsplash.webp
+                "
+                alt="Inside of an Airplane"
             />
         </div>
     </section>
@@ -33,7 +36,8 @@
             <div class="avatar flex-col text-center">
                 <div class="mb-2 h-full w-full rounded-xl sm:h-[400px]">
                     <img
-                        src="../assets/images/linkedin-sales-solutions-pAtA8xe_iVM-unsplash.webp"
+                        src="@/assets/images/linkedin-sales-solutions-pAtA8xe_iVM-unsplash.webp"
+                        alt="Marcus Stevens - IT Manager"
                     />
                 </div>
                 <p class="text-lg">Marcus Stevens</p>
@@ -42,7 +46,8 @@
             <div class="avatar flex-col text-center">
                 <div class="mb-2 h-full w-full rounded-xl sm:h-[400px]">
                     <img
-                        src="../assets/images/albert-dera-ILip77SbmOE-unsplash.webp"
+                        src="@/assets/images/albert-dera-ILip77SbmOE-unsplash.webp"
+                        alt="Jameson Reid - Marketing Manager"
                     />
                 </div>
                 <p class="text-lg">Jameson Reid</p>
@@ -51,7 +56,8 @@
             <div class="avatar flex-col text-center">
                 <div class="mb-2 h-full w-full rounded-xl sm:h-[400px]">
                     <img
-                        src="../assets/images/anthony-tran-3Xkms-gMvZg-unsplash.webp"
+                        src="@/assets/images/anthony-tran-3Xkms-gMvZg-unsplash.webp"
+                        alt="Lily Chen - Media and Communications Specialist"
                     />
                 </div>
                 <p class="text-lg">Lily Chen</p>
@@ -148,23 +154,37 @@
 
 <script>
 import { useHead } from '@vueuse/head';
+import { useRoute } from 'vue-router';
 
 export default {
     name: 'AboutView',
     setup() {
+        const route = useRoute();
+        const canonicalUrl = 'https://www.frontair.nl' + route.path;
         useHead({
             title: 'About - FrontAir',
+            link: [
+                {
+                    rel: 'canonical',
+                    href: canonicalUrl,
+                },
+            ],
             meta: [
                 {
                     name: 'description',
                     content:
-                        'At FrontAir, we strive to provide the best customer experience when booking flights. Meet our dedicated team committed to making your travel smooth and enjoyable.',
+                        'The about page of FrontAir, a flight booking web application. Welcome to FrontAir, your one-stop destination for booking flights at the best prices. Find deals on international and domestic flights, compare airlines, and plan your perfect trip.',
                 },
                 {
                     name: 'keywords',
                     content:
-                        'FrontAir, flights, booking, customer experience, travel, team',
+                        'flights, flight booking, cheap flights, airline tickets, travel, FrontAir, flight deals, international flights, domestic flights',
                 },
+                {
+                    name: 'author',
+                    content: 'FrontAir',
+                },
+                // og: = Open Graph, for sharing using social media, reference: https://ogp.me/
                 {
                     property: 'og:title',
                     content: 'About - FrontAir',
@@ -172,7 +192,7 @@ export default {
                 {
                     property: 'og:description',
                     content:
-                        'At FrontAir, we strive to provide the best customer experience when booking flights. Meet our dedicated team committed to making your travel smooth and enjoyable.',
+                        'The about page of FrontAir, a flight booking web application. Welcome to FrontAir, your one-stop destination for booking flights at the best prices. Find deals on international and domestic flights, compare airlines, and plan your perfect trip.',
                 },
                 {
                     property: 'og:type',
@@ -180,30 +200,12 @@ export default {
                 },
                 {
                     property: 'og:url',
-                    content: 'https://www.frontair.com/about',
+                    content: 'https://www.frontair.nl',
                 },
                 {
                     property: 'og:image',
                     content:
-                        'https://www.frontair.com/images/about-page-image.jpg',
-                },
-                {
-                    name: 'twitter:card',
-                    content: 'summary_large_image',
-                },
-                {
-                    name: 'twitter:title',
-                    content: 'About - FrontAir',
-                },
-                {
-                    name: 'twitter:description',
-                    content:
-                        'At FrontAir, we strive to provide the best customer experience when booking flights. Meet our dedicated team committed to making your travel smooth and enjoyable.',
-                },
-                {
-                    name: 'twitter:image',
-                    content:
-                        'https://www.frontair.com/images/about-page-image.jpg',
+                        'https://www.frontair.nl/images/frontair_logo.webp',
                 },
             ],
         });

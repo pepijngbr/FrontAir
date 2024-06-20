@@ -29,18 +29,42 @@
                         <h3 class="text-lg font-semibold">FAQ</h3>
                         <ul class="[&>*]:mb-2">
                             <li>
-                                <a href="#" class="text-primary hover:underline"
-                                    >How do I book a flight?</a
+                                <a
+                                    href="#"
+                                    :class="
+                                        (theme == 'frontair'
+                                            ? 'text-blue-600'
+                                            : 'text-blue-400') +
+                                        ' hover:underline'
+                                    "
+                                >
+                                    How do I book a flight?</a
                                 >
                             </li>
                             <li>
-                                <a href="#" class="text-primary hover:underline"
-                                    >Can I change my booking?</a
+                                <a
+                                    href="#"
+                                    :class="
+                                        (theme == 'frontair'
+                                            ? 'text-blue-600'
+                                            : 'text-blue-400') +
+                                        ' hover:underline'
+                                    "
+                                >
+                                    Can I change my booking?</a
                                 >
                             </li>
                             <li>
-                                <a href="#" class="text-primary hover:underline"
-                                    >What is the cancellation policy?</a
+                                <a
+                                    href="#"
+                                    :class="
+                                        (theme == 'frontair'
+                                            ? 'text-blue-600'
+                                            : 'text-blue-400') +
+                                        ' hover:underline'
+                                    "
+                                >
+                                    What is the cancellation policy?</a
                                 >
                             </li>
                         </ul>
@@ -51,22 +75,40 @@
                             <li>
                                 <RouterLink
                                     :to="{ name: 'policy.privacy' }"
-                                    class="text-primary hover:underline"
-                                    >Privacy Policy</RouterLink
+                                    :class="
+                                        (theme == 'frontair'
+                                            ? 'text-blue-600'
+                                            : 'text-blue-400') +
+                                        ' hover:underline'
+                                    "
+                                >
+                                    Privacy Policy</RouterLink
                                 >
                             </li>
                             <li>
                                 <RouterLink
                                     :to="{ name: 'tos.index' }"
-                                    class="text-primary hover:underline"
-                                    >Terms of Service</RouterLink
+                                    :class="
+                                        (theme == 'frontair'
+                                            ? 'text-blue-600'
+                                            : 'text-blue-400') +
+                                        ' hover:underline'
+                                    "
+                                >
+                                    Terms of Service</RouterLink
                                 >
                             </li>
                             <li>
                                 <RouterLink
                                     :to="{ name: 'policy.refund' }"
-                                    class="text-primary hover:underline"
-                                    >Refund Policy</RouterLink
+                                    :class="
+                                        (theme == 'frontair'
+                                            ? 'text-blue-600'
+                                            : 'text-blue-400') +
+                                        ' hover:underline'
+                                    "
+                                >
+                                    Refund Policy</RouterLink
                                 >
                             </li>
                         </ul>
@@ -80,7 +122,6 @@
                     </p>
                 </div>
             </div>
-            <!-- Clouds (Background Image using tailwind.config.js) -->
             <div
                 class="absolute inset-0 z-0 h-full w-full bg-clouds bg-cover bg-no-repeat opacity-50"
             ></div>
@@ -109,3 +150,9 @@ export default {
     },
 };
 </script>
+
+<style>
+.bg-clouds {
+    background-image: url('@/assets/images/clouds.webp');
+}
+</style>

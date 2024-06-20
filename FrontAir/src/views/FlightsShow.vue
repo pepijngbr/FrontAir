@@ -1,10 +1,10 @@
 <template>
-    <section class="py-10" v-if="this.flight">
+    <section class="py-10" v-if="this.flight && !this.loading">
         <div
-            class="mx-12 grid auto-rows-fr grid-cols-1 rounded-lg bg-base-200 md:auto-rows-[750px] lg:grid-cols-3"
+            class="mx-1 grid grid-cols-1 rounded-lg bg-base-200 sm:mx-12 lg:grid-cols-3"
         >
             <img
-                class="col-span-2 h-full w-full rounded-lg object-cover object-center"
+                class="col-span-2 hidden h-full w-full rounded-lg object-cover object-center sm:block"
                 :src="
                     '../src/assets/images/airlines/' +
                     this.flight.airline.name.toLowerCase().replace(/\s/g, '_') +
@@ -117,20 +117,91 @@
                             name: 'bookings.index',
                         }"
                         class="btn btn-warning w-full sm:w-1/2 md:w-auto"
-                        >View booked flight
+                        >View booking
                     </RouterLink>
                 </div>
             </div>
         </div>
     </section>
-    <section v-else>
-        <p>No flight found.</p>
+    <section v-else class="py-10">
+        <div
+            class="mx-1 grid auto-rows-fr grid-cols-1 rounded-lg bg-base-200 sm:mx-12 md:auto-rows-[750px] lg:grid-cols-3"
+        >
+            <div
+                class="skeleton col-span-2 h-full w-full rounded-lg object-cover object-center"
+            />
+            <div class="col-span-3 p-4 md:col-span-1">
+                <h1 class="h-22 skeleton text-transparent">Lorem ipsum</h1>
+                <p class="skeleton mt-4 text-2xl text-transparent">Lorem</p>
+                <p class="skeleton my-4 text-transparent">
+                    Lorem ipsum
+                    <br />
+                    Lorem ipsum
+                </p>
+                <p class="skeleton mb-4 mt-2 text-transparent">
+                    Estimated times
+                </p>
+                <div class="flex flex-col gap-4 lg:flex-row">
+                    <div
+                        class="h-30 skeleton rounded-lg p-2 text-transparent lg:p-4"
+                    >
+                        <p class="font-bold">Departure</p>
+                        Lorem ipsum dolor sit
+                    </div>
+                    <div
+                        class="h-30 skeleton rounded-lg p-2 text-transparent lg:p-4"
+                    >
+                        <p class="font-bold">Arrival</p>
+                        Lorem ipsum dolor sit
+                    </div>
+                </div>
+                <p class="skeleton my-4 text-transparent">Airline</p>
+                <p class="skeleton my-4 text-transparent">Seats available</p>
+                <form
+                    class="my-4 flex w-full flex-col gap-0 lg:flex-row lg:gap-4"
+                >
+                    <label class="form-control max-w-xs">
+                        <div class="label">
+                            <span class="label-text skeleton text-transparent"
+                                >Class</span
+                            >
+                        </div>
+                        <select
+                            class="select skeleton min-w-[150px] text-transparent caret-primary outline-none transition-colors focus:border-primary focus:outline-none"
+                        ></select>
+                    </label>
+                    <label class="form-control max-w-xs">
+                        <div class="label">
+                            <span class="label-text skeleton text-transparent"
+                                >Type</span
+                            >
+                        </div>
+                        <select
+                            class="select skeleton min-w-[150px] text-transparent caret-primary outline-none transition-colors focus:border-primary focus:outline-none"
+                        ></select>
+                    </label>
+                </form>
+                <label class="my-4 flex gap-2">
+                    <input
+                        type="checkbox"
+                        class="checkbox skeleton text-transparent"
+                    />
+                    <span class="skeleton text-transparent">Confirm</span>
+                </label>
+                <button
+                    class="btn skeleton w-full text-transparent sm:w-1/2 md:w-auto"
+                >
+                    Book Flight
+                </button>
+            </div>
+        </div>
     </section>
 </template>
 
 <script>
 import { useUserStore } from '@/stores/user.js';
 import { useHead } from '@vueuse/head';
+import { useRoute } from 'vue-router';
 
 const userStore = useUserStore();
 
@@ -146,6 +217,7 @@ export default {
             type: '',
             confirmation: false,
             bookings: [],
+            loading: true,
         };
     },
     created() {
@@ -165,6 +237,9 @@ export default {
                 })
                 .catch((error) => {
                     console.error(error);
+                })
+                .finally(() => {
+                    this.loading = false;
                 });
         },
         bookFlight() {
@@ -248,8 +323,17 @@ export default {
             }
         },
         updateMetaData() {
+            const route = useRoute();
+            const canonicalUrl = 'https://www.frontair.nl' + route.path;
+
             useHead({
                 title: `Flight ${this.flight.flight_number} - ${this.flight.airline.name}`,
+                link: [
+                    {
+                        rel: 'canonical',
+                        href: canonicalUrl,
+                    },
+                ],
                 meta: [
                     {
                         name: 'description',

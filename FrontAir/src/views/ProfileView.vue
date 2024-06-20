@@ -16,7 +16,7 @@
                 v-model="this.name"
                 maxlength="255"
             />
-            <button type="submit" class="btn btn-accent">Update</button>
+            <button type="submit" class="btn btn-primary">Update</button>
         </form>
         <div class="my-2">
             <p class="font-bold">Email</p>
@@ -84,7 +84,7 @@
             /><br />
             <button
                 type="submit"
-                class="btn btn-accent"
+                class="btn btn-primary"
                 @click="updatePassword"
             >
                 Update
@@ -119,6 +119,7 @@
 import { useSiteThemeStore } from '@/stores/siteTheme.js';
 import { useUserStore } from '@/stores/user.js';
 import { useHead } from '@vueuse/head';
+import { useRoute } from 'vue-router';
 
 import axios from 'axios';
 const apiUrl = 'http://127.0.0.1:8000/api';
@@ -126,9 +127,55 @@ const apiUrl = 'http://127.0.0.1:8000/api';
 export default {
     name: 'ProfileView',
     setup() {
+        const route = useRoute();
+        const canonicalUrl = 'https://www.frontair.nl' + route.path;
         useHead({
             title: 'Profile - FrontAir',
-            meta: [],
+            link: [
+                {
+                    rel: 'canonical',
+                    href: canonicalUrl,
+                },
+            ],
+            meta: [
+                {
+                    name: 'description',
+                    content:
+                        'The profile page of FrontAir, a flight booking web application. Welcome to FrontAir, your one-stop destination for booking flights at the best prices. Find deals on international and domestic flights, compare airlines, and plan your perfect trip.',
+                },
+                {
+                    name: 'keywords',
+                    content:
+                        'profile, account, flights, flight booking, cheap flights, airline tickets, travel, FrontAir, flight deals, international flights, domestic flights',
+                },
+                {
+                    name: 'author',
+                    content: 'FrontAir',
+                },
+                // og: = Open Graph, for sharing using social media, reference: https://ogp.me/
+                {
+                    property: 'og:title',
+                    content: 'Profile - FrontAir',
+                },
+                {
+                    property: 'og:description',
+                    content:
+                        'The profile page of FrontAir, a flight booking web application. Welcome to FrontAir, your one-stop destination for booking flights at the best prices. Find deals on international and domestic flights, compare airlines, and plan your perfect trip.',
+                },
+                {
+                    property: 'og:type',
+                    content: 'website',
+                },
+                {
+                    property: 'og:url',
+                    content: 'https://www.frontair.nl',
+                },
+                {
+                    property: 'og:image',
+                    content:
+                        'https://www.frontair.nl/images/frontair_logo.webp',
+                },
+            ],
         });
     },
     data() {

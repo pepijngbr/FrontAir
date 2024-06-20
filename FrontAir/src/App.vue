@@ -317,7 +317,7 @@
 </template>
 
 <script>
-import { RouterLink, RouterView, useRouter } from 'vue-router';
+import { RouterLink, RouterView, useRoute, useRouter } from 'vue-router';
 import MainFooter from '@/components/MainFooter.vue';
 import { useUserStore } from '@/stores/user.js';
 import { useSiteThemeStore } from '@/stores/siteTheme.js';
@@ -340,8 +340,16 @@ export default {
         };
     },
     setup() {
+        const route = useRoute();
+        const canonicalUrl = 'https://www.frontair.nl' + route.path;
         useHead({
             title: 'FrontAir',
+            link: [
+                {
+                    rel: 'canonical',
+                    href: canonicalUrl,
+                },
+            ],
             meta: [
                 {
                     name: 'description',

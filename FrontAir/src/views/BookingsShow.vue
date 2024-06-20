@@ -18,32 +18,6 @@
             />
         </div>
     </section>
-    <section>
-        {{ this.booking }}
-    </section>
-    <section class="py-20" v-if="this.booking.flight">
-        <p>
-            {{ this.booking.flight.airline.name }} -
-            {{ this.booking.flight.flight_number }}
-        </p>
-        <p>
-            {{ this.booking.flight.departure_airport.name }} ({{
-                this.booking.flight.departure_airport.iata
-            }})
-        </p>
-        <p>
-            {{ this.booking.flight.arrival_airport.name }} ({{
-                this.booking.flight.arrival_airport.iata
-            }})
-        </p>
-        <p>
-            {{ formatDate(this.booking.flight.departure_time) }} -
-            {{ formatDate(this.booking.flight.arrival_time) }}
-        </p>
-        <p>Price: €{{ this.booking.price }}</p>
-        <p>Booking Status: {{ this.booking.booking_status }}</p>
-        <p>Seat Number: {{ this.booking.seat_number }}</p>
-    </section>
     <section class="py-20" v-if="this.booking.user">
         <h2>Billing information</h2>
         <p>
@@ -54,18 +28,13 @@
     </section>
     <section class="py-20">
         <h2>Flight</h2>
-        <div v-for="flight in this.flights" :key="flight.id">
-            <h3>{{ flight.name }}</h3>
-            <p>{{ flight.description }}</p>
-            <p>{{ flight.price }}</p>
-            <p>{{ flight.departure }}</p>
-            <p>{{ flight.arrival }}</p>
-            <p>{{ flight.airline }}</p>
-            <p>{{ flight.aircraft }}</p>
-            <p>{{ flight.seats }}</p>
-            <p>{{ flight.from }}</p>
-            <p>{{ flight.to }}</p>
-        </div>
+        <h3>{{ this.booking.name }}</h3>
+        <p>Price: {{ this.booking.price }}</p>
+        <p>{{ this.booking.flight.arrival_airport }}</p>
+        <p>{{ this.booking.flight.departure_airport }}</p>
+        <p>{{ this.booking.flight.airline }}</p>
+        <p>Available seats: {{ this.booking.flight.available_seats }}</p>
+        <p>Your seat number: {{ this.booking.seat_number }}</p>
     </section>
     <section class="py-20">
         <h2>Airports</h2>
@@ -87,8 +56,9 @@
 </template>
 
 <script>
-import { useUserStore } from '@/stores/user.js';
 import { useHead } from '@vueuse/head';
+import { useRoute } from 'vue-router';
+import { useUserStore } from '@/stores/user.js';
 import Barcode from '@/components/Barcode.vue';
 
 import axios from 'axios';
@@ -127,8 +97,16 @@ export default {
                 });
         },
         updateMetaData() {
+            const route = useRoute();
+            const canonicalUrl = 'https://www.frontair.nl' + route.path;
             useHead({
                 title: `${this.booking.flight.flight_number} - ${this.booking.flight.airline.name}`,
+                link: [
+                    {
+                        rel: 'canonical',
+                        href: canonicalUrl,
+                    },
+                ],
                 meta: [
                     {
                         name: 'description',

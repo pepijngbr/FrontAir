@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Airline;
 use App\Models\Booking;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Collection;
@@ -161,7 +160,6 @@ class UserController extends Controller
                 if ($sortField) {
                     $bookings->orderBy($sortField, $sortOrder);
                 }
-
                 return [
                     'user' => $user->makeHidden(['id']),
                     'bookings' => $bookings->with('flight.departureAirport', 'flight.arrivalAirport', 'flight.airline')->get()

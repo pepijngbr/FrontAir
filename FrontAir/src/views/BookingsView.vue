@@ -7,8 +7,13 @@
             cancelled.
         </p>
     </section>
-    <section v-if="bookings.length > 0 && this.userStore.isLoggedIn == true">
-        <div class="grid grid-cols-1 gap-4 p-4 lg:grid-cols-2 xl:grid-cols-3">
+    <section
+        v-if="bookings.length > 0 && this.userStore.isLoggedIn == true"
+        class="mb-20"
+    >
+        <div
+            class="grid grid-cols-1 gap-4 p-0 sm:p-4 md:grid-cols-2 xl:grid-cols-3"
+        >
             <div
                 class="card bordered shadow-lg"
                 :class="theme == 'frontair' ? '' : 'shadow-white/30'"
@@ -55,7 +60,9 @@
                     </div>
                 </div>
                 <div class="card-body mt-20">
-                    <div class="grid grid-cols-4 [&>*]:text-center">
+                    <div
+                        class="grid grid-cols-2 gap-2 sm:grid-cols-4 [&>*]:text-center"
+                    >
                         <div>
                             <p class="text-lg font-bold">Status</p>
                             <p>{{ booking.booking_status }}</p>
@@ -74,7 +81,7 @@
                         </div>
                     </div>
                     <div class="divider my-2"></div>
-                    <div class="mb-4 grid grid-cols-1 sm:grid-cols-2">
+                    <div class="mb-4 grid grid-cols-1 gap-2 sm:grid-cols-2">
                         <div class="flex flex-col">
                             <p class="text-lg font-bold">From</p>
                             <p>
@@ -84,7 +91,9 @@
                                 {{ booking.flight.departure_airport.city }},
                                 {{ booking.flight.departure_airport.country }}
                             </p>
-                            <p>{{ booking.flight.departure_time }}</p>
+                            <p>
+                                {{ formatDate(booking.flight.departure_time) }}
+                            </p>
                         </div>
                         <div class="flex flex-col text-left sm:text-right">
                             <p class="text-lg font-bold">To</p>
@@ -95,7 +104,7 @@
                                 {{ booking.flight.arrival_airport.city }},
                                 {{ booking.flight.arrival_airport.country }}
                             </p>
-                            <p>{{ booking.flight.arrival_time }}</p>
+                            <p>{{ formatDate(booking.flight.arrival_time) }}</p>
                         </div>
                     </div>
                     <p class="text-center text-2xl font-bold">Ticket</p>
@@ -169,8 +178,9 @@
 import { useSiteThemeStore } from '@/stores/siteTheme.js';
 import { useUserStore } from '@/stores/user.js';
 import { RouterLink } from 'vue-router';
-import { useHead } from '@vueuse/head';
 import Barcode from '@/components/Barcode.vue';
+import { useHead } from '@vueuse/head';
+import { useRoute } from 'vue-router';
 
 import axios from 'axios';
 const apiUrl = 'http://127.0.0.1:8000/api';
@@ -182,16 +192,62 @@ export default {
         Barcode,
     },
     setup() {
+        const route = useRoute();
+        const canonicalUrl = 'https://www.frontair.nl' + route.path;
+
         useHead({
             title: 'Bookings - FrontAir',
-            meta: [],
+            link: [
+                {
+                    rel: 'canonical',
+                    href: canonicalUrl,
+                },
+            ],
+            meta: [
+                {
+                    name: 'description',
+                    content:
+                        'The bookings page of FrontAir, a flight booking web application. Welcome to FrontAir, your one-stop destination for booking flights at the best prices. Find deals on international and domestic flights, compare airlines, and plan your perfect trip.',
+                },
+                {
+                    name: 'keywords',
+                    content:
+                        'bookings, booked flights, flights, flight booking, cheap flights, airline tickets, travel, FrontAir, flight deals, international flights, domestic flights',
+                },
+                {
+                    name: 'author',
+                    content: 'FrontAir',
+                },
+                // og: = Open Graph, for sharing using social media, reference: https://ogp.me/
+                {
+                    property: 'og:title',
+                    content: 'Bookings - FrontAir',
+                },
+                {
+                    property: 'og:description',
+                    content:
+                        'The bookings page of FrontAir, a flight booking web application. Welcome to FrontAir, your one-stop destination for booking flights at the best prices. Find deals on international and domestic flights, compare airlines, and plan your perfect trip.',
+                },
+                {
+                    property: 'og:type',
+                    content: 'website',
+                },
+                {
+                    property: 'og:url',
+                    content: 'https://www.frontair.nl',
+                },
+                {
+                    property: 'og:image',
+                    content:
+                        'https://www.frontair.nl/images/frontair_logo.webp',
+                },
+            ],
         });
     },
     data() {
         return {
             bookings: [],
             userStore: useUserStore(),
-            balance: '',
         };
     },
     mounted() {
@@ -233,7 +289,7 @@ export default {
                             Number(userStore.user.wallet) +
                             Number(response.data.flight.price);
                         const userData = {
-                            wallet: updatedWallet,
+                            wallet: parseFloat(updatedWallet).toFixed(2),
                         };
 
                         // Add Flight price back to user wallet after cancelling
@@ -245,9 +301,6 @@ export default {
                             .then((response) => {
                                 console.log(response.data);
                                 userStore.updateUser(response.data);
-                                this.balance = parseFloat(
-                                    response.data.wallet,
-                                ).toFixed(2);
                             })
                             .catch((error) => {
                                 console.error(error);
