@@ -1,42 +1,9 @@
 # FrontAir  
 <img src="FrontAir_White.png" align="right" width="40%">  
 
-🟧 **Eindresultaat: N/A** 🟧  
-  
-Opleiding: Software Developer (Niveau 4)  
-Leerjaar: 3  
-Module: Keuzedeel Frontend Development (FED) - Portfolio Examen  
-Examenduur: 6 weken  
-Resultaat: 8 studiepunten  
-Beoordeling: -
+Ontwikkeld door: <a href="https://github.com/pepijngbr">Pepijn Robben</a> (SD3b, PS230764), <a href="https://www.linkedin.com/in/pepijngbr/">![LinkedIn](https://img.shields.io/badge/-LinkedIn-0A66C2?style=flat-square&logo=linkedin&logoColor=white)</a>  
 
-**Startgesprek: vrijdag 17 mei 2024 om 08:30**  
-
-Oplevermoment: -  
-Duur: -  
-Lokaal: -  
-Docenten: -
-
-Groep (individueel / ~~tweetal~~):  
-* <a href="https://github.com/pepijngbr">Pepijn Robben</a> (SD3b, PS230764), <a href="https://www.linkedin.com/in/pepijngbr/">![LinkedIn](https://img.shields.io/badge/-LinkedIn-0A66C2?style=flat-square&logo=linkedin&logoColor=white)</a>   
-
-## Design / Concept  
-The idea behind this application in general originated from my younger self that really enjoyed watching aeroplanes take off and land as well as go to airshows with spectacular stunts.  
-Therefore, I chose to came up with the idea about flight booking/planning webapp.  
-
-Figma Design File: <a href="https://www.figma.com/design/3e3EKYb0RBB8fMZq8tVx2T/FrontAir?node-id=236-5&t=I3SpWShWrYLop2wE-0">![Figma](https://img.shields.io/badge/-FrontAir-2C2C2C?style=flat-square&logo=figma&logoColor=white)</a>
-
-## API  
-### Database (ERD)  
-Coming soon.  
-
-### Endpoints
-Coming soon.  
-
-## Webapp  
-Coming soon.  
-
-## Resources  
+### Resources  
 A table of all the resources I plan on using or used for this entire project.  
 
 | Category | Resources |
