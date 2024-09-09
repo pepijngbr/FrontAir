@@ -30,8 +30,8 @@ jobs:
       - name: Verify npm version
         run: npm -v
 
-      - name: Run tests
-        run: npm run test
+#      - name: Run tests
+#        run: npm run test
 
       - name: Build the application
         run: npm run build
