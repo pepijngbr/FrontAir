@@ -3,8 +3,8 @@
         class="flex min-h-screen w-screen flex-col justify-center md:h-screen md:flex-row"
     >
         <form
-            @submit.prevent="resetPassword"
             class="flex w-full flex-col items-center justify-center p-6 md:w-[600px] md:p-10 [&>*]:w-full"
+            @submit.prevent="resetPassword"
         >
             <img
                 :src="
@@ -22,17 +22,17 @@
             </p>
             <div class="form-control mb-4">
                 <input
+                    id="email"
                     v-model="email"
                     type="email"
-                    id="email"
                     name="email"
                     placeholder="Email Address"
                     class="input input-bordered w-full border caret-primary outline-none transition-colors focus:border-primary focus:outline-none"
-                    :disabled="this.time > 0"
+                    :disabled="time > 0"
                 />
             </div>
-            <div v-show="this.time > 0" class="mb-4">
-                Try again in {{ this.time }} seconds.
+            <div v-show="time > 0" class="mb-4">
+                Try again in {{ time }} seconds.
             </div>
             <button
                 type="submit"
@@ -45,7 +45,8 @@
                 <RouterLink
                     to="/login"
                     class="font-bold text-primary hover:underline"
-                    >Login
+                >
+                    Login
                 </RouterLink>
             </p>
             <p class="mt-2 text-center font-extralight">
@@ -53,13 +54,15 @@
                 <RouterLink
                     to="/register"
                     class="font-bold text-secondary hover:underline"
-                    >Register
+                >
+                    Register
                 </RouterLink>
             </p>
             <RouterLink
                 :to="{ name: 'home' }"
                 class="mt-4 text-center font-bold hover:underline"
-                >Enter as Guest
+            >
+                Enter as Guest
             </RouterLink>
         </form>
         <img
@@ -141,17 +144,9 @@ export default {
             theme: '',
         };
     },
-    methods: {
-        resetPassword() {
-            if (this.email === '') {
-                alert('Enter a valid email address.');
-            } else {
-                if (this.time > 0) {
-                    return alert('Please wait before trying again.');
-                }
-                alert('E-mail sent!');
-                this.time = 59;
-            }
+    computed: {
+        theme() {
+            return useSiteThemeStore().siteTheme;
         },
     },
     watch: {
@@ -165,13 +160,21 @@ export default {
             },
         },
     },
-    computed: {
-        theme() {
-            return useSiteThemeStore().siteTheme;
-        },
-    },
     mounted() {
         useSiteThemeStore().loadTheme();
+    },
+    methods: {
+        resetPassword() {
+            if (this.email === '') {
+                alert('Enter a valid email address.');
+            } else {
+                if (this.time > 0) {
+                    return alert('Please wait before trying again.');
+                }
+                alert('E-mail sent!');
+                this.time = 59;
+            }
+        },
     },
 };
 </script>

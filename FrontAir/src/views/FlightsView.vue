@@ -11,16 +11,16 @@
                 <div class="collapse-content text-center md:text-left">
                     <p class="font-bold">Destination</p>
                     <select
+                        v-model="departure_airport"
                         class="select select-bordered w-1/2 border caret-primary outline-none transition-colors focus:border-primary focus:outline-none"
-                        v-model="this.departure_airport"
                     >
                         <option disabled>From</option>
                         <option value="0" selected>Any</option>
                         <option
-                            v-for="airport in this.airports"
+                            v-for="airport in airports"
+                            v-show="arrival_airport != airport.id"
                             :key="airport.id"
                             :value="airport.id"
-                            v-show="this.arrival_airport != airport.id"
                         >
                             {{ airport.country }}, {{ airport.name }} ({{
                                 airport.iata
@@ -28,16 +28,16 @@
                         </option>
                     </select>
                     <select
+                        v-model="arrival_airport"
                         class="select select-bordered w-1/2 border caret-primary outline-none transition-colors focus:border-primary focus:outline-none"
-                        v-model="this.arrival_airport"
                     >
                         <option disabled>To</option>
                         <option value="0" selected>Any</option>
                         <option
-                            v-for="airport in this.airports"
+                            v-for="airport in airports"
+                            v-show="departure_airport != airport.id"
                             :key="airport.id"
                             :value="airport.id"
-                            v-show="this.departure_airport != airport.id"
                         >
                             {{ airport.country }}, {{ airport.name }} ({{
                                 airport.iata
@@ -46,14 +46,14 @@
                     </select>
                     <p class="mt-4 font-bold">Airline</p>
                     <select
+                        v-model="airline"
                         class="select select-bordered w-full border caret-primary outline-none transition-colors focus:border-primary focus:outline-none"
-                        v-model="this.airline"
                     >
                         <option value="0" selected>All</option>
                         <option
-                            v-for="airline in this.airlines"
-                            :value="airline.id"
+                            v-for="airline in airlines"
                             :key="airline.id"
+                            :value="airline.id"
                         >
                             {{ airline.name }}
                         </option>
@@ -63,7 +63,7 @@
                         <div
                             class="pointer-events-none absolute inset-y-0 start-0 flex items-center ps-3.5"
                         >
-                            <i class="bi bi-calendar-fill text-lg"></i>
+                            <i class="bi bi-calendar-fill text-lg" />
                         </div>
                         <input
                             type="text"
@@ -76,11 +76,11 @@
         </div>
     </section>
     <div
-        v-if="this.flights.length > 0 && !this.loading"
+        v-if="flights.length > 0 && !loading"
         class="grid auto-rows-fr grid-cols-12 gap-4 px-4"
     >
         <div
-            v-for="flight in this.flights"
+            v-for="flight in flights"
             :key="flight.id"
             class="group card col-span-12 min-h-[443px] bg-base-100 shadow-lg md:col-span-6 xl:col-span-4 2xl:col-span-3"
             :class="theme == 'frontair' ? '' : 'shadow-white/30'"
@@ -137,7 +137,7 @@
                     <div
                         class="mt-3 flex h-10 w-10 rotate-90 items-center justify-center"
                     >
-                        <i class="bi bi-airplane-fill"></i>
+                        <i class="bi bi-airplane-fill" />
                     </div>
                     <div class="p-1 text-center lg:col-span-2">
                         <p class="text-2xl">
@@ -173,7 +173,8 @@
                         v-else-if="!user.isLoggedIn"
                         :to="{ name: 'login' }"
                         class="btn btn-warning w-full sm:w-1/2 md:w-auto"
-                        >Login to book
+                    >
+                        Login to book
                     </RouterLink>
                     <RouterLink
                         v-else
@@ -181,14 +182,15 @@
                             name: 'bookings.index',
                         }"
                         class="btn btn-warning w-full sm:w-1/2 md:w-auto"
-                        >View booking
+                    >
+                        View booking
                     </RouterLink>
                 </div>
             </div>
         </div>
     </div>
     <div
-        v-else-if="this.flights.length === 0 && !this.loading"
+        v-else-if="flights.length === 0 && !loading"
         class="h-screen w-full text-center"
     >
         <p>No flights found.</p>
@@ -196,41 +198,41 @@
     <div v-else class="grid auto-rows-fr grid-cols-12 gap-4 px-4">
         <div
             class="card skeleton col-span-12 min-h-[443px] shadow-lg md:col-span-6 xl:col-span-4 2xl:col-span-3"
-        ></div>
+        />
         <div
             class="card skeleton col-span-12 min-h-[443px] shadow-lg md:col-span-6 xl:col-span-4 2xl:col-span-3"
-        ></div>
+        />
         <div
             class="card skeleton col-span-12 min-h-[443px] shadow-lg md:col-span-6 xl:col-span-4 2xl:col-span-3"
-        ></div>
+        />
         <div
             class="card skeleton col-span-12 min-h-[443px] shadow-lg md:col-span-6 xl:col-span-4 2xl:col-span-3"
-        ></div>
+        />
         <div
             class="card skeleton col-span-12 min-h-[443px] shadow-lg md:col-span-6 xl:col-span-4 2xl:col-span-3"
-        ></div>
+        />
         <div
             class="card skeleton col-span-12 min-h-[443px] shadow-lg md:col-span-6 xl:col-span-4 2xl:col-span-3"
-        ></div>
+        />
         <div
             class="card skeleton col-span-12 min-h-[443px] shadow-lg md:col-span-6 xl:col-span-4 2xl:col-span-3"
-        ></div>
+        />
         <div
             class="card skeleton col-span-12 min-h-[443px] shadow-lg md:col-span-6 xl:col-span-4 2xl:col-span-3"
-        ></div>
+        />
         <div
             class="card skeleton col-span-12 min-h-[443px] shadow-lg md:col-span-6 xl:col-span-4 2xl:col-span-3"
-        ></div>
+        />
         <div
             class="card skeleton col-span-12 min-h-[443px] shadow-lg md:col-span-6 xl:col-span-4 2xl:col-span-3"
-        ></div>
+        />
     </div>
     <div
-        v-if="this.flights && this.limit <= this.flights.length"
+        v-if="flights && limit <= flights.length"
         class="mb-12 mt-4 flex flex-col items-center justify-center"
     >
-        <p>Current limit: {{ this.limit }}</p>
-        <button @click="flightLimit(+10)" class="btn btn-secondary">
+        <p>Current limit: {{ limit }}</p>
+        <button class="btn btn-secondary" @click="flightLimit(+10)">
             View More
         </button>
     </div>
@@ -319,13 +321,13 @@ export default {
             loading: true,
         };
     },
-    mounted() {
-        this.retrieveAirlines();
-        this.retrieveAirports();
-        if (userStore.user) {
-            this.retrieveBookings();
-        }
-        this.retrieveFlights();
+    computed: {
+        theme() {
+            return useSiteThemeStore().siteTheme;
+        },
+        user() {
+            return userStore;
+        },
     },
     watch: {
         airline: function () {
@@ -337,6 +339,14 @@ export default {
         arrival_airport: function () {
             this.retrieveFlights();
         },
+    },
+    mounted() {
+        this.retrieveAirlines();
+        this.retrieveAirports();
+        if (userStore.user) {
+            this.retrieveBookings();
+        }
+        this.retrieveFlights();
     },
     methods: {
         formatDate(datetime) {
@@ -422,14 +432,6 @@ export default {
             } else {
                 return false;
             }
-        },
-    },
-    computed: {
-        theme() {
-            return useSiteThemeStore().siteTheme;
-        },
-        user() {
-            return userStore;
         },
     },
 };

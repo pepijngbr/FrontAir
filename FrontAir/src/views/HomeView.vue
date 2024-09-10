@@ -37,11 +37,11 @@
             <p>Book your flights using the Flight Schedule below!</p>
         </div>
         <div
-            v-if="this.flights.length > 0 && !this.loading"
+            v-if="flights.length > 0 && !loading"
             class="mt-8 grid auto-rows-fr grid-cols-12 gap-4"
         >
             <div
-                v-for="flight in this.flights"
+                v-for="flight in flights"
                 :key="flight.id"
                 class="group card col-span-12 min-h-[443px] bg-base-100 shadow-lg md:col-span-6 xl:col-span-4 2xl:col-span-4"
                 :class="theme == 'frontair' ? '' : 'shadow-white/30'"
@@ -100,7 +100,7 @@
                         <div
                             class="mt-3 flex h-10 w-10 rotate-90 items-center justify-center"
                         >
-                            <i class="bi bi-airplane-fill"></i>
+                            <i class="bi bi-airplane-fill" />
                         </div>
                         <div class="p-1 text-center lg:col-span-2">
                             <p class="text-2xl">
@@ -136,7 +136,8 @@
                             v-else-if="!user.isLoggedIn"
                             :to="{ name: 'login' }"
                             class="btn btn-warning w-full sm:w-1/2 md:w-auto"
-                            >Login to book
+                        >
+                            Login to book
                         </RouterLink>
                         <RouterLink
                             v-else
@@ -144,7 +145,8 @@
                                 name: 'bookings.index',
                             }"
                             class="btn btn-warning w-full sm:w-1/2 md:w-auto"
-                            >View booking
+                        >
+                            View booking
                         </RouterLink>
                     </div>
                 </div>
@@ -153,17 +155,17 @@
         <div v-else class="mt-8 grid auto-rows-fr grid-cols-12 gap-4">
             <div
                 class="skeleton col-span-12 min-h-[443px] md:col-span-6 xl:col-span-4 2xl:col-span-4"
-            ></div>
+            />
             <div
                 class="skeleton col-span-12 min-h-[443px] md:col-span-6 xl:col-span-4 2xl:col-span-4"
-            ></div>
+            />
             <div
                 class="skeleton col-span-12 min-h-[443px] md:col-span-6 xl:col-span-4 2xl:col-span-4"
-            ></div>
+            />
         </div>
         <div class="mt-4 flex justify-center">
-            <RouterLink :to="{ name: 'flights' }" class="btn btn-secondary"
-                >View More
+            <RouterLink :to="{ name: 'flights' }" class="btn btn-secondary">
+                View More
             </RouterLink>
         </div>
     </section>
@@ -219,8 +221,8 @@
                 </div>
             </div>
             <p class="mt-8">Learn more about FrontAir and our mission!</p>
-            <RouterLink to="about" class="btn btn-secondary mt-4"
-                >About us
+            <RouterLink to="about" class="btn btn-secondary mt-4">
+                About us
             </RouterLink>
         </div>
     </section>
@@ -228,8 +230,8 @@
         <div class="text-center">
             <h2>Contact Us</h2>
             <p>Get in touch with us!</p>
-            <RouterLink to="contact" class="btn btn-secondary mt-4"
-                >Contact us
+            <RouterLink to="contact" class="btn btn-secondary mt-4">
+                Contact us
             </RouterLink>
         </div>
     </section>
@@ -311,6 +313,14 @@ export default {
             loading: true,
         };
     },
+    computed: {
+        theme() {
+            return useSiteThemeStore().siteTheme;
+        },
+        user() {
+            return userStore;
+        },
+    },
     mounted() {
         this.retrieveFlights();
         if (userStore.user) {
@@ -364,14 +374,6 @@ export default {
                 minute: 'numeric',
                 timeZone: 'GMT',
             });
-        },
-    },
-    computed: {
-        theme() {
-            return useSiteThemeStore().siteTheme;
-        },
-        user() {
-            return userStore;
         },
     },
 };

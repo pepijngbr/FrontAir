@@ -3,7 +3,8 @@ import { useUserStore } from '@/stores/user.js';
 
 const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),
-    scrollBehavior(to, from, savedPosition) {
+    // scrollBehavior(to, from, savedPosition) {
+    scrollBehavior() {
         return {
             top: 0,
             behavior: 'smooth',

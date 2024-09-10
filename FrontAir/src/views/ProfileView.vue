@@ -1,26 +1,26 @@
 <template>
     <section class="mb-4 pt-20 text-center md:text-left">
-        <h1><i class="bi bi-person-circle"></i> Profile</h1>
+        <h1><i class="bi bi-person-circle" /> Profile</h1>
         <p>View and edit your profile.</p>
     </section>
-    <div class="divider"></div>
+    <div class="divider" />
     <section class="my-12">
         <b class="text-2xl">Profile Information</b>
-        <form @submit.prevent="updateInformation()" class="my-2">
+        <form class="my-2" @submit.prevent="updateInformation()">
             <p class="font-bold">Name</p>
             <input
+                v-model="name"
                 type="text"
                 placeholder="Type here"
                 class="input input-bordered mr-2 w-full max-w-xs border caret-primary outline-none transition-colors focus:border-primary focus:outline-none"
                 required
-                v-model="this.name"
                 maxlength="255"
             />
             <button type="submit" class="btn btn-primary">Update</button>
         </form>
         <div class="my-2">
             <p class="font-bold">Email</p>
-            <p>{{ this.user.email }}</p>
+            <p>{{ user.email }}</p>
         </div>
         <button class="btn" onclick="support_modal.showModal()">
             How do I change my email address?
@@ -53,34 +53,37 @@
         <form class="my-4" @submit.prevent="changePassword">
             <label for="old-password">Old Password</label><br />
             <input
+                id="old-password"
+                v-model="old_password"
                 type="password"
                 placeholder="Type here"
                 class="input input-bordered mb-4 mr-2 w-full max-w-xs border caret-primary outline-none transition-colors focus:border-primary focus:outline-none"
-                id="old-password"
                 name="old-password"
-                v-model="this.old_password"
-            /><RouterLink
+            />
+            <RouterLink
                 :to="{ name: 'reset-password' }"
                 class="text-primary hover:underline"
-                >Forgot password?</RouterLink
-            ><br />
+            >
+                Forgot password?
+            </RouterLink>
+            <br />
             <label for="new-password">New Password</label><br />
             <input
+                id="new-password"
+                v-model="new_password"
                 type="password"
                 placeholder="Type here"
                 class="input input-bordered mb-4 w-full max-w-xs border caret-primary outline-none transition-colors focus:border-primary focus:outline-none"
-                id="new-password"
                 name="new-password"
-                v-model="this.new_password"
             /><br />
             <label for="confirm-password">Confirm Password</label><br />
             <input
+                id="confirm-password"
+                v-model="confirm_password"
                 type="password"
                 placeholder="Type here"
                 class="input input-bordered mb-4 w-full max-w-xs border caret-primary outline-none transition-colors focus:border-primary focus:outline-none"
-                id="confirm-password"
                 name="confirm-password"
-                v-model="this.confirm_password"
             /><br />
             <button
                 type="submit"

@@ -31,8 +31,8 @@
                         </div>
                         <div class="tooltip" data-tip="Opens update window">
                             <button
-                                @click="updateUser(user.id)"
                                 class="btn btn-warning"
+                                @click="updateUser(user.id)"
                             >
                                 Update
                             </button>
@@ -42,8 +42,8 @@
                             data-tip="Opens deletion confirm window"
                         >
                             <button
-                                @click="deleteUser(user.id)"
                                 class="btn btn-error"
+                                @click="deleteUser(user.id)"
                             >
                                 Delete
                             </button>
@@ -83,7 +83,7 @@
             </tbody>
         </table>
         <button class="btn" @click="modifyLimit(-10)">Prev</button>
-        <p>Pages: {{ this.currentPage }} / {{ this.allUsers }}</p>
+        <p>Pages: {{ currentPage }} / {{ allUsers }}</p>
         <button class="btn" @click="modifyLimit(+10)">Next</button>
     </div>
 </template>
@@ -102,13 +102,13 @@ export default {
             limit: 10,
         };
     },
-    mounted() {
-        this.retrieveUsers();
-    },
     watch: {
         limit() {
             this.retrieveUsers();
         },
+    },
+    mounted() {
+        this.retrieveUsers();
     },
     methods: {
         modifyLimit(value) {

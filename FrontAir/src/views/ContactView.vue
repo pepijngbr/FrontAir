@@ -7,7 +7,7 @@
         <p>Contact us using the form below.</p>
     </section>
     <section class="mx-auto max-w-[900px]">
-        <form @submit.prevent="submit()" class="[&>*]:my-4">
+        <form class="[&>*]:my-4" @submit.prevent="submit()">
             <label class="form-control">
                 <div class="label">
                     <span class="label-text">Name</span>
@@ -15,12 +15,12 @@
                 <label
                     class="input input-bordered flex w-full items-center gap-2 md:w-fit"
                 >
-                    <i class="bi bi-person-fill opacity-70"></i>
+                    <i class="bi bi-person-fill opacity-70" />
                     <input
+                        v-model="name"
                         type="text"
                         class="grow border-none"
                         placeholder="Name"
-                        v-model="this.name"
                     />
                 </label>
             </label>
@@ -31,12 +31,12 @@
                 <label
                     class="input input-bordered flex w-full items-center gap-2 md:w-fit"
                 >
-                    <i class="bi bi-envelope-fill opacity-70"></i>
+                    <i class="bi bi-envelope-fill opacity-70" />
                     <input
+                        v-model="email"
                         type="text"
                         class="grow border-none"
                         placeholder="Email"
-                        v-model="this.email"
                     />
                 </label>
             </label>
@@ -45,15 +45,15 @@
                     <span class="label-text">Message</span>
                 </div>
                 <textarea
+                    v-model="content"
                     class="textarea textarea-bordered w-full border caret-primary outline-none transition-colors focus:border-primary focus:outline-none"
                     placeholder="Type here"
-                    v-model="this.content"
-                ></textarea>
+                />
             </label>
             <button
                 type="submit"
-                @click="submit()"
                 class="btn btn-primary w-full md:w-fit"
+                @click="submit()"
             >
                 Submit
             </button>

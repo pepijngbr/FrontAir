@@ -2,9 +2,9 @@
     <div class="drawer">
         <input
             id="my-drawer-3"
+            v-model="isDrawerOpen"
             type="checkbox"
             class="drawer-toggle"
-            v-model="isDrawerOpen"
         />
         <div class="drawer-content">
             <!-- Header -->
@@ -25,7 +25,7 @@
                     >
                         <i
                             class="bi bi-list flex h-[30px] items-center text-3xl"
-                        ></i>
+                        />
                     </label>
                 </div>
                 <RouterLink
@@ -94,12 +94,12 @@
                         :to="{ name: 'store' }"
                         class="btn btn-secondary"
                     >
-                        <i class="bi bi-shop"></i> Store
+                        <i class="bi bi-shop" /> Store
                     </RouterLink>
                     <div class="dropdown dropdown-end dropdown-hover">
                         <div tabindex="0" role="button" class="btn">
-                            <i v-if="isLoggedIn" class="bi bi-person-gear"></i>
-                            <i v-else class="bi bi-person-circle"></i> Account
+                            <i v-if="isLoggedIn" class="bi bi-person-gear" />
+                            <i v-else class="bi bi-person-circle" /> Account
                         </div>
                         <ul
                             tabindex="0"
@@ -112,48 +112,50 @@
                                 <p class="font-bold">
                                     {{ user.name }}
                                 </p>
-                                <p class="opacity-75">{{ user.email }}</p>
+                                <p class="opacity-75">
+                                    {{ user.email }}
+                                </p>
                             </div>
                             <li v-if="isLoggedIn">
                                 <RouterLink :to="{ name: 'wallet' }">
-                                    <i class="bi bi-wallet"></i> Wallet: €{{
+                                    <i class="bi bi-wallet" /> Wallet: €{{
                                         user.wallet
                                     }}
                                 </RouterLink>
                             </li>
                             <li v-if="isLoggedIn">
                                 <RouterLink :to="{ name: 'bookings.index' }">
-                                    <i class="bi bi-ticket"></i> My Bookings
+                                    <i class="bi bi-ticket" /> My Bookings
                                 </RouterLink>
                             </li>
                             <li v-if="isLoggedIn">
                                 <RouterLink :to="{ name: 'profile' }">
-                                    <i class="bi bi-person-circle"></i> Profile
+                                    <i class="bi bi-person-circle" /> Profile
                                 </RouterLink>
                             </li>
                             <li>
                                 <RouterLink :to="{ name: 'reset-password' }">
-                                    <i class="bi bi-arrow-counterclockwise"></i>
+                                    <i class="bi bi-arrow-counterclockwise" />
                                     Reset Password
                                 </RouterLink>
                             </li>
                             <li v-if="isLoggedIn">
                                 <button
-                                    @click="logout()"
                                     class="bg-red-400 hover:bg-red-500"
+                                    @click="logout()"
                                 >
-                                    <i class="bi bi-box-arrow-left"></i> Logout
+                                    <i class="bi bi-box-arrow-left" /> Logout
                                 </button>
                             </li>
                             <li v-if="!isLoggedIn">
                                 <RouterLink :to="{ name: 'login' }">
-                                    <i class="bi bi-box-arrow-in-right"></i>
+                                    <i class="bi bi-box-arrow-in-right" />
                                     Login
                                 </RouterLink>
                             </li>
                             <li v-if="!isLoggedIn">
                                 <RouterLink :to="{ name: 'register' }">
-                                    <i class="bi bi-person-plus"></i> Register
+                                    <i class="bi bi-person-plus" /> Register
                                 </RouterLink>
                             </li>
                         </ul>
@@ -161,7 +163,7 @@
                 </div>
             </header>
             <!-- Content -->
-            <RouterView :isLoggedIn="this.isLoggedIn" />
+            <RouterView :is-logged-in="isLoggedIn" />
             <MainFooter
                 v-if="
                     currentRoute() != '/login' &&
@@ -179,7 +181,7 @@
                 for="my-drawer-3"
                 aria-label="close sidebar"
                 class="drawer-overlay"
-            ></label>
+            />
             <div class="z-2 menu min-h-full w-80 bg-base-200 p-4">
                 <div class="mb-4 flex items-start justify-between gap-4">
                     <img
@@ -197,7 +199,7 @@
                     >
                         <i
                             class="bi bi-x-lg flex h-[30px] items-center text-3xl"
-                        ></i>
+                        />
                     </label>
                 </div>
                 <b class="mb-2 text-2xl">Navigation</b>
@@ -207,7 +209,7 @@
                             :to="{ name: 'home' }"
                             @click="toggleDrawer"
                         >
-                            <i class="bi bi-house"></i> Home
+                            <i class="bi bi-house" /> Home
                         </RouterLink>
                     </li>
                     <li>
@@ -215,7 +217,7 @@
                             :to="{ name: 'flights' }"
                             @click="toggleDrawer"
                         >
-                            <i class="bi bi-airplane"></i> Flights
+                            <i class="bi bi-airplane" /> Flights
                         </RouterLink>
                     </li>
                     <li>
@@ -223,7 +225,7 @@
                             :to="{ name: 'about' }"
                             @click="toggleDrawer"
                         >
-                            <i class="bi bi-question-lg"></i> About
+                            <i class="bi bi-question-lg" /> About
                         </RouterLink>
                     </li>
                     <li>
@@ -231,7 +233,7 @@
                             :to="{ name: 'contact' }"
                             @click="toggleDrawer"
                         >
-                            <i class="bi bi-pen"></i> Contact
+                            <i class="bi bi-pen" /> Contact
                         </RouterLink>
                     </li>
                     <li>
@@ -239,12 +241,12 @@
                             :to="{ name: 'store' }"
                             @click="toggleDrawer"
                         >
-                            <i class="bi bi-shop"></i> Store
+                            <i class="bi bi-shop" /> Store
                         </RouterLink>
                     </li>
-                    <div class="divider sm:hidden"></div>
+                    <div class="divider sm:hidden" />
                     <b class="mb-2 block text-2xl sm:hidden"
-                        ><i class="bi bi-person-circle"></i> Account</b
+                        ><i class="bi bi-person-circle" /> Account</b
                     >
                     <ul class="sm:hidden">
                         <li v-if="isLoggedIn">
@@ -252,7 +254,7 @@
                                 :to="{ name: 'wallet' }"
                                 @click="toggleDrawer"
                             >
-                                <i class="bi bi-wallet"></i> Wallet: €{{
+                                <i class="bi bi-wallet" /> Wallet: €{{
                                     user.wallet
                                 }}
                             </RouterLink>
@@ -262,7 +264,7 @@
                                 :to="{ name: 'bookings.index' }"
                                 @click="toggleDrawer"
                             >
-                                <i class="bi bi-ticket"></i> My Bookings
+                                <i class="bi bi-ticket" /> My Bookings
                             </RouterLink>
                         </li>
                         <li v-if="isLoggedIn">
@@ -270,7 +272,7 @@
                                 :to="{ name: 'profile' }"
                                 @click="toggleDrawer"
                             >
-                                <i class="bi bi-person-circle"></i> Profile
+                                <i class="bi bi-person-circle" /> Profile
                             </RouterLink>
                         </li>
                         <li v-if="!isLoggedIn">
@@ -278,7 +280,7 @@
                                 :to="{ name: 'login' }"
                                 @click="toggleDrawer"
                             >
-                                <i class="bi bi-box-arrow-in-right"></i> Login
+                                <i class="bi bi-box-arrow-in-right" /> Login
                             </RouterLink>
                         </li>
                         <li v-if="!isLoggedIn">
@@ -286,7 +288,7 @@
                                 :to="{ name: 'register' }"
                                 @click="toggleDrawer"
                             >
-                                <i class="bi bi-person-plus"></i> Register
+                                <i class="bi bi-person-plus" /> Register
                             </RouterLink>
                         </li>
                         <li>
@@ -294,7 +296,7 @@
                                 :to="{ name: 'reset-password' }"
                                 @click="toggleDrawer"
                             >
-                                <i class="bi bi-arrow-counterclockwise"></i>
+                                <i class="bi bi-arrow-counterclockwise" />
                                 Reset Password
                             </RouterLink>
                         </li>
@@ -306,7 +308,7 @@
                                     toggleDrawer();
                                 "
                             >
-                                <i class="bi bi-box-arrow-left"></i> Logout
+                                <i class="bi bi-box-arrow-left" /> Logout
                             </button>
                         </li>
                     </ul>
@@ -323,21 +325,12 @@ import { useUserStore } from '@/stores/user.js';
 import { useSiteThemeStore } from '@/stores/siteTheme.js';
 import { useHead } from '@vueuse/head';
 
-import axios from 'axios';
-const apiUrl = 'http://127.0.0.1:8000/api';
-
 export default {
     name: 'App',
     components: {
         RouterLink,
         RouterView,
         MainFooter,
-    },
-    data() {
-        return {
-            theme: '',
-            isDrawerOpen: false,
-        };
     },
     setup() {
         const route = useRoute();
@@ -391,10 +384,27 @@ export default {
             ],
         });
 
-        const isLoggedIn = useUserStore().isLoggedIn;
+        const isLoggdIn = useUserStore().isLoggedIn;
         return {
             isLoggedIn, // boolean
         };
+    },
+    data() {
+        return {
+            theme: '',
+            isDrawerOpen false,
+        };
+    },
+    computed: {
+        user() {
+            return useUserStore().user;
+        },
+        theme() {
+            return useSiteThemeStore().siteTheme;
+        },
+    },
+    mounted() {
+        useSiteThemeStore().loadTheme();
     },
     methods: {
         async logout() {
@@ -414,17 +424,6 @@ export default {
         toggleDrawer() {
             this.isDrawerOpen = !this.isDrawerOpen;
         },
-    },
-    computed: {
-        user() {
-            return useUserStore().user;
-        },
-        theme() {
-            return useSiteThemeStore().siteTheme;
-        },
-    },
-    mounted() {
-        useSiteThemeStore().loadTheme();
     },
 };
 </script>

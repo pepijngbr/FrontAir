@@ -1,6 +1,6 @@
 <template>
-    <h1>User: {{ this.user }}</h1>
-    <p>{{ this.$route.params.id }}</p>
+    <h1>User: {{ user }}</h1>
+    <p>{{ $route.params.id }}</p>
 
     <!-- RouterLink has to return back to previous page -->
     <!-- <button @click="$router.go(-1)" class="btn btn-primary">Back</button> -->
@@ -8,16 +8,11 @@
 </template>
 
 <script>
-import { RouterLink } from 'vue-router';
-
 import axios from 'axios';
 const apiUrl = 'http://127.0.0.1:8000/api';
 
 export default {
     name: 'UsersShow',
-    components: {
-        RouterLink,
-    },
     data() {
         return {
             user: {},

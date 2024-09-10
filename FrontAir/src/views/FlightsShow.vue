@@ -1,5 +1,5 @@
 <template>
-    <section class="py-10" v-if="this.flight && !this.loading">
+    <section v-if="flight && !loading" class="py-10">
         <div
             class="mx-1 grid grid-cols-1 rounded-lg bg-base-200 sm:mx-12 lg:grid-cols-3"
         >
@@ -7,9 +7,9 @@
                 class="col-span-2 hidden h-full w-full rounded-lg object-cover object-center sm:block"
                 :src="
                     '../src/assets/images/airlines/' +
-                    this.flight.airline.name.toLowerCase().replace(/\s/g, '_') +
+                    flight.airline.name.toLowerCase().replace(/\s/g, '_') +
                     '/' +
-                    this.flight.image +
+                    flight.image +
                     '.webp'
                 "
                 :alt="
@@ -20,41 +20,41 @@
             />
             <div class="col-span-3 p-4 md:col-span-1">
                 <h1>
-                    {{ this.flight.flight_number }} -
-                    {{ this.flight.airline.icao }}
+                    {{ flight.flight_number }} -
+                    {{ flight.airline.icao }}
                 </h1>
-                <p class="text-2xl">Price: €{{ this.flight.price }}</p>
+                <p class="text-2xl">Price: €{{ flight.price }}</p>
                 <p class="my-4">
-                    From: {{ this.flight.departure_airport.name }}
+                    From: {{ flight.departure_airport.name }}
                     <span class="text-sm opacity-80"
-                        >({{ this.flight.departure_airport.city }},
-                        {{ this.flight.departure_airport.country }})</span
+                        >({{ flight.departure_airport.city }},
+                        {{ flight.departure_airport.country }})</span
                     ><br />
-                    To: {{ this.flight.arrival_airport.name }}
+                    To: {{ flight.arrival_airport.name }}
                     <span class="text-sm opacity-80"
-                        >({{ this.flight.arrival_airport.city }},
-                        {{ this.flight.arrival_airport.country }})</span
+                        >({{ flight.arrival_airport.city }},
+                        {{ flight.arrival_airport.country }})</span
                     >
                 </p>
                 <p>Estimated times</p>
                 <div class="flex flex-col gap-4 lg:flex-row">
                     <div class="h-30 rounded-lg bg-base-100 p-2 lg:p-4">
                         <p class="font-bold">Departure</p>
-                        {{ this.flight.departure_time }}
+                        {{ flight.departure_time }}
                     </div>
                     <div class="h-30 rounded-lg bg-base-100 p-2 lg:p-4">
                         <p class="font-bold">Arrival</p>
-                        {{ this.flight.arrival_time }}
+                        {{ flight.arrival_time }}
                     </div>
                 </div>
-                <p class="my-4">Airline: {{ this.flight.airline.name }}</p>
+                <p class="my-4">Airline: {{ flight.airline.name }}</p>
                 <p class="my-4">
-                    Seats available: {{ this.flight.available_seats }}
+                    Seats available: {{ flight.available_seats }}
                 </p>
                 <form
                     v-if="user.isLoggedIn && !isFlightBooked(flight.id)"
-                    @submit.prevent="bookFlight"
                     class="my-4 flex w-full flex-col gap-0 lg:flex-row lg:gap-4"
+                    @submit.prevent="bookFlight"
                 >
                     <label class="form-control max-w-xs">
                         <div class="label">
@@ -74,7 +74,7 @@
                             <span class="label-text">Type</span>
                         </div>
                         <select
-                            v-model="this.type"
+                            v-model="type"
                             class="select select-bordered w-full border caret-primary outline-none transition-colors focus:border-primary focus:outline-none"
                         >
                             <option value="one-way">one-way</option>
@@ -83,22 +83,22 @@
                     </label>
                 </form>
                 <label
+                    v-if="user.isLoggedIn && !isFlightBooked(flight.id)"
                     for="confirmation"
                     class="my-4 flex gap-2"
-                    v-if="user.isLoggedIn && !isFlightBooked(flight.id)"
                 >
                     <input
-                        v-model="this.confirmation"
+                        id="confirmation"
+                        v-model="confirmation"
                         type="checkbox"
                         name="confirmation"
                         class="checkbox"
-                        id="confirmation"
                     />
                     Confirm
                 </label>
                 <button
-                    type="submit"
                     v-if="user.isLoggedIn && !isFlightBooked(flight.id)"
+                    type="submit"
                     class="btn btn-primary w-full sm:w-1/2 md:w-auto"
                     @click="bookFlight"
                 >
@@ -108,7 +108,8 @@
                     v-else-if="!user.isLoggedIn"
                     :to="{ name: 'login' }"
                     class="btn btn-warning w-full sm:w-1/2 md:w-auto"
-                    >Login to book
+                >
+                    Login to book
                 </RouterLink>
                 <div v-else class="mt-4">
                     <p>Flight already booked.</p>
@@ -117,7 +118,8 @@
                             name: 'bookings.index',
                         }"
                         class="btn btn-warning w-full sm:w-1/2 md:w-auto"
-                        >View booking
+                    >
+                        View booking
                     </RouterLink>
                 </div>
             </div>
@@ -168,7 +170,7 @@
                         </div>
                         <select
                             class="select skeleton min-w-[150px] text-transparent caret-primary outline-none transition-colors focus:border-primary focus:outline-none"
-                        ></select>
+                        />
                     </label>
                     <label class="form-control max-w-xs">
                         <div class="label">
@@ -178,7 +180,7 @@
                         </div>
                         <select
                             class="select skeleton min-w-[150px] text-transparent caret-primary outline-none transition-colors focus:border-primary focus:outline-none"
-                        ></select>
+                        />
                     </label>
                 </form>
                 <label class="my-4 flex gap-2">
@@ -220,6 +222,17 @@ export default {
             loading: true,
         };
     },
+    computed: {
+        flightId() {
+            return this.$route.params.id;
+        },
+        useUserStore() {
+            return useUserStore();
+        },
+        user() {
+            return userStore;
+        },
+    },
     created() {
         this.retrieveFlight();
         if (userStore.user) {
@@ -227,7 +240,7 @@ export default {
         }
     },
     methods: {
-        retrieveFlight() {
+        retrieveFlight( {
             axios
                 .get(apiUrl + '/flights/' + this.$route.params.id)
                 .then((response) => {
@@ -408,17 +421,6 @@ export default {
             } else {
                 return false;
             }
-        },
-    },
-    computed: {
-        flightId() {
-            return this.$route.params.id;
-        },
-        useUserStore() {
-            return useUserStore();
-        },
-        user() {
-            return userStore;
         },
     },
 };

@@ -3,8 +3,8 @@
         class="flex min-h-screen w-screen flex-col justify-center md:h-screen md:flex-row"
     >
         <form
-            @submit.prevent="register"
             class="flex w-full flex-col items-center justify-center p-6 md:w-[600px] md:p-10 [&>*]:w-full"
+            @submit.prevent="register"
         >
             <img
                 :src="
@@ -25,7 +25,7 @@
             </label>
             <label class="form-control mb-4">
                 <input
-                    v-model="this.email"
+                    v-model="email"
                     type="text"
                     placeholder="Email Address"
                     class="input input-bordered w-full border caret-primary outline-none transition-colors focus:border-primary focus:outline-none"
@@ -33,7 +33,7 @@
             </label>
             <label class="form-control mb-4">
                 <input
-                    v-model="this.password"
+                    v-model="password"
                     type="password"
                     placeholder="Password"
                     class="input input-bordered w-full border caret-primary outline-none transition-colors focus:border-primary focus:outline-none"
@@ -41,7 +41,7 @@
             </label>
             <label class="form-control mb-4">
                 <input
-                    v-model="this.confirmPassword"
+                    v-model="confirmPassword"
                     type="password"
                     placeholder="Confirm Password"
                     class="input input-bordered w-full border caret-primary outline-none transition-colors focus:border-primary focus:outline-none"
@@ -55,13 +55,15 @@
                 <RouterLink
                     to="/login"
                     class="font-bold text-primary hover:underline"
-                    >Login
+                >
+                    Login
                 </RouterLink>
             </p>
             <RouterLink
                 :to="{ name: 'home' }"
                 class="mt-4 text-center font-bold hover:underline"
-                >Enter as Guest
+            >
+                Enter as Guest
             </RouterLink>
         </form>
         <img
@@ -148,6 +150,14 @@ export default {
             theme: '',
         };
     },
+    computed: {
+        theme() {
+            return useSiteThemeStore().siteTheme;
+        },
+    },
+    mounted() {
+        useSiteThemeStore().loadTheme();
+    },
     methods: {
         register() {
             if (this.password !== this.confirmPassword) {
@@ -184,14 +194,6 @@ export default {
                     });
             }
         },
-    },
-    computed: {
-        theme() {
-            return useSiteThemeStore().siteTheme;
-        },
-    },
-    mounted() {
-        useSiteThemeStore().loadTheme();
     },
 };
 </script>

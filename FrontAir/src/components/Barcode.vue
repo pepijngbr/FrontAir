@@ -1,6 +1,6 @@
 <template>
     <div>
-        <svg ref="barcode"></svg>
+        <svg ref="barcode" />
     </div>
 </template>
 
@@ -15,6 +15,11 @@ export default {
             required: true,
         },
     },
+    watch: {
+        value() {
+            this.generateBarcode();
+        },
+    },
     mounted() {
         this.generateBarcode();
     },
@@ -26,11 +31,6 @@ export default {
                 height: 100,
                 displayValue: true,
             });
-        },
-    },
-    watch: {
-        value() {
-            this.generateBarcode();
         },
     },
 };

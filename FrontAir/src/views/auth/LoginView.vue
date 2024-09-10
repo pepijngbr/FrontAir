@@ -3,8 +3,8 @@
         class="flex min-h-screen w-screen flex-col justify-center md:h-screen md:flex-row"
     >
         <form
-            @submit.prevent="login"
             class="flex w-full flex-col items-center justify-center p-6 md:w-[600px] md:p-10 lg:mt-20 [&>*]:w-full"
+            @submit.prevent="login"
         >
             <img
                 :src="
@@ -17,7 +17,7 @@
             <h1 class="my-4 text-2xl font-extralight lg:text-3xl">Login</h1>
             <label class="form-control mb-4">
                 <input
-                    v-model="this.email"
+                    v-model="email"
                     type="email"
                     placeholder="Email Address"
                     class="input input-bordered w-full border caret-primary outline-none transition-colors focus:border-primary focus:outline-none"
@@ -25,7 +25,7 @@
             </label>
             <label class="form-control">
                 <input
-                    v-model="this.password"
+                    v-model="password"
                     type="password"
                     placeholder="Password"
                     class="input input-bordered w-full border caret-primary outline-none transition-colors focus:border-primary focus:outline-none"
@@ -34,7 +34,8 @@
             <RouterLink
                 to="/reset-password"
                 class="mb-4 text-right font-bold text-secondary hover:underline"
-                >Forgot your password?
+            >
+                Forgot your password?
             </RouterLink>
             <button class="btn btn-primary h-14 w-full text-white lg:w-auto">
                 Login
@@ -51,7 +52,8 @@
             <RouterLink
                 :to="{ name: 'home' }"
                 class="mt-4 text-center font-bold hover:underline"
-                >Enter as Guest
+            >
+                Enter as Guest
             </RouterLink>
         </form>
         <img
@@ -136,6 +138,14 @@ export default {
             theme: '',
         };
     },
+    computed: {
+        theme() {
+            return useSiteThemeStore().siteTheme;
+        },
+    },
+    mounted() {
+        useSiteThemeStore().loadTheme();
+    },
     methods: {
         login() {
             const user = {
@@ -170,14 +180,6 @@ export default {
                     alert('Login failed, please try again.');
                 });
         },
-    },
-    computed: {
-        theme() {
-            return useSiteThemeStore().siteTheme;
-        },
-    },
-    mounted() {
-        useSiteThemeStore().loadTheme();
     },
 };
 </script>

@@ -2,7 +2,7 @@
     <section
         class="mx-auto mb-4 max-w-[900px] pb-10 pt-4 text-center md:pt-20 md:text-left"
     >
-        <h1><i class="bi bi-wallet"></i> Wallet</h1>
+        <h1><i class="bi bi-wallet" /> Wallet</h1>
         <p>
             Here you can see your wallet balance and top it up using the input
             below.
@@ -14,16 +14,16 @@
         <p>The top up limit has a maximum of €999.</p>
         <div class="my-4 flex justify-center gap-2 md:justify-start">
             <input
+                v-model="amount"
                 type="text"
                 placeholder="9.99"
                 class="input input-bordered"
-                v-model="this.amount"
             />
-            <button @click="topUp" class="btn btn-outline">Top up</button>
+            <button class="btn btn-outline" @click="topUp">Top up</button>
         </div>
     </section>
     <section>
-        <div class="p-4 pt-2 text-center text-2xl"></div>
+        <div class="p-4 pt-2 text-center text-2xl" />
     </section>
 </template>
 
@@ -131,7 +131,7 @@ export default {
                 console.log('data: ', data);
                 await axios
                     .put(apiUrl + '/users/' + user.id, data)
-                    .then((response) => {
+                    .then(() => {
                         console.log('Wallet topped up!');
                         this.retrieveBalance();
                     })

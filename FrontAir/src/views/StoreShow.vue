@@ -1,6 +1,6 @@
 <template>
     <section class="mb-4 pb-10 pt-20">
-        <h1>Store {{ this.$route.params }}</h1>
+        <h1>Store {{ $route.params }}</h1>
         <p>Show specific product information</p>
     </section>
     <!-- left column -->

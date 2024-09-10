@@ -1,6 +1,6 @@
 <template>
     <section class="mb-4 pb-10 pt-20">
-        <h1><i class="bi bi-shop"></i> Store</h1>
+        <h1><i class="bi bi-shop" /> Store</h1>
         <p>Buy items from the store using your Loyalty Points!</p>
         <p>Receive Loyalty Points by booking Flights.</p>
     </section>
@@ -8,7 +8,7 @@
         <h2>Items</h2>
         <div class="grid grid-cols-1 gap-4 p-4 md:grid-cols-2 lg:grid-cols-3">
             <div
-                v-for="item in this.items"
+                v-for="item in items"
                 class="card bordered shadow shadow-white/30"
             >
                 <div class="card-body">
@@ -21,7 +21,7 @@
                         @click="redeemItem(item.name, item.loyalty_points)"
                     >
                         {{
-                            this.points > item.loyalty_points
+                            points > item.loyalty_points
                                 ? 'Redeem'
                                 : 'More loyalty points needed'
                         }}
@@ -39,6 +39,9 @@ import { useRoute } from 'vue-router';
 
 export default {
     name: 'StoreView',
+    props: {
+        isLoggedIn: Boolean,
+    },
     setup() {
         const route = useRoute();
         const canonicalUrl = 'https://www.frontair.nl' + route.path;
@@ -115,9 +118,6 @@ export default {
                 },
             ],
         };
-    },
-    props: {
-        isLoggedIn: Boolean,
     },
     methods: {
         redeemItem(item, loyalty_points) {

@@ -82,8 +82,8 @@
                                         ' hover:underline'
                                     "
                                 >
-                                    Privacy Policy</RouterLink
-                                >
+                                    Privacy Policy
+                                </RouterLink>
                             </li>
                             <li>
                                 <RouterLink
@@ -95,8 +95,8 @@
                                         ' hover:underline'
                                     "
                                 >
-                                    Terms of Service</RouterLink
-                                >
+                                    Terms of Service
+                                </RouterLink>
                             </li>
                             <li>
                                 <RouterLink
@@ -108,8 +108,8 @@
                                         ' hover:underline'
                                     "
                                 >
-                                    Refund Policy</RouterLink
-                                >
+                                    Refund Policy
+                                </RouterLink>
                             </li>
                         </ul>
                     </div>
@@ -123,8 +123,8 @@
                 </div>
             </div>
             <div
-                class="absolute inset-0 z-0 h-full w-full bg-clouds bg-cover bg-no-repeat opacity-50"
-            ></div>
+                class="bg-clouds absolute inset-0 z-0 h-full w-full bg-cover bg-no-repeat opacity-50"
+            />
         </div>
     </footer>
 </template>

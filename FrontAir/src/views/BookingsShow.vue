@@ -1,5 +1,5 @@
 <template>
-    <section class="pt-20" v-if="this.booking.flight">
+    <section v-if="booking.flight" class="pt-20">
         <img
             class="h-60 w-full rounded-lg object-cover object-center"
             :src="
@@ -15,65 +15,60 @@
                     : 'Image of Airline'
             "
         />
-        <h1>{{ this.booking.flight.flight_number }}</h1>
+        <h1>{{ booking.flight.flight_number }}</h1>
     </section>
     <section class="py-10">
         <h2>Your Ticket</h2>
         <div class="max-w-[300px]">
             <Barcode
                 :value="
-                    this.booking.user_id +
+                    booking.user_id +
                     '' +
-                    this.booking.flight.departure_airport.id +
+                    booking.flight.departure_airport.id +
                     '' +
-                    this.booking.flight.arrival_airport.id +
-                    this.booking.flight.flight_number +
-                    this.booking.id
+                    booking.flight.arrival_airport.id +
+                    booking.flight.flight_number +
+                    booking.id
                 "
             />
         </div>
     </section>
-    <section class="py-10" v-if="this.booking.user">
+    <section v-if="booking.user" class="py-10">
         <h2>Billing information</h2>
         <p>
-            Booking made by: {{ this.booking.user.name }} ({{
-                this.booking.user.email
-            }})
+            Booking made by: {{ booking.user.name }} ({{ booking.user.email }})
         </p>
     </section>
     <section class="py-10">
         <h2>Flight</h2>
-        <h3>{{ this.booking.flight.flight_number }}</h3>
-        <p>Price: €{{ this.booking.price }}</p>
+        <h3>{{ booking.flight.flight_number }}</h3>
+        <p>Price: €{{ booking.price }}</p>
         <p>
-            Arrival Airport: {{ this.booking.flight.arrival_airport.name }} ({{
-                this.booking.flight.arrival_airport.iata
+            Arrival Airport: {{ booking.flight.arrival_airport.name }} ({{
+                booking.flight.arrival_airport.iata
             }})
         </p>
         <p>
             Departure Airport:
-            {{ this.booking.flight.departure_airport.name }} ({{
-                this.booking.flight.departure_airport.iata
+            {{ booking.flight.departure_airport.name }} ({{
+                booking.flight.departure_airport.iata
             }})
         </p>
-        <p>Airline: {{ this.booking.flight.airline.name }}</p>
-        <p>Available seats: {{ this.booking.flight.available_seats }}</p>
-        <p>Your seat number: {{ this.booking.seat_number }}</p>
+        <p>Airline: {{ booking.flight.airline.name }}</p>
+        <p>Available seats: {{ booking.flight.available_seats }}</p>
+        <p>Your seat number: {{ booking.seat_number }}</p>
     </section>
     <section class="py-20">
         <h2>Airports</h2>
-        <b
-            >Departure airport:
-            {{ this.booking.flight.departure_airport.name }}</b
-        >
-        <p>Code: {{ this.booking.flight.departure_airport.iata }}</p>
-        <p>City: {{ this.booking.flight.departure_airport.city }}</p>
-        <p>Country: {{ this.booking.flight.departure_airport.country }}</p>
+        <b>Departure airport: {{ booking.flight.departure_airport.name }}</b>
+        <p>Code: {{ booking.flight.departure_airport.iata }}</p>
+        <p>City: {{ booking.flight.departure_airport.city }}</p>
+        <p>Country: {{ booking.flight.departure_airport.country }}</p>
         <br /><br />
-        <b>Arrival airport: {{ this.booking.flight.arrival_airport.name }}</b>
-        <p>Code: {{ this.booking.flight.arrival_airport.iata }}</p>
-        <p>City: {{ this.booking.flight.arrival_airport.city }}</p>
-        <p>Country: {{ this.booking.flight.arrival_airport.country }}</p>
+        <b>Arrival airport: {{ booking.flight.arrival_airport.name }}</b>
+        <p>Code: {{ booking.flight.arrival_airport.iata }}</p>
+        <p>City: {{ booking.flight.arrival_airport.city }}</p>
+        <p>Country: {{ booking.flight.arrival_airport.country }}</p>
     </section>
 </template>
 
@@ -95,6 +90,11 @@ export default {
         return {
             booking: {},
         };
+    },
+    computed: {
+        bookngId() {
+            return this.$route.params.id;
+        },
     },
     created() {
         this.retrieveBooking();
@@ -212,11 +212,6 @@ export default {
                 minute: 'numeric',
                 timeZone: 'GMT',
             });
-        },
-    },
-    computed: {
-        bookingId() {
-            return this.$route.params.id;
         },
     },
 };

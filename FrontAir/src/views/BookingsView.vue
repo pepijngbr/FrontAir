@@ -1,6 +1,6 @@
 <template>
     <section class="py-20">
-        <h1><i class="bi bi-ticket"></i> My Bookings</h1>
+        <h1><i class="bi bi-ticket" /> My Bookings</h1>
         <p>Here you can see all your bookings.</p>
         <p>
             If the status of a booking is "booked", the flight can not be
@@ -8,17 +8,17 @@
         </p>
     </section>
     <section
-        v-if="bookings.length > 0 && this.userStore.isLoggedIn == true"
+        v-if="bookings.length > 0 && userStore.isLoggedIn == true"
         class="mb-20"
     >
         <div
             class="grid grid-cols-1 gap-4 p-0 sm:p-4 md:grid-cols-2 xl:grid-cols-3"
         >
             <div
+                v-for="booking in bookings"
+                :key="booking.id"
                 class="card bordered shadow-lg"
                 :class="theme == 'frontair' ? '' : 'shadow-white/30'"
-                v-for="booking in this.bookings"
-                :key="booking.id"
             >
                 <figure>
                     <img
@@ -80,7 +80,7 @@
                             <p>{{ booking.flight.airline.name }}</p>
                         </div>
                     </div>
-                    <div class="divider my-2"></div>
+                    <div class="divider my-2" />
                     <div class="mb-4 grid grid-cols-1 gap-2 sm:grid-cols-2">
                         <div class="flex flex-col">
                             <p class="text-lg font-bold">From</p>
@@ -121,9 +121,9 @@
                         "
                     />
                     <button
-                        @click="confirmBooking(booking.id)"
                         v-if="booking.booking_status == 'pending'"
                         class="btn btn-success absolute left-4 top-4"
+                        @click="confirmBooking(booking.id)"
                     >
                         Confirm
                     </button>
@@ -144,31 +144,35 @@
                                 name: 'bookings.show',
                                 params: { id: booking.id },
                             }"
-                            >More details</RouterLink
                         >
+                            More details
+                        </RouterLink>
                     </div>
                 </div>
             </div>
         </div>
     </section>
     <section v-else>
-        <p v-if="bookings.length == 0 && this.userStore.isLoggedIn == true">
+        <p v-if="bookings.length == 0 && userStore.isLoggedIn == true">
             It's empty in here.. try booking a
-            <RouterLink :to="{ name: 'flights' }" class="text-primary underline"
-                >Flight
+            <RouterLink
+                :to="{ name: 'flights' }"
+                class="text-primary underline"
+            >
+                Flight
             </RouterLink>
             !
         </p>
-        <div v-if="this.userStore.isLoggedIn == false">
+        <div v-if="userStore.isLoggedIn == false">
             <p>
                 Please log in to view your bookings or register to start
                 booking.
             </p>
-            <RouterLink :to="{ name: 'login' }" class="text-primary underline"
-                >Login
+            <RouterLink :to="{ name: 'login' }" class="text-primary underline">
+                Login
             </RouterLink>
-            <RouterLink :to="{ name: 'register' }" class="btn btn-primary"
-                >Register
+            <RouterLink :to="{ name: 'register' }" class="btn btn-primary">
+                Register
             </RouterLink>
         </div>
     </section>
@@ -249,6 +253,11 @@ export default {
             bookings: [],
             userStore: useUserStore(),
         };
+    },
+    computed: {
+        theme() {
+            return useSiteThemeStore().siteTheme;
+        },
     },
     mounted() {
         this.retrieveBookings();
@@ -359,11 +368,6 @@ export default {
                 minute: 'numeric',
                 timeZone: 'GMT',
             });
-        },
-    },
-    computed: {
-        theme() {
-            return useSiteThemeStore().siteTheme;
         },
     },
 };
