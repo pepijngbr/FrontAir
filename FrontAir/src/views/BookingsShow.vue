@@ -20,7 +20,7 @@
     <section class="py-10">
         <h2>Your Ticket</h2>
         <div class="max-w-[300px]">
-            <Barcode
+            <BarcodeLabel
                 :value="
                     booking.user_id +
                     '' +

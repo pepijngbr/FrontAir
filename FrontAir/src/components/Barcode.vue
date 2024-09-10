@@ -8,7 +8,7 @@
 import JsBarcode from 'jsbarcode';
 
 export default {
-    name: 'Barcode',
+    name: 'BarcodeLabel',
     props: {
         value: {
             type: String,

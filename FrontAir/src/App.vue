@@ -392,7 +392,7 @@ export default {
     data() {
         return {
             theme: '',
-            isDrawerOpen false,
+            isDrawerOpen: false,
         };
     },
     computed: {

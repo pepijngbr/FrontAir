@@ -108,7 +108,7 @@
                         </div>
                     </div>
                     <p class="text-center text-2xl font-bold">Ticket</p>
-                    <Barcode
+                    <BarcodeLabel
                         v-show="booking.booking_status == 'booked'"
                         :value="
                             booking.user_id +
