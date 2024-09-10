@@ -140,7 +140,7 @@ export default {
     },
     data() {
         return {
-            theme: '',
+            // theme: '',
         };
     },
     computed: {

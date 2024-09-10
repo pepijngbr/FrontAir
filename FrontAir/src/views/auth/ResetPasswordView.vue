@@ -141,7 +141,6 @@ export default {
         return {
             email: '',
             time: 0,
-            theme: '',
         };
     },
     computed: {

@@ -51,11 +51,11 @@
                     >
                         <option value="0" selected>All</option>
                         <option
-                            v-for="airline in airlines"
-                            :key="airline.id"
-                            :value="airline.id"
+                            v-for="airlineItem in airlines"
+                            :key="airlineItem.id"
+                            :value="airlineItem.id"
                         >
-                            {{ airline.name }}
+                            {{ airlineItem.name }}
                         </option>
                     </select>
                     <p class="mt-4 font-bold">Date selection</p>

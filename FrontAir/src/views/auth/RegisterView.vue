@@ -147,7 +147,7 @@ export default {
             email: '',
             password: '',
             confirmPassword: '',
-            theme: '',
+            // theme: '',
         };
     },
     computed: {

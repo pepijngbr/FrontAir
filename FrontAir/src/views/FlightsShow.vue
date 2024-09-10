@@ -240,7 +240,7 @@ export default {
         }
     },
     methods: {
-        retrieveFlight( {
+        retrieveFlight() {
             axios
                 .get(apiUrl + '/flights/' + this.$route.params.id)
                 .then((response) => {

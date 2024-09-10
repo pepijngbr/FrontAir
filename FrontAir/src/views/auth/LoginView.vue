@@ -135,7 +135,7 @@ export default {
         return {
             email: '',
             password: '',
-            theme: '',
+            // theme: '',
         };
     },
     computed: {

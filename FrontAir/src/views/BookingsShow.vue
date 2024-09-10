@@ -76,7 +76,7 @@
 import { useHead } from '@vueuse/head';
 import { useRoute } from 'vue-router';
 import { useUserStore } from '@/stores/user.js';
-import Barcode from '@/components/Barcode.vue';
+import BarcodeLabel from '@/components/BarcodeLabel.vue';
 
 import axios from 'axios';
 const apiUrl = 'http://127.0.0.1:8000/api';
@@ -84,7 +84,7 @@ const apiUrl = 'http://127.0.0.1:8000/api';
 export default {
     name: 'BookingShow',
     components: {
-        Barcode,
+        BarcodeLabel,
     },
     data() {
         return {

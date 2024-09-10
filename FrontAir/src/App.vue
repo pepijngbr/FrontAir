@@ -384,14 +384,16 @@ export default {
             ],
         });
 
+        // eslint-disable-next-line no-unused-vars
         const isLoggdIn = useUserStore().isLoggedIn;
         return {
+            // eslint-disable-next-line no-undef
             isLoggedIn, // boolean
         };
     },
     data() {
         return {
-            theme: '',
+            // theme: '',
             isDrawerOpen: false,
         };
     },

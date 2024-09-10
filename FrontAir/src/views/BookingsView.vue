@@ -182,7 +182,7 @@
 import { useSiteThemeStore } from '@/stores/siteTheme.js';
 import { useUserStore } from '@/stores/user.js';
 import { RouterLink } from 'vue-router';
-import Barcode from '@/components/Barcode.vue';
+import BarcodeLabel from '@/components/BarcodeLabel.vue';
 import { useHead } from '@vueuse/head';
 import { useRoute } from 'vue-router';
 
@@ -193,7 +193,7 @@ export default {
     name: 'BookingsView',
     components: {
         RouterLink,
-        Barcode,
+        BarcodeLabel,
     },
     setup() {
         const route = useRoute();

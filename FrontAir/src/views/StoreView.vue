@@ -9,7 +9,9 @@
         <div class="grid grid-cols-1 gap-4 p-4 md:grid-cols-2 lg:grid-cols-3">
             <div
                 v-for="item in items"
+                :key="item.id"
                 class="card bordered shadow shadow-white/30"
+                :value="item.id"
             >
                 <div class="card-body">
                     <h2>{{ item.name }}</h2>

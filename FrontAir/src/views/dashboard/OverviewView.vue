@@ -64,30 +64,30 @@
         >
             <p>Incoming Flights</p>
             <!-- <ul class="[&>*]:bg-white [&>*]:mb-2">
-                      <li>Flight 1</li>
-                      <li>Flight 2</li>
-                      <li>Flight 3</li>
-                  </ul> -->
+                            <li>Flight 1</li>
+                            <li>Flight 2</li>
+                            <li>Flight 3</li>
+                        </ul> -->
         </div>
         <div
             class="col-span-2 row-span-2 border-4 border-red-600 bg-red-500 p-2"
         >
             <p>Outgoing Flights</p>
             <!-- <ul class="[&>*]:bg-white [&>*]:mb-2">
-                      <li>Flight 1</li>
-                      <li>Flight 2</li>
-                      <li>Flight 3</li>
-                  </ul> -->
+                            <li>Flight 1</li>
+                            <li>Flight 2</li>
+                            <li>Flight 3</li>
+                        </ul> -->
         </div>
         <div
             class="col-span-4 row-span-1 border-4 border-orange-600 bg-orange-500 p-2"
         >
             <p>Logs</p>
             <!-- <ul class="[&>*]:bg-white [&>*]:mb-2">
-                      <li>Log 1</li>
-                      <li>Log 2</li>
-                      <li>Log 3</li>
-                  </ul> -->
+                            <li>Log 1</li>
+                            <li>Log 2</li>
+                            <li>Log 3</li>
+                        </ul> -->
         </div>
     </div>
 </template>
