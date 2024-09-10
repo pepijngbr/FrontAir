@@ -23,18 +23,21 @@ jobs:
 
       - name: Install dependencies
         run: npm install
+        working-directory: ./FrontAir
 
       - name: Verify node version
         run: node -v
-
+        
       - name: Verify npm version
         run: npm -v
 
 #      - name: Run tests
 #        run: npm run test
+#        working-directory: ./FrontAir
 
       - name: Build the application
         run: npm run build-only
+        working-directory: ./FrontAir
 
       - name: Upload build artifacts
         uses: actions/upload-artifact@v3
