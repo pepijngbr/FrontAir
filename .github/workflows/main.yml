@@ -31,6 +31,9 @@ jobs:
       - name: Verify npm version
         run: npm -v
 
+      - name: Linter
+        run: npm run lint
+
 #      - name: Run tests
 #        run: npm run test
 #        working-directory: FrontAir
