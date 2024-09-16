@@ -7,10 +7,15 @@ on:
   pull_request:
     branches:
       - main
-      
+
+env:
+  DAY_OF_THE_WEEK: Monday
+
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      Greeting: Hey
 
     steps:
       - name: Checkout the repository
@@ -20,6 +25,12 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: '20.11.0'
+
+      - name: Say Hey to Pepijn if it is Monday
+        if: ${{ env.DAY_OF_THE_WEEK == 'Monday' }}
+        run:  echo "$Greeting $First_Name, today is $DAY_OF_THE_WEEK!"
+        env:
+          First_Name: Pepijn
 
       - name: Install dependencies
         run: npm install
