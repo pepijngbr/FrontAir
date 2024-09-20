@@ -77,18 +77,24 @@ jobs:
       # Step 1: Checkout the repository
       - name: Checkout the repository
         uses: actions/checkout@v2
+        
+      - name: Create a Tag
+        run: |
+          TAG=$(date +%Y%m%d%H%M%S)
+          echo "Creating tag $TAG"
+          git tag $TAG
+          git push origin $TAG
 
-      # Step 2: Create GitHub Release
-      - name: Create Release
+      - name: Create GitHub Release
         uses: actions/create-release@v1
         with:
-          tag_name: ${{ github.ref }}  # This references the tag that triggered the workflow
-          release_name: Release ${{ github.ref }}
+          tag_name: ${{ steps.tag_creation.outputs.TAG }}  # Reference the created tag
+          release_name: "Release ${{ steps.tag_creation.outputs.TAG }}"
           body: "Automated release of Vue.js application."
           draft: false
           prerelease: false
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # GitHub token for authentication
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       # Optional Step: Upload build artifacts (dist folder) to the release
       - name: Upload build artifacts
