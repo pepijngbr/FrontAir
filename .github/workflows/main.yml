@@ -61,13 +61,13 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: build
-          path: dist/
+          path: FrontAir/dist
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}  # GitHub token for authentication
-          publish_dir: frontair/dist
+          publish_dir: FrontAir/dist
 
 
   release:
