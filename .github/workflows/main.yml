@@ -98,10 +98,10 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Upload build artifacts
-        uses: actions/upload-release-asset@v1
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}  # URL for uploading assets
-          asset_content_type: application/zip
-          asset_path: FrontAir/dist.zip  # Path to the asset to upload
-          asset_name: dist.zip
+#      - name: Upload build artifacts
+#        uses: actions/upload-release-asset@v1
+#        with:
+#          upload_url: ${{ steps.create_release.outputs.upload_url }}  # URL for uploading assets
+#          asset_content_type: application/zip
+#          asset_path: FrontAir/dist.zip  # Path to the asset to upload
+#          asset_name: dist.zip
