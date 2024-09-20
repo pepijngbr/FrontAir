@@ -84,11 +84,12 @@ jobs:
           echo "Creating tag $TAG"
           git tag $TAG
           git push origin $TAG
+          echo "::set-output name=TAG::$TAG"
 
       - name: Create GitHub Release
         uses: actions/create-release@v1
         with:
-          tag_name: ${{ github.ref }}  # This references the tag that triggered the workflow
+          tag_name: ${{ steps.tag_creation.outputs.TAG }}  # This references the tag that triggered the workflow
           release_name: "Release ${{ steps.tag_creation.outputs.TAG }}"
           body: "Automated release of Vue.js application."
           draft: false
