@@ -74,11 +74,11 @@ jobs:
     runs-on: ubuntu-latest
     needs: build  # Only run this job if the build is successful
     steps:
-      # Step 1: Checkout the repository
       - name: Checkout the repository
         uses: actions/checkout@v2
         
       - name: Create a Tag
+        id: tag_creation
         run: |
           TAG=$(date +%Y%m%d%H%M%S)
           echo "Creating tag $TAG"
@@ -88,7 +88,7 @@ jobs:
       - name: Create GitHub Release
         uses: actions/create-release@v1
         with:
-          tag_name: ${{ steps.tag_creation.outputs.TAG }}  # Reference the created tag
+          tag_name: ${{ steps.tag_creation.outputs.TAG }}
           release_name: "Release ${{ steps.tag_creation.outputs.TAG }}"
           body: "Automated release of Vue.js application."
           draft: false
@@ -96,11 +96,10 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      # Optional Step: Upload build artifacts (dist folder) to the release
       - name: Upload build artifacts
         uses: actions/upload-release-asset@v1
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./dist.zip  # You may zip your dist/ folder if necessary
+          asset_path: ./dist.zip
           asset_name: dist.zip
           asset_content_type: application/zip
