@@ -12,5 +12,9 @@ module.exports = {
         ecmaVersion: 2021,
         sourceType: 'module'
     },
-    plugins: ['vue', 'import']
+    plugins: ['vue', 'import'],
+    rules: {
+        'no-unused-vars': 'error',
+        'no-undef': 'error'
+    }
 };
