@@ -63,11 +63,11 @@ jobs:
           name: build
           path: dist/
 
-#      - name: Deploy to GitHub Pages
-#        uses: peaceiris/actions-gh-pages@v3
-#        with:
-#          github_token: ${{ secrets.GITHUB_TOKEN }}  # GitHub token for authentication
-#          publish_dir: ./dist  # Path to the directory where the build is output
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}  # GitHub token for authentication
+          publish_dir: frontair/dist
 
 
   release:
