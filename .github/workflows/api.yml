@@ -2,11 +2,11 @@ name: Laravel API
 
 on:
   push:
-    branches:
-      - main
+    branches: [ 'main' ]
+    paths: [ 'apiFrontAir/**' ]
   pull_request:
-    branches:
-      - main
+    branches: [ 'main' ]
+    paths: [ 'apiFrontAir/**' ]
 
 jobs:
   build:

@@ -2,11 +2,11 @@ name: Build & Deployment
 
 on:
   push:
-    branches:
-      - main
+    branches: [ 'main' ]
+    paths: [ 'FrontAir/**' ]
   pull_request:
-    branches:
-      - main
+    branches: [ 'main' ]
+    paths: [ 'FrontAir/**' ]
 
 permissions:
   contents: write
