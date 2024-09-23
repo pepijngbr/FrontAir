@@ -3,10 +3,13 @@ name: Build & Deployment
 on:
   push:
     branches: [ 'main' ]
-    paths: [ 'FrontAir/**' ]
+  #    paths: [ 'FrontAir/**' ]
   pull_request:
     branches: [ 'main' ]
-    paths: [ 'FrontAir/**' ]
+#    paths: [ 'FrontAir/**' ]
+
+env:
+  APP_DIR: FrontAir
 
 permissions:
   contents: write
@@ -25,7 +28,7 @@ jobs:
 
       - name: Install dependencies
         run: npm install
-        working-directory: FrontAir
+        working-directory: env.APP_DIR
 
       - name: Verify node version
         run: node -v
@@ -35,15 +38,15 @@ jobs:
 
       - name: Linter
         run: npm run lint
-        working-directory: FrontAir
+        working-directory: env.APP_DIR
 
 #      - name: Run tests
 #        run: npm run test
-#        working-directory: FrontAir
+      #        working-directory: env.APP_DIR
 
       - name: Build the application
         run: npm run build-only
-        working-directory: FrontAir
+        working-directory: env.APP_DIR
 
 #      - name: Upload build artifacts
 #        uses: actions/upload-artifact@v3
