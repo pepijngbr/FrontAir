@@ -10,6 +10,7 @@ on:
 
 env:
   APP_DIR: FrontAir
+  API_DIR: apiFrontAir
 
 permissions:
   contents: write
@@ -38,15 +39,15 @@ jobs:
 
       - name: Linter
         run: npm run lint
-        working-directory: env.APP_DIR
+        working-directory: FrontAir
 
 #      - name: Run tests
 #        run: npm run test
-      #        working-directory: env.APP_DIR
+      #        working-directory: FrontAir
 
       - name: Build the application
         run: npm run build-only
-        working-directory: env.APP_DIR
+        working-directory: FrontAir
 
 #      - name: Upload build artifacts
 #        uses: actions/upload-artifact@v3
