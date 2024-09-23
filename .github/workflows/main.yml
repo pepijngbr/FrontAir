@@ -91,5 +91,5 @@ jobs:
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}  # URL for uploading assets
           asset_content_type: application/zip
-          asset_path: FrontAir/
+          asset_path: FrontAir/dist
           asset_name: dist.zip
