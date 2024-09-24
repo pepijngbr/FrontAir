@@ -25,16 +25,16 @@ jobs:
 
       # Ensure the working directory is correct
       - name: Install dependencies for frontair
-        working-directory: frontair  # Use the correct directory name
+        working-directory: FrontAir  # Use the correct directory name
         run: npm install
 
       - name: Build frontair application
-        working-directory: frontair
+        working-directory: FrontAir
         run: npm run build
 
       # Deploy the app
       - name: Deploy the application
-        working-directory: frontair
+        working-directory: FrontAir
         run: npm run deploy
 
       - name: Verify node version
