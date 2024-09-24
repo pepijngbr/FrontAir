@@ -45,11 +45,14 @@ jobs:
         run: npm run build-only
         working-directory: FrontAir
 
+      - name: cd
+        run: cd FrontAir/dist
+
       - name: Upload build artifacts
         uses: actions/upload-artifact@v3
         with:
           name: dist-artifact
-          path: FrontAir/dist
+  #          path: FrontAir/dist
 
 #      - name: Deploy to GitHub Pages
 #        uses: peaceiris/actions-gh-pages@v3
@@ -102,11 +105,12 @@ jobs:
       - name: View files in dist artifact
         run: ls -l
 
-#      - name: Deploy to GitHub Pages
-#        uses: peaceiris/actions-gh-pages@v3
-#        with:
-#          github_token: ${{ secrets.GITHUB_TOKEN }}
-#          publish_dir: FrontAir/dist
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: FrontAir/dist
+
 
 
 #      - name: Move dist folder to a clean build directory
@@ -119,7 +123,7 @@ jobs:
 #          echo 'FROM nginx:alpine' > docker-build/Dockerfile
 #          echo 'COPY ./dist /usr/share/nginx/html' >> docker-build/Dockerfile
 #          echo 'EXPOSE 80' >> docker-build/Dockerfile
-#
+##
 #      - name: Log in to Docker Hub
 #        uses: docker/login-action@v2
 #        with:
