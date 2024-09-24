@@ -11,6 +11,7 @@
     "type-check": "vue-tsc --build --force",
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore",
     "serve": "serve -s dist",
+    "predeploy": "npm run build-only",
     "deploy": "gh-pages -d dist"
   },
   "dependencies": {
