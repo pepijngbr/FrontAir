@@ -23,9 +23,19 @@ jobs:
         with:
           node-version: '20.11.0'
 
-      - name: Install dependencies
+      # Ensure the working directory is correct
+      - name: Install dependencies for frontair
+        working-directory: frontair  # Use the correct directory name
         run: npm install
-        working-directory: FrontAir
+
+      - name: Build frontair application
+        working-directory: frontair
+        run: npm run build
+
+      # Deploy the app
+      - name: Deploy the application
+        working-directory: frontair
+        run: npm run deploy
 
       - name: Verify node version
         run: node -v
@@ -101,6 +111,7 @@ jobs:
 
       - name: Deploy to GitHub Pages
         run: npm run deploy
+        working-directory: FrontAir
 
 #      - name: Move dist folder to a clean build directory
 #        run: |
