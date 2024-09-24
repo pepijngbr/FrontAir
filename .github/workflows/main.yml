@@ -25,7 +25,7 @@ jobs:
 
       - name: Install dependencies
         run: npm install
-      #        working-directory: frontair
+        working-directory: FrontAir
 
       - name: Verify node version
         run: node -v
@@ -35,15 +35,15 @@ jobs:
 
       - name: Linter
         run: npm run lint
-      #        working-directory: frontair
+        working-directory: FrontAir
 
 #      - name: Run tests
 #        run: npm run test
-      #        working-directory: frontair
+      #        working-directory: FrontAir
 
       - name: Build the application
         run: npm run build-only
-      #        working-directory: frontair
+        working-directory: FrontAir
 
       - name: Upload build artifacts
         uses: actions/upload-artifact@v3
