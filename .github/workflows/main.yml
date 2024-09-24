@@ -100,7 +100,6 @@ jobs:
 #          publish_dir: FrontAir/dist
 
       - name: Deploy to GitHub Pages
-        working-directory: FrontAir
         run: npm install -g gh-pages && npm run deploy
 
 #      - name: Move dist folder to a clean build directory
