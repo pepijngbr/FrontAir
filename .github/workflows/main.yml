@@ -103,7 +103,7 @@ jobs:
       - name: Move dist folder to a clean build directory
         run: |
           mkdir -p docker-build
-          mv dist docker-build/
+          mv FrontAir/dist docker-build/
 
       - name: Create Dockerfile for dist deployment
         run: |
