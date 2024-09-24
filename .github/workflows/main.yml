@@ -30,7 +30,7 @@ jobs:
 
       - name: Build frontair application
         working-directory: FrontAir
-        run: npm run build
+        run: npm run build-only
 
       # Deploy the app
       - name: Deploy the application
