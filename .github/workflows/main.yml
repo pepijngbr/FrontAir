@@ -51,12 +51,6 @@ jobs:
           name: dist-artifact
           path: FrontAir/dist
 
-#      - name: Deploy to GitHub Pages
-#        uses: peaceiris/actions-gh-pages@v3
-#        with:
-#          github_token: ${{ secrets.GITHUB_TOKEN }}
-#          publish_dir: FrontAir/dist
-
   #  release:
   #    runs-on: ubuntu-latest
   #    needs: build
@@ -98,6 +92,12 @@ jobs:
 
       - name: View files in dist artifact
         run: ls -l
+
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: FrontAir/dist
 
       - name: Deploy to GitHub Pages
         run: npm run deploy
