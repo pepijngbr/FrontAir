@@ -100,11 +100,7 @@ jobs:
         run: ls -l
 
       - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v3
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-
-
+        run: npm run deploy
 
 #      - name: Move dist folder to a clean build directory
 #        run: |
