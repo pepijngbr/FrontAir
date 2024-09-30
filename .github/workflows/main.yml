@@ -88,15 +88,15 @@ jobs:
     steps:
       - name: Install dependencies
         run: |
-          cd FrontAir/FrontAir
+          cd FrontAir
           npm install
 
       - name: Build project
         run: |
-          cd FrontAir/FrontAir
+          cd FrontAir
           npm run build
 
       - name: Deploy to GitHub Pages
         run: |
-          cd FrontAir/FrontAir
+          cd FrontAir
           npm run deploy
