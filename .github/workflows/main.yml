@@ -94,9 +94,6 @@ jobs:
       - name: View files in dist artifact
         run: ls -l
 
-      - name: return to parent dir
-        run: cd..
-
 #      - name: Deploy to GitHub Pages
 #        uses: peaceiris/actions-gh-pages@v3
 #        with:
