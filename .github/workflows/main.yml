@@ -27,6 +27,9 @@ jobs:
         run: npm install
         working-directory: FrontAir
 
+      - name: Set NODE_ENV to production
+        run: export NODE_ENV=production
+
       - name: Verify node version
         run: node -v
         
