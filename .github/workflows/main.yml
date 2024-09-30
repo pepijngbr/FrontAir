@@ -86,12 +86,24 @@ jobs:
 #    needs: [ 'build', 'release' ]
     needs: [ 'build' ]
     steps:
+      # Checkout the repository again to have access to package.json and npm scripts
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
       - name: Download build artifacts
         uses: actions/download-artifact@v3
         with:
           name: dist-artifact
+          path: ./temp-dist  # Download artifact into this folder
 
-      - name: View files in dist artifact
+      - name: [1] View files in dist artifact
+        run: ls -l
+
+      # Move the contents of the downloaded dist folder into the original dist location
+      - name: Move dist to correct location
+        run: mv ./temp-dist/* ./frontair/dist/
+
+      - name: [2] View files in dist artifact
         run: ls -l
 
 #      - name: Deploy to GitHub Pages
