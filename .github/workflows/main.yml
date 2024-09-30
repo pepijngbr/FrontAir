@@ -87,16 +87,13 @@ jobs:
     needs: [ 'build' ]
     steps:
       - name: Install dependencies
-        run: |
-          cd FrontAir
-          npm install
+        run: npm install
+        working-directory: FrontAir
 
       - name: Build project
-        run: |
-          cd FrontAir
-          npm run build
+        run: npm run build
+        working-directory: FrontAir
 
       - name: Deploy to GitHub Pages
-        run: |
-          cd FrontAir
-          npm run deploy
+        run: npm run deploy
+        working-directory: FrontAir
