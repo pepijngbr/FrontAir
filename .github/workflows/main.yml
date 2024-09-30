@@ -98,9 +98,16 @@ jobs:
       - name: View files in dist artifact
         run: ls -l
 
-      # Move the contents of the downloaded dist folder into the original dist location
+      # Ensure the dist folder exists
+      - name: Create dist directory if it doesn't exist
+        run: mkdir -p ./FrontAir/dist
+
+      - name: View files in dist artifact
+        run: ls -l
+
+      # Move the contents of temp-dist into the frontair/dist directory
       - name: Move dist to correct location
-        run: mv ./temp-dist/* ./frontair/dist/
+        run: mv ./temp-dist/* ./FrontAir/dist/
 
       - name: View files in dist artifact
         run: ls -l
