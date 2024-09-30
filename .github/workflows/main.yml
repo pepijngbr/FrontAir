@@ -99,7 +99,7 @@ jobs:
         working-directory: FrontAir
 
       - name: Build project
-        run: npm run build
+        run: npm run build-only
         working-directory: FrontAir
 
       - name: Deploy to GitHub Pages
