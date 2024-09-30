@@ -29,6 +29,7 @@ jobs:
 
       - name: Set NODE_ENV to production
         run: export NODE_ENV=production
+        working-directory: FrontAir
 
       - name: Verify node version
         run: node -v
