@@ -20,15 +20,15 @@
                     Book Now
                 </RouterLink>
             </div>
-            <img
-                :srcset="`
-                    ${require('../src/assets/images/FrontAir_Aeroplane_V2' +
-                    (theme == 'frontair' ? '' : '_White') +
-                    '.webp')}
-                `"
-                class="mx-auto hidden h-[250px] md:block lg:h-[300px]"
-                alt="FrontAir Logo"
-            />
+<!--            <img-->
+<!--                :srcset="-->
+<!--                    '../src/assets/images/FrontAir_Aeroplane_V2' +-->
+<!--                    (theme == 'frontair' ? '' : '_White') +-->
+<!--                    '.webp'-->
+<!--                "-->
+<!--                class="mx-auto hidden h-[250px] md:block lg:h-[300px]"-->
+<!--                alt="FrontAir Logo"-->
+<!--            />-->
         </div>
     </section>
     <section class="py-20">
@@ -47,23 +47,23 @@
                 :class="theme == 'frontair' ? '' : 'shadow-white/30'"
             >
                 <figure>
-                    <img
-                        class="h-60 w-full object-cover object-center"
-                        :srcset="
-                            '../src/assets/images/airlines/' +
-                            flight.airline.name
-                                .toLowerCase()
-                                .replace(/\s/g, '_') +
-                            '/' +
-                            flight.image +
-                            '.webp'
-                        "
-                        :alt="
-                            flight.airline.name != null
-                                ? flight.airline.name
-                                : 'Image of Airline'
-                        "
-                    />
+<!--                    <img-->
+<!--                        class="h-60 w-full object-cover object-center"-->
+<!--                        :srcset="-->
+<!--                            '../src/assets/images/airlines/' +-->
+<!--                            flight.airline.name-->
+<!--                                .toLowerCase()-->
+<!--                                .replace(/\s/g, '_') +-->
+<!--                            '/' +-->
+<!--                            flight.image +-->
+<!--                            '.webp'-->
+<!--                        "-->
+<!--                        :alt="-->
+<!--                            flight.airline.name != null-->
+<!--                                ? flight.airline.name-->
+<!--                                : 'Image of Airline'-->
+<!--                        "-->
+<!--                    />-->
                 </figure>
                 <div class="card-body">
                     <h2 class="card-title justify-center">
@@ -177,42 +177,42 @@
             >
                 <div class="avatar flex-col text-center">
                     <div class="mb-2 h-full w-full rounded-xl sm:h-[400px]">
-                        <img
-                            srcset="
-                                @/assets/images/linkedin-sales-solutions-pAtA8xe_iVM-unsplash.webp
-                            "
-                            alt="Marcus Stevens"
-                            width="400"
-                            height="400"
-                        />
+<!--                        <img-->
+<!--                            srcset="-->
+<!--                                @/assets/images/linkedin-sales-solutions-pAtA8xe_iVM-unsplash.webp-->
+<!--                            "-->
+<!--                            alt="Marcus Stevens"-->
+<!--                            width="400"-->
+<!--                            height="400"-->
+<!--                        />-->
                     </div>
                     <p class="text-lg">Marcus Stevens</p>
                     <p class="text-sm opacity-75">IT Manager</p>
                 </div>
                 <div class="avatar flex-col text-center">
                     <div class="mb-2 h-full w-full rounded-xl sm:h-[400px]">
-                        <img
-                            srcset="
-                                @/assets/images/albert-dera-ILip77SbmOE-unsplash.webp
-                            "
-                            alt="Jameson Reid"
-                            width="400"
-                            height="400"
-                        />
+<!--                        <img-->
+<!--                            srcset="-->
+<!--                                @/assets/images/albert-dera-ILip77SbmOE-unsplash.webp-->
+<!--                            "-->
+<!--                            alt="Jameson Reid"-->
+<!--                            width="400"-->
+<!--                            height="400"-->
+<!--                        />-->
                     </div>
                     <p class="text-lg">Jameson Reid</p>
                     <p class="text-sm opacity-75">Marketing Manager</p>
                 </div>
                 <div class="avatar flex-col text-center">
                     <div class="mb-2 h-full w-full rounded-xl sm:h-[400px]">
-                        <img
-                            srcset="
-                                @/assets/images/anthony-tran-3Xkms-gMvZg-unsplash.webp
-                            "
-                            alt="Lily Chen"
-                            width="400"
-                            height="400"
-                        />
+<!--                        <img-->
+<!--                            srcset="-->
+<!--                                @/assets/images/anthony-tran-3Xkms-gMvZg-unsplash.webp-->
+<!--                            "-->
+<!--                            alt="Lily Chen"-->
+<!--                            width="400"-->
+<!--                            height="400"-->
+<!--                        />-->
                     </div>
                     <p class="text-lg">Lily Chen</p>
                     <p class="text-sm opacity-75">
