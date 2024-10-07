@@ -112,7 +112,7 @@ jobs:
           name: dist-artifact
 
       - name: View files in the artifact
-        run: ls -l   # Check the contents of the downloaded files (should contain index.html and assets/)
+        run: ls -l
 
       - name: Prepare files for Docker build
         run: |
