@@ -7,7 +7,7 @@
                 class="flex w-auto flex-col items-center gap-2 text-center sm:w-[650px] md:items-start md:text-left"
             >
                 <h1>
-                    Flyyy with Ease,<br />
+                    Fly with Ease,<br />
                     Book with Breeze!
                 </h1>
                 <p>
