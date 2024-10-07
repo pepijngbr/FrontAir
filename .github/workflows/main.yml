@@ -116,14 +116,14 @@ jobs:
 
       - name: Prepare files for Docker build
         run: |
-          mkdir -p /tmp/docker-build   # Create the docker-build directory
-          mv index.html assets/ /tmp/docker-build/   # Move the necessary files into this directory
+          mkdir -p /docker-build   # Create the docker-build directory
+          mv index.html assets/ /docker-build/   # Move the necessary files into this directory
 
       - name: Create Dockerfile for dist deployment
         run: |
-          echo 'FROM nginx:alpine' > /tmp/docker-build/Dockerfile
-          echo 'COPY ./ /usr/share/nginx/html' >> /tmp/docker-build/Dockerfile
-          echo 'EXPOSE 80' >> /tmp/docker-build/Dockerfile
+          echo 'FROM nginx:alpine' > /docker-build/Dockerfile
+          echo 'COPY ./ /usr/share/nginx/html' >> /docker-build/Dockerfile
+          echo 'EXPOSE 80' >> /docker-build/Dockerfile
 
       - name: Log in to Docker Hub
         uses: docker/login-action@v2
@@ -133,7 +133,7 @@ jobs:
 
       - name: Build Docker image
         run: |
-          cd /tmp/docker-build
+          cd /docker-build
           docker build -t ${{ secrets.DOCKER_USERNAME }}/frontair-app:latest .
 
       - name: Push Docker image to Docker Hub
