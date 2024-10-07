@@ -122,9 +122,9 @@
                     </p>
                 </div>
             </div>
-<!--            <div-->
-<!--                class="bg-clouds absolute inset-0 z-0 h-full w-full bg-cover bg-no-repeat opacity-50"-->
-<!--            />-->
+            <div
+                class="bg-clouds absolute inset-0 z-0 h-full w-full bg-cover bg-no-repeat opacity-50"
+            />
         </div>
     </footer>
 </template>
