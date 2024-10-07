@@ -21,11 +21,11 @@
                 </RouterLink>
             </div>
             <img
-                :srcset="
-                    '../src/assets/images/FrontAir_Aeroplane_V2' +
+                :srcset="`
+                    ${require('../src/assets/images/FrontAir_Aeroplane_V2' +
                     (theme == 'frontair' ? '' : '_White') +
-                    '.webp'
-                "
+                    '.webp')}
+                `"
                 class="mx-auto hidden h-[250px] md:block lg:h-[300px]"
                 alt="FrontAir Logo"
             />
