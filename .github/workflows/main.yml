@@ -84,7 +84,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-  deploy:
+  deploy-github:
     runs-on: ubuntu-latest
     needs: [ 'build', 'release' ]
     steps:
@@ -101,6 +101,18 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: .
+
+  deploy-docker:
+    runs-on: ubuntu-latest
+    needs: [ 'build', 'release' ]
+    steps:
+      - name: Download build artifacts
+        uses: actions/download-artifact@v3
+        with:
+          name: dist-artifact
+
+      - name: View files in dist artifact
+        run: ls -l
 
       - name: Move dist folder to a clean build directory
         run: |
