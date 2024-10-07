@@ -112,12 +112,12 @@ jobs:
           name: dist-artifact
 
       - name: View files in dist artifact
-        run: ls -l
+        run: ls -l dist-artifact
 
       - name: Move dist folder to a clean build directory
         run: |
           mkdir -p docker-build
-          mv FrontAir/dist/* docker-build/
+          mv dist-artifact/* docker-build/   # Move files from the downloaded artifact
 
       - name: Create Dockerfile for dist deployment
         run: |
