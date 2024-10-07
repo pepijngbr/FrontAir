@@ -384,10 +384,8 @@ export default {
             ],
         });
 
-        // eslint-disable-next-line no-unused-vars
-        const isLoggdIn = useUserStore().isLoggedIn;
+        const isLoggedIn = useUserStore().isLoggedIn;
         return {
-            // eslint-disable-next-line no-undef
             isLoggedIn, // boolean
         };
     },
