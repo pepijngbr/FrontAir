@@ -84,24 +84,6 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-  deploy-github:
-    runs-on: ubuntu-latest
-    needs: [ 'build', 'release' ]
-    steps:
-      - name: Download build artifacts
-        uses: actions/download-artifact@v3
-        with:
-          name: dist-artifact
-
-      - name: View files in dist artifact
-        run: ls -l
-
-      - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v3
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: .
-
   deploy-docker:
     runs-on: ubuntu-latest
     needs: [ 'build', 'release' ]
@@ -111,18 +93,18 @@ jobs:
         with:
           name: dist-artifact
 
-      - name: View files in dist artifact
+      - name: View files in the artifact
         run: ls -l
 
-      - name: Move dist folder to a clean build directory
+      - name: Move files to docker-build directory
         run: |
           mkdir -p docker-build
-          mv * docker-build/   # Move files from the downloaded artifact
+          mv * docker-build/   # Move all files from the root into docker-build/
 
       - name: Create Dockerfile for dist deployment
         run: |
           echo 'FROM nginx:alpine' > docker-build/Dockerfile
-          echo 'COPY ./dist /usr/share/nginx/html' >> docker-build/Dockerfile
+          echo 'COPY ./ /usr/share/nginx/html' >> docker-build/Dockerfile
           echo 'EXPOSE 80' >> docker-build/Dockerfile
 
       - name: Log in to Docker Hub
