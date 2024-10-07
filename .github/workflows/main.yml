@@ -112,11 +112,12 @@ jobs:
           name: dist-artifact
 
       - name: View files in the artifact
-        run: ls -l
+        run: ls -l   # Check the contents of the downloaded files (should contain index.html and assets/)
 
-      - name: Move files into place for Docker build
+      - name: Prepare files for Docker build
         run: |
-          mv index.html assets/ /tmp/docker-build/
+          mkdir -p /tmp/docker-build   # Create the docker-build directory
+          mv index.html assets/ /tmp/docker-build/   # Move the necessary files into this directory
 
       - name: Create Dockerfile for dist deployment
         run: |
