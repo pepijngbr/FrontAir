@@ -153,6 +153,6 @@ export default {
 
 <style>
 .bg-clouds {
-    background-image: url('@/assets/images/clouds.webp');
+    background-image: url('~@/assets/images/clouds.webp');
 }
 </style>
