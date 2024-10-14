@@ -41,10 +41,8 @@ jobs:
         run: npm run test
         working-directory: FrontAir
 
-      - name: Remove node_modules & install non-dev dependencies
-        run: |
-          rm -rf node_modules/
-          npm install --omit=dev
+      - name: Install non-dev dependencies
+        run: npm install --omit=dev
 
       - name: Build the application
         run: npm run build-only
