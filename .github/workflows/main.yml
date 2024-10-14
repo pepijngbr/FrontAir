@@ -57,9 +57,6 @@ jobs:
         run: npm install --omit=dev
         working-directory: FrontAir
 
-#      - name: Install dependencies
-#        run: npm install
-
       - name: Build the application
         run: npm run build-only
         working-directory: FrontAir
