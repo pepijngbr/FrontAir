@@ -23,8 +23,8 @@ jobs:
         with:
           node-version: '20.11.0'
 
-      - name: Install dependencies (without dev)
-        run: npm install --omit=dev
+      - name: Install all dependencies (incl. dev)
+        run: npm install
         working-directory: FrontAir
 
       - name: Verify node version
@@ -40,6 +40,11 @@ jobs:
       - name: Testing
         run: npm run test
         working-directory: FrontAir
+
+      - name: Uninstall all dependencies & install non-dev dependencies
+        run: |
+          npm uninstall
+          npm install --omit=dev
 
       - name: Build the application
         run: npm run build-only
