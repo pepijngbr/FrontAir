@@ -3,10 +3,10 @@ name: Build & Deployment
 on:
   push:
     branches: [ 'main' ]
-  #    paths: [ 'FrontAir/**' ]
+    paths: [ 'FrontAir/**' ]
   pull_request:
     branches: [ 'main' ]
-#    paths: [ 'FrontAir/**' ]
+    paths: [ 'FrontAir/**' ]
 
 permissions:
   contents: write
@@ -29,7 +29,7 @@ jobs:
 
       - name: Verify node version
         run: node -v
-        
+
       - name: Verify npm version
         run: npm -v
 
@@ -136,8 +136,8 @@ jobs:
 
       - name: Prepare files for Docker build
         run: |
-          mkdir -p /tmp/docker-build   # Create the docker-build directory
-          mv index.html assets/ /tmp/docker-build/   # Move the necessary files into this directory
+          mkdir -p /tmp/docker-build                   # Create the docker-build directory
+          mv index.html assets/ /tmp/docker-build/     # Move the necessary files into this directory
 
       - name: Create Dockerfile for dist deployment
         run: |
@@ -159,3 +159,4 @@ jobs:
       - name: Push Docker image to Docker Hub
         run: |
           docker push ${{ secrets.DOCKER_USERNAME }}/frontair-app:latest
+
