@@ -1,5 +1,5 @@
 # FrontAir  
-<img src="FrontAir_White.png" align="right" width="45%">  
+<img src="FrontAir_White.png" align="right" width="40%" alt="FrontAir Logo White">  
 
 By <a href="https://github.com/pepijngbr">pepijngbr</a>  
 
