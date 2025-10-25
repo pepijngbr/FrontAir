@@ -1,10 +1,9 @@
 # FrontAir  
-<img src="FrontAir_White.png" align="right" width="40%">  
+<img src="FrontAir_White.png" align="right" width="45%">  
 
-Ontwikkeld door: <a href="https://github.com/pepijngbr">Pepijn Robben</a> (SD3b, PS230764), <a href="https://www.linkedin.com/in/pepijngbr/">![LinkedIn](https://img.shields.io/badge/-LinkedIn-0A66C2?style=flat-square&logo=linkedin&logoColor=white)</a>  
+By <a href="https://github.com/pepijngbr">pepijngbr</a>  
 
 ### Resources  
-A table of all the resources I plan on using or used for this entire project.  
 
 | Category | Resources |
 |----------|----------|
